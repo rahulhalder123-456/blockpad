@@ -1,0 +1,264 @@
+pwn.college Cheat Sheet
+Fundamentals: Data Dealings & Talking Web
+
+This cheat sheet is based on the challenges and terminal examples you've shared. It focuses on quick commands, reusable templates, common mistakes, and the key concepts to remember during future challenges.
+1. Data Dealings — essential command patterns
+
+Data Dealings focuses on working with data using shell utilities, files, encodings, and scripting. Use these patterns as a quick reference when a challenge involves manipulating input or extracting a value.
+
+Task
+<TAB>
+
+Command
+
+Print a file
+<TAB>
+
+cat file.txt
+
+List files, including hidden ones
+<TAB>
+
+ls -la
+
+Search for text
+<TAB>
+
+grep 'pattern' file.txt
+
+Decode Base64
+<TAB>
+
+base64 -d file.txt
+
+URL-decode a string in Python
+<TAB>
+
+python3 -c 'import urllib.parse; print(urllib.parse.unquote("VALUE"))'
+
+Filter JSON with jq
+<TAB>
+
+jq '.key' file.json
+URL encoding
+
+Web challenges often encode special characters in URLs. For example:
+
+    %7B → {
+
+    %7D → }
+
+    %20 → space
+
+Decode a URL-encoded flag with:
+bash
+
+python3 -c 'import urllib.parse; print(urllib.parse.unquote("pwn.college%7Bexample%7D"))'
+
+Output:
+text
+
+pwn.college{example}
+
+Important: URL encoding is not encryption. It is a representation of characters for safe transport.
+2. Talking Web — HTTP essentials
+The request/response cycle
+
+Client
+
+curl, Python requests, or a browser
+
+HTTP request
+
+Method · URL · Headers · Cookies · Body
+
+Web server
+
+Checks the request and returns a response
+
+HTTP response
+
+Status · Headers · Body · Cookies · Redirects
+
+Common HTTP methods
+
+Method
+<TAB>
+
+Purpose
+
+GET
+<TAB>
+
+Retrieve a resource; parameters often appear in the URL
+
+POST
+<TAB>
+
+Submit data in the request body
+Inspect requests with curl
+bash
+
+# Basic GET
+curl http://challenge.localhost/
+
+# Send POST form data
+curl -X POST \
+  -d "username=test&code=1234" \
+  http://challenge.localhost/submit
+
+Tip: Use curl -v when you need to understand why a request fails. It reveals the outgoing request headers and incoming status and response headers.
+3. Redirects
+
+A redirect response typically includes a Location header telling the client where to go next.
+
+For example, the initial request might return:
+http
+
+HTTP/1.1 302 FOUND
+Location: /aBxPmzjf-access
+
+The target URL is /aBxPmzjf-access.
+bash
+
+# Inspect the redirect
+curl -i http://challenge.localhost/
+
+Without -L, curl generally displays the redirect response instead of requesting the destination.
+JavaScript redirects
+
+A page can redirect the browser with:
+javascript
+
+location = "http://challenge.localhost/attempt";
+
+Or after an asynchronous operation:
+javascript
+
+fetch("/endpoint")
+  .then(r => r.text())
+  .then(data => {
+    location = "/next";
+  });
+
+Use the first form for a direct redirect.
+4. Cookies and session state
+
+Cookies allow a server to associate requests with state maintained across multiple requests.
+curl cookie workflow
+bash
+
+# Receive and save cookies
+curl -c cookies.txt http://challenge.localhost/
+
+# Send saved cookies on the next request
+curl -b cookies.txt http://challenge.localhost/
+
+    -c specifies the cookie jar to write received cookies to.
+
+    -b specifies cookies to send from a cookie jar or explicit cookie string.
+
+Common mistake: If the first request sets a cookie and the next request requires it, don't delete the cookie jar between requests.
+Python requests: sessions
+python
+
+import requests
+
+s = requests.Session()
+
+r1 = s.get("http://challenge.localhost/")
+r2 = s.get("http://challenge.localhost/")
+
+print(r2.text)
+
+A Session persists cookies between requests automatically. This is generally simpler than manually copying cookie values into headers.
+5. HTTP requests with Python
+
+The requests library is useful when a challenge requires multiple requests, redirects, cookies, or parameters.
+python
+
+import requests
+
+url = "http://challenge.localhost/"
+r = requests.get(url)
+
+print(r.status_code)
+print(r.headers)
+print(r.text)
+
+Custom headers
+python
+
+headers = {"Host": "challenge.localhost"}
+
+r = requests.get(
+    "http://127.0.0.1/",
+    headers=headers
+)
+
+print(r.text)
+
+The Host header tells the server which hostname the request targets. This matters when multiple virtual hosts share an IP address.
+GET parameters
+python
+
+params = {
+    "secure_key": "example",
+    "token": "12345"
+}
+
+r = requests.get(
+    "http://challenge.localhost/evaluate",
+    params=params
+)
+
+print(r.url)
+print(r.text)
+
+Using params= avoids manually assembling and URL-encoding the query string.
+9. Common mistakes and fixes
+
+Mistake
+<TAB>
+
+Fix
+
+Curl shows a redirect page instead of the final result
+<TAB>
+
+Add -L
+
+A cookie-dependent request fails
+<TAB>
+
+Save and resend cookies with -c and -b
+
+curl -c -b cookies.txt fails
+<TAB>
+
+Supply a filename after each option: -c cookies.txt -b cookies.txt
+10. Quick command reference
+Command lookup
+
+Basic request
+
+curl -i http://challenge.localhost/
+
+Follow redirects
+
+curl -L http://challenge.localhost/
+
+Create solve page
+
+nano /home/hacker/public_html/solve.html
+11. Final challenge-solving checklist
+
+When you open a new Talking Web challenge, follow this sequence:
+
+    Read the server code. Identify the route, required method, query parameters, form fields, cookies, and headers.
+
+    Understand the response. Determine whether the endpoint returns HTML, plain text, JavaScript, a redirect, or a cookie.
+
+The main lesson
+
+Most of these challenges test one HTTP concept at a time. Learn to recognize whether the missing piece is a path, redirect, header, cookie, GET parameter, POST field, or JavaScript execution context. Once you identify it, the solution is usually short.

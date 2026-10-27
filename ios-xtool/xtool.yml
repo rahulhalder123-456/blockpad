@@ -1,0 +1,5 @@
+version: 1
+bundleID: app.blockpad.mobile
+iconPath: Resources/AppIcon.png
+resources:
+- Resources/web

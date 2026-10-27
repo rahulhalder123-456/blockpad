@@ -1,0 +1,8 @@
+{
+  "appId": "app.blockpad.mobile",
+  "appName": "Blockpad",
+  "webDir": "site/app",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": false, "webContentsDebuggingEnabled": true },
+  "backgroundColor": "#ffffff"
+}

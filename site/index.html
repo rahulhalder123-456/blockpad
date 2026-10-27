@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blockpad: notes, wiki and databases on your own computer</title>
+  <meta name="description" content="Blockpad is a free block editor with databases, offline AI and private peer-to-peer sharing. No account, no cloud.">
+  <meta property="og:title" content="Blockpad">
+  <meta property="og:description" content="Notes, wiki and databases that live on your computer. Share and edit together without any server.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/"><img src="assets/logo.svg" alt="" width="30" height="30"><span>Blockpad</span></a>
+    <nav><a href="#how">How sharing works</a><a href="#faq">Questions</a><a class="btn small" href="#download">Download</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Your notes, wiki and databases.<br>On your own computer.</h1>
+      <p class="lead">Blockpad is a free block editor with databases, a built-in offline AI and private sharing. No account, no cloud, no subscription.</p>
+      <div class="cta" id="download">
+        <a class="btn big" id="dl" href="#">Download</a>
+        <p class="muted small" id="dl-note"></p>
+        <p class="small"><a href="app/" id="webapp">Or use it right now in your browser</a></p>
+      </div>
+      <p class="muted small warn" id="warn">Windows may say “Windows protected your PC” and macOS may ask you to confirm opening it, because Blockpad is not code-signed yet.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card"><h3>Everything stays with you</h3><p>Pages live in one file on your computer and work offline. Move the folder into Dropbox or OneDrive to sync your own devices.</p></div>
+      <div class="card"><h3>Share without a server</h3><p>Send a link. Your friend's Blockpad connects directly to yours, encrypted, and you edit together. View-only links really are read-only.</p></div>
+      <div class="card"><h3>A small AI that runs locally</h3><p>Fix grammar, summarize, translate and draft with a tiny model on your laptop. It uses 4–10% of your memory, only while it is on.</p></div>
+      <div class="card"><h3>Blocks, databases, views</h3><p>Tables, boards, calendars, timelines, formulas, relations, forms, synced blocks, code with highlighting, equations and more.</p></div>
+    </section>
+
+    <section id="platforms" class="how">
+      <h2>Every device</h2>
+      <div class="grid plat">
+        <a class="card" id="p-windows"><h3>Windows</h3><p>One-click installer. Windows 10 or 11.</p></a>
+        <a class="card" id="p-macosArm"><h3>macOS, Apple silicon</h3><p>M1 and newer. Unzip, then right-click → Open the first time.</p></a>
+        <a class="card" id="p-macosIntel"><h3>macOS, Intel</h3><p>Unzip, then right-click → Open the first time.</p></a>
+        <a class="card" id="p-linux"><h3>Linux</h3><p>x86-64 archive. Extract and run <code>Blockpad</code>.</p></a>
+        <a class="card" id="p-android"><h3>Android</h3><p>APK for phones and tablets (allow “install unknown apps”).</p></a>
+        <a class="card" href="app/"><h3>iPhone, iPad, any browser</h3><p>Open the web app, then Share → <b>Add to Home Screen</b>. Works offline.</p></a>
+      </div>
+      <p class="muted small">Desktop apps include the offline AI and peer-to-peer sharing. Phones and the web app are the editor and databases only for now.</p>
+    </section>
+
+    <section id="how" class="how">
+      <h2>How sharing works</h2>
+      <ol class="steps">
+        <li><b>Press Share</b> on a page in Blockpad and copy the <em>Can edit</em> or <em>View only</em> link.</li>
+        <li><b>Send it</b> by WhatsApp, Telegram, email, anything.</li>
+        <li><b>They click it.</b> If they have Blockpad it opens and asks to join. If not, this website helps them install it first.</li>
+        <li><b>You edit together.</b> You see who is online and which block they are on. Everyone keeps a full copy, so it also works offline.</li>
+      </ol>
+      <p class="muted">The page content never goes through this website. The link carries only the access secrets, after the <code>#</code>, which browsers do not send to any server.</p>
+    </section>
+
+    <section id="faq" class="faq">
+      <h2>Questions</h2>
+      <details><summary>Does it cost anything or need an account?</summary><p>No. There is no account, no cloud and nothing to subscribe to.</p></details>
+      <details><summary>Where is my data?</summary><p>In a single file in your user folder on your computer. Settings → Data shows the location and lets you move it.</p></details>
+      <details><summary>Who can see what I share?</summary><p>Only people who have your link. Anyone with the link can join, so send it only to people you trust. The <em>View only</em> link cannot change your page.</p></details>
+      <details><summary>Does the other person need to be online?</summary><p>You each keep your own copy. Changes sync whenever at least two people from the group are online at the same time.</p></details>
+      <details><summary>Mac, Linux or phone?</summary><p>Not yet. Blockpad is for Windows PCs for now.</p></details>
+    </section>
+  </main>
+
+  <footer><span>Blockpad <span id="ver"></span></span> · <span class="muted" id="sha"></span></footer>
+  <script src="config.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>

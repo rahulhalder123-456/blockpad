@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Blockpad</string>
+    <string name="title_activity_main">Blockpad</string>
+    <string name="package_name">app.blockpad.mobile</string>
+    <string name="custom_url_scheme">app.blockpad.mobile</string>
+</resources>

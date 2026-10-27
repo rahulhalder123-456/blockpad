@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Join a shared page in Blockpad</title>
+  <meta property="og:title" content="You were invited to a shared page">
+  <meta property="og:description" content="Open this link to join in Blockpad. If you do not have Blockpad yet, this page helps you install it.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body class="join-body">
+  <header class="top"><a class="brand" href="/"><img src="assets/logo.svg" alt="" width="30" height="30"><span>Blockpad</span></a></header>
+  <main class="join">
+    <div id="bad" class="panel" hidden>
+      <h1>This link looks incomplete</h1>
+      <p>It may have been cut off by the chat app. Ask the sender to copy the whole link again, or to send the <em>app-only</em> link.</p>
+      <p><a class="btn" href="/">What is Blockpad?</a></p>
+    </div>
+
+    <div id="ok" class="panel" hidden>
+      <p class="muted small">You were invited to</p>
+      <h1 id="name">A shared page</h1>
+      <p><span class="chip" id="access"></span></p>
+
+      <div id="desktop">
+        <a class="btn big" id="open" href="#">Open in Blockpad</a>
+        <p class="muted small" id="trying">Trying to open Blockpad…</p>
+
+        <div class="install" id="install">
+          <h2>Nothing opened? You probably need Blockpad first</h2>
+          <ol class="steps">
+            <li><a class="btn small" id="dl" href="#">Download Blockpad for Windows</a></li>
+            <li>Install it. Windows: run <b>Blockpad-Setup.exe</b> (if it says “protected your PC”: <b>More info</b>, then <b>Run anyway</b>). macOS: unzip and right-click → <b>Open</b>. Linux: extract and run <code>Blockpad</code>.</li>
+            <li>Come back to this page and press <b>Open in Blockpad</b>, or open Blockpad and paste the link into it.</li>
+          </ol>
+          <div class="copyrow"><input id="applink" readonly><button class="btn small" id="copy">Copy link</button></div>
+          <p class="muted small">Anyone with this link can join, so keep it between people you trust.</p>
+        </div>
+      </div>
+
+      <div id="mobile" hidden>
+        <h2>Open this on a computer</h2>
+        <p>Joining a shared page needs the Blockpad desktop app (Windows, Mac or Linux). Open this same link on your computer, or copy it and send it to yourself.</p>
+        <div class="copyrow"><input id="applink2" readonly><button class="btn small" id="copy2">Copy link</button></div>
+      </div>
+    </div>
+  </main>
+  <footer><span class="muted">The page content never goes through this website. This link carries only access secrets, after the #, which your browser does not send anywhere.</span></footer>
+  <script src="config.js"></script>
+  <script src="join.js"></script>
+</body>
+</html>

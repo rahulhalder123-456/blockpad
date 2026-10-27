@@ -1,0 +1,170 @@
+name: Build and test Blockpad on every platform
+
+# Push a tag like v1.6.0 to publish a GitHub Release with every download attached:
+#   Windows installer, Linux, macOS (Intel + Apple silicon), Android APK.
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+env:
+  LLAMA_TAG: b11935
+  MODEL_URL: https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf
+
+jobs:
+  desktop:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, target: win32-x64 }
+          - { os: ubuntu-latest,  target: linux-x64 }
+          - { os: macos-14,       target: darwin-arm64 }   # Apple silicon
+          - { os: macos-13,       target: darwin-x64 }     # Intel
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: AI engine (macOS / Linux)
+        if: runner.os != 'Windows'
+        run: bash tools/fetch-engines.sh ${{ matrix.target }}
+      - name: AI engine (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # the Windows engine is kept in the repository under engine/win32-x64
+          if (-not (Test-Path engine/win32-x64/llama-server.exe)) { throw 'engine/win32-x64 is missing' }
+      - name: Build the app
+        run: node tools/build.js ${{ matrix.target }} --out build
+      - name: Test model for the AI tests
+        shell: bash
+        run: mkdir -p models && curl -fsSL -o models/qwen2.5-0.5b-instruct-q4_k_m.gguf "$MODEL_URL"
+
+      # ---- tests: the same scripts that were run by hand on Windows and Linux ----
+      - name: Test (Linux, virtual display)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libasound2t64
+          export BP_LLM_DIR=$PWD/models
+          bash tools/linux-test.sh "$PWD/build/Blockpad-linux-x64" smoke12 smoke13 smoke10 smoke25 smoke27
+          bash tools/run-share-test.sh "$PWD/build/Blockpad-linux-x64/Blockpad" smoke20 smoke21 smoke22
+          bash tools/run-share-test.sh "$PWD/build/Blockpad-linux-x64/Blockpad" smoke23 smoke24
+      - name: Test (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          export BP_LLM_DIR=$PWD/models
+          APP="$PWD/build/Blockpad-${{ matrix.target }}/Blockpad.app/Contents/MacOS/Blockpad"
+          xattr -cr "$PWD/build" || true
+          fail=0
+          for t in smoke12 smoke13 smoke10; do
+            export BP_SMOKE_DIR=/tmp/bp-$t BP_SMOKE_OUT=/tmp/bp-$t-out; rm -rf $BP_SMOKE_DIR
+            "$APP" --smoke=$PWD/tools/$t.js > /tmp/$t.log 2>&1 || true
+            if grep -qE 'ALL CHECKS PASSED|passed, 0 failed' /tmp/$t.log && ! grep -q '^FAIL' /tmp/$t.log; then echo "$t ok"; else echo "$t FAILED"; grep -E '^(FAIL|SMOKE)' /tmp/$t.log | head; fail=1; fi
+          done
+          bash tools/run-share-test.sh "$APP" smoke20 smoke21 smoke22 || fail=1
+          exit $fail
+      - name: Test (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:BP_LLM_DIR = "$PWD\models"
+          $exe = "$PWD\build\Blockpad-win32-x64\Blockpad.exe"
+          $fail = 0
+          foreach ($t in 'smoke12','smoke13','smoke10') {
+            $env:BP_SMOKE_DIR = "$env:TEMP\bp-$t"; $env:BP_SMOKE_OUT = "$env:TEMP\bp-$t-out"
+            $o = & $exe "--smoke=$PWD\tools\$t.js" 2>&1 | Out-String
+            if ($o -match 'ALL CHECKS PASSED|passed, 0 failed' -and $o -notmatch '(?m)^FAIL ') { "$t ok" } else { "$t FAILED"; $fail = 1 }
+          }
+          & .\tools\run-share-test.ps1 -Exe $exe
+          if ($LASTEXITCODE -ne 0) { $fail = 1 }
+          exit $fail
+
+      - name: Package
+        shell: bash
+        run: |
+          cd build
+          case "${{ matrix.target }}" in
+            win32-x64)    7z a -tzip ../Blockpad-windows-x64-portable.zip Blockpad-win32-x64 >/dev/null ;;
+            linux-x64)    tar -czf ../Blockpad-linux-x64.tar.gz Blockpad-linux-x64 ;;
+            darwin-arm64) ditto -c -k --keepParent Blockpad-darwin-arm64/Blockpad.app ../Blockpad-macos-arm64.zip ;;
+            darwin-x64)   ditto -c -k --keepParent Blockpad-darwin-x64/Blockpad.app ../Blockpad-macos-x64.zip ;;
+          esac
+      - name: Windows installer
+        if: runner.os == 'Windows'
+        run: npx electron-builder --prepackaged build/Blockpad-win32-x64 --win nsis
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blockpad-${{ matrix.target }}
+          path: |
+            Blockpad-*.zip
+            Blockpad-*.tar.gz
+            installer/Blockpad-Setup.exe
+
+  web-and-android:
+    name: web app + Android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - run: npm ci
+      - run: node tools/build-web.js
+      - run: npx cap sync android
+      - name: Build APK
+        run: cd android && ./gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with: { name: blockpad-android-apk, path: android/app/build/outputs/apk/debug/app-debug.apk }
+      - uses: actions/upload-artifact@v4
+        with: { name: blockpad-web-app, path: site/app }
+
+  ios:
+    name: iOS (simulator build, experimental)
+    runs-on: macos-14
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: node tools/build-web.js
+      - run: npx cap add ios && npx cap sync ios
+      - name: Build for the simulator
+        run: |
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -sdk iphonesimulator -configuration Debug \
+            -derivedDataPath build/ios CODE_SIGNING_ALLOWED=NO build | tail -20
+      - name: Launch in the simulator and take a screenshot
+        run: |
+          xcrun simctl boot "iPhone 15" || true
+          xcrun simctl install booted build/ios/Build/Products/Debug-iphonesimulator/App.app
+          xcrun simctl launch booted app.blockpad.mobile
+          sleep 8
+          xcrun simctl io booted screenshot ios-simulator.png
+      - uses: actions/upload-artifact@v4
+        with: { name: blockpad-ios-simulator, path: ios-simulator.png }
+
+  release:
+    name: publish release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [desktop, web-and-android]
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: dist, merge-multiple: true }
+      - run: cp dist/android/app-debug.apk dist/Blockpad-android.apk 2>/dev/null || true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/Blockpad-Setup.exe
+            dist/Blockpad-windows-x64-portable.zip
+            dist/Blockpad-linux-x64.tar.gz
+            dist/Blockpad-macos-arm64.zip
+            dist/Blockpad-macos-x64.zip
+            dist/Blockpad-android.apk
