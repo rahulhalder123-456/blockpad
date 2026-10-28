@@ -3,7 +3,7 @@
    usage: node_modules\electron\dist\electron.exe tools\web-share-test.js https://blockpad-umber.vercel.app/app/
    (needs internet; ELECTRON_RUN_AS_NODE must be unset) */
 const { app, BrowserWindow } = require('electron');
-const url = process.argv.find((a) => /^https?:/.test(a)) || 'https://blockpad-umber.vercel.app/app/';
+const url = process.argv.find((a) => /^(https?|file):/.test(a)) || 'https://blockpad-umber.vercel.app/app/';
 const open = (name) => new Promise((resolve) => {
   const w = new BrowserWindow({ show: false, width: 420, height: 800, webPreferences: { partition: 'web-' + name + Date.now() } });
   w.webContents.on('console-message', (_e, _l, msg) => { if (/rtc|webrtc|CSP|Content Security/i.test(msg)) console.log('[' + name + ' console]', msg.slice(0, 200)); });
@@ -40,6 +40,10 @@ app.whenReady().then(async () => {
   for (let i = 0; i < 60 && !seen; i++) { await wait(1000); seen = await ev(B, `(BP.page(window.__root) || {}).title === ${JSON.stringify(marker)}`); }
   console.log('B saw A\'s edit:', seen);
   if (!seen) return fail('edit did not reach B');
+  // leave, trash the copy, then join the same link again (the page is still in Trash)
+  const again = await ev(B, `(async () => { const info = BP.share.parseLink(${JSON.stringify(link)}); await BP.share.leave(info.id); BP.trash(info.root); try { await BP.share.join(info); } catch (e) { return 'ERR ' + e.message; } const p = BP.page(info.root); return p && !p.trashed && p.sharedRoot === info.id ? 'ok' : 'bad state'; })()`);
+  console.log('rejoin after trash:', again);
+  if (again !== 'ok') return fail('could not rejoin after trashing');
   console.log('WEB SHARE TEST PASSED');
   app.exit(0);
 });

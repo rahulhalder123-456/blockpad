@@ -392,7 +392,11 @@
       if (info.writeSec && have.role === 'viewer') { have.writeSec = info.writeSec; have.role = 'editor'; (BP.__origSave || BP.save)(); changed(); }
       return have;
     }
-    if (BP.page(info.root)) throw new Error('This workspace already has that page, so it cannot be joined again here.');
+    const stale = BP.page(info.root);
+    if (stale) {
+      if (!BP.isTrashed(stale)) throw new Error('This workspace already has that page as a normal page. Move it to Trash first, then join again.');
+      [info.root, ...BP.descendants(info.root)].forEach((x) => { delete BP.state.pages[x]; });      // an old copy sitting in Trash: replace it with the shared page
+    }
     const sp = { id: info.id, name: info.name, root: info.root, role: info.writeSec ? 'editor' : 'viewer', readKey: info.readKey, writePub: info.writePub, writeSec: info.writeSec, lamport: 0, units: {}, created: Date.now() };
     store().spaces[sp.id] = sp;
     BP.createPage(null, { id: info.root, title: info.name, sharedRoot: sp.id, blocks: [] });
