@@ -894,6 +894,9 @@
     await BP.boot();
     BP.share.init();
     if (small() && BP.state.settings.sidebar) { BP.state.settings.sidebar = false; renderAll(); }
+    /* rotating a phone or resizing the window across the phone breakpoint: drawer closed on small screens, sidebar docked on large ones */
+    let wasSmall = small();
+    matchMedia('(max-width: 760px)').addEventListener('change', () => { const now = small(); if (now === wasSmall) return; wasSmall = now; BP.state.settings.sidebar = !now; renderAll(); });
     BP.$('#app').addEventListener('click', (e) => { if (e.target.id === 'app' && small() && BP.state.settings.sidebar) { BP.state.settings.sidebar = false; renderAll(); } });   // tap the dim area to close the drawer
     if (!window.bp) return;
     BP.llm.on(() => BP.paintAiChip());

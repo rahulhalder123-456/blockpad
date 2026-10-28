@@ -363,7 +363,7 @@ button, .icon-btn, .sb-item, .menu-item { touch-action: manipulation; }
   .bctl { left: -32px; opacity: .55; } .bctl button:first-child { display: none; }
   .title-in { font-size: 30px; }
   .modal-back { padding-top: 4vh; } .modal, .modal.wide, .modal.settings { width: 96vw !important; max-height: 92dvh; }
-  .set { grid-template-columns: 1fr; } .set-tabs { display: flex; overflow-x: auto; gap: 4px; } .set-tabs button { white-space: nowrap; }
+  .set { grid-template-columns: 1fr; grid-template-rows: auto 1fr; } .set-tabs { display: flex; align-self: start; align-items: center; overflow-x: auto; gap: 4px; padding-bottom: 4px; scrollbar-width: none; } .set-tabs::-webkit-scrollbar { display: none; } .set-tabs button { white-space: nowrap; }
   .sel-toolbar { max-width: 96vw; flex-wrap: wrap; }
   .tbl-wrap, .table-wrap { overflow-x: auto; }
   .pagewrap { padding-bottom: 40vh; }
@@ -378,3 +378,18 @@ button, .icon-btn, .sb-item, .menu-item { touch-action: manipulation; }
 }
 @media (max-width: 400px) { .topbar .crumbs .crumb:not(.last) { display: none; } .title-in { font-size: 26px; } }
 @supports (padding: max(0px)) { .topbar { padding-left: max(6px, env(safe-area-inset-left)); } }
+
+/* ---- v1.8 polish: touch targets, keyboard focus, notches, motion, big screens ---- */
+@media (pointer: coarse) {
+  .icon-btn, .topbar .icon-btn { min-width: 44px; min-height: 44px; }
+  .menu-item, .set-tabs button, .btn { min-height: 40px; }
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.title-in:focus-visible, .txt:focus-visible, .ta:focus-visible, .cell-in:focus-visible { outline: none; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+@supports (padding: max(0px)) {
+  .main { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+  .pagewrap { padding-bottom: max(40vh, env(safe-area-inset-bottom)); }
+}
+@media (min-width: 761px) and (max-width: 1100px) { .comments { width: 280px; } }
+@media (min-width: 1800px) { .page { font-size: 17px; } }
