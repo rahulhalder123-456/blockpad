@@ -299,7 +299,7 @@
       const P = (SH.pres[sp.id] = SH.pres[sp.id] || {});
       const w = m.who || {};
       if (!w.id) return;
-      P[w.id] = { id: w.id, name: String(w.name || 'Someone').slice(0, 40), color: /^#[0-9a-f]{6}$/i.test(w.color) ? w.color : '#7a6a50', page: m.page || null, block: m.block || null, seen: Date.now(), peer: peerId };
+      P[peerId] = { id: w.id, name: String(w.name || 'Someone').slice(0, 40), color: /^#[0-9a-f]{6}$/i.test(w.color) ? w.color : '#7a6a50', page: m.page || null, block: m.block || null, seen: Date.now(), peer: peerId };
       if (BP.ui && BP.ui.presence) BP.ui.presence();
       changed();
     }
@@ -331,7 +331,12 @@
   }
   const presenceNow = () => SH.spaces().forEach((sp) => sendPresence(sp));
   SH.presenceSoon = () => { clearTimeout(presTimer); presTimer = setTimeout(presenceNow, 250); };
-  SH.online = (sp) => Object.values(SH.pres[sp.id] || {}).filter((x) => Date.now() - x.seen < 30000 && [...SH.peers.values()].some((p) => p.id === x.peer));
+  /* who is online = every verified connection of this space, one row per device (a device whose presence message is late or lost still shows, from its hello) */
+  SH.online = (sp) => verifiedPeers(sp).map((p) => {
+    const x = (SH.pres[sp.id] || {})[p.id], w = p.who || {};
+    if (x) return Date.now() - x.seen < 60000 ? x : Object.assign({}, x, { page: null, block: null });
+    return { id: w.id || p.id, name: String(w.name || 'Someone').slice(0, 40), color: /^#[0-9a-f]{6}$/i.test(w.color) ? w.color : '#7a6a50', page: null, block: null, seen: Date.now(), peer: p.id };
+  });
   SH.peerCount = (sp) => verifiedPeers(sp).length;
 
   /* ---------- local changes -> ops ---------- */
@@ -439,7 +444,8 @@
     window.bp && window.bp.onLink && window.bp.onLink((url) => BP.joinDialog && BP.joinDialog(url));
     const track = () => { const a = document.activeElement; const b = a && a.closest ? a.closest('.block') : null; focusBlock = b ? b.dataset.id : null; SH.presenceSoon(); };
     document.addEventListener('focusin', track);
-    setInterval(() => { presenceNow(); Object.keys(SH.pres).forEach((s) => Object.keys(SH.pres[s]).forEach((id) => { if (Date.now() - SH.pres[s][id].seen > 30000) delete SH.pres[s][id]; })); changed(); }, 10000);
+    setInterval(() => { presenceNow(); changed(); }, 10000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { presenceNow(); changed(); } });      // a phone sleeps its timers in the background
     SH.spaces().forEach(connect);
     /* flaky links: keep re-introducing ourselves to peers that have not accepted us yet, and every 20 s compare what each side has so a lost message heals */
     setInterval(() => {
