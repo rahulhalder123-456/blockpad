@@ -1,0 +1,834 @@
+# Sound credits
+
+Kenney packs and Freesound recordings are CC0 (public domain). Credit is not required but given.
+
+
+- boom/fs-105351-backfire-ogg-1: "BACKFIRE.ogg" by CeebFrack, CC0, https://freesound.org/people/CeebFrack/sounds/105351
+- boom/fs-13862-10-wav-1: "10.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/13862
+- boom/fs-13875-23-wav-1: "23.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/13875
+- boom/fs-13895-43-wav-1: "43.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/13895
+- boom/fs-141570-4-sec-drop-wav-1: "4 Sec Drop.wav" by xIceCoffeex, CC0, https://freesound.org/people/xIceCoffeex/sounds/141570
+- boom/fs-160711-90-bpm-funky-break-wav-2: "90 bpm funky break.wav" by Snapper4298, CC0, https://freesound.org/people/Snapper4298/sounds/160711
+- boom/fs-169713-bass-drop-nasty-001-3: "Bass Drop - Nasty 001" by GnoteSoundz, CC0, https://freesound.org/people/GnoteSoundz/sounds/169713
+- boom/fs-197462-kick-dubstep-kick-1: "[Kick] dubstep kick" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/197462
+- boom/fs-198117-sfx-creepy-lead-fx-3: "[SFX] creepy lead fx" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/198117
+- boom/fs-201748-bass-rugged-sub-2-3: "[Bass] Rugged sub 2" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/201748
+- boom/fs-212768-bass-drop-3: "Bass Drop" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/212768
+- boom/fs-223838-expriements-bass-8-mp3-2: "Expriements - bass 8 .mp3" by Wonki_B, CC0, https://freesound.org/people/Wonki_B/sounds/223838
+- boom/fs-223838-expriements-bass-8-mp3-3: "Expriements - bass 8 .mp3" by Wonki_B, CC0, https://freesound.org/people/Wonki_B/sounds/223838
+- boom/fs-236956-boom-mp3-1: "Boom.mp3" by Barcker, CC0, https://freesound.org/people/Barcker/sounds/236956
+- boom/fs-249587-oneshot-bass-2-wav-2: "Oneshot Bass 2.wav" by staticpony1, CC0, https://freesound.org/people/staticpony1/sounds/249587
+- boom/fs-261205-bass-drop-pitch-sweep-fx-wav-1: "Bass Drop Pitch Sweep FX.wav" by Stereo Surgeon, CC0, https://freesound.org/people/Stereo%20Surgeon/sounds/261205
+- boom/fs-264031-low-mid-afar-explosion-1-wav-1: "low mid afar explosion 1.wav" by Logicogonist, CC0, https://freesound.org/people/Logicogonist/sounds/264031
+- boom/fs-268608-juno-sub-wav-1: "Juno Sub.wav" by breo2012, CC0, https://freesound.org/people/breo2012/sounds/268608
+- boom/fs-320782-huge-explosion-thunder-explo-3: "Huge Explosion - Thunder - Exploding" by dmstudio, CC0, https://freesound.org/people/dmstudio/sounds/320782
+- boom/fs-334638-yaw-bass-drop-1: "yaw bass/drop" by bazz_boy, CC0, https://freesound.org/people/bazz_boy/sounds/334638
+- boom/fs-334638-yaw-bass-drop-2: "yaw bass/drop" by bazz_boy, CC0, https://freesound.org/people/bazz_boy/sounds/334638
+- boom/fs-334638-yaw-bass-drop-3: "yaw bass/drop" by bazz_boy, CC0, https://freesound.org/people/bazz_boy/sounds/334638
+- boom/fs-336487-boom-01-wav-1: "Boom_01.wav" by Faulkin, CC0, https://freesound.org/people/Faulkin/sounds/336487
+- boom/fs-337695-transition-bass-1: "Transition Bass" by TheNikonProductions, CC0, https://freesound.org/people/TheNikonProductions/sounds/337695
+- boom/fs-337695-transition-bass-2: "Transition Bass" by TheNikonProductions, CC0, https://freesound.org/people/TheNikonProductions/sounds/337695
+- boom/fs-347893-fatsubkick-198046edited-wav-1: "FATSUBKICK_198046EDITED.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/347893
+- boom/fs-347893-fatsubkick-198046edited-wav-3: "FATSUBKICK_198046EDITED.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/347893
+- boom/fs-362380-theatrical-loop-140-bpm-1: "Theatrical Loop 140 BPM" by SSS_Samples, CC0, https://freesound.org/people/SSS_Samples/sounds/362380
+- boom/fs-362380-theatrical-loop-140-bpm-2: "Theatrical Loop 140 BPM" by SSS_Samples, CC0, https://freesound.org/people/SSS_Samples/sounds/362380
+- boom/fs-366886-reverse-door-slam-wav-3: "Reverse Door Slam.wav" by MegaBlasterRecordings, CC0, https://freesound.org/people/MegaBlasterRecordings/sounds/366886
+- boom/fs-394285-bass-drop-mp3-2: "Bass Drop.mp3" by marc_drcksn, CC0, https://freesound.org/people/marc_drcksn/sounds/394285
+- boom/fs-401630-booms-wav-1: "Booms.wav" by studiomandragore, CC0, https://freesound.org/people/studiomandragore/sounds/401630
+- boom/fs-401630-booms-wav-3: "Booms.wav" by studiomandragore, CC0, https://freesound.org/people/studiomandragore/sounds/401630
+- boom/fs-423458-low-pitched-boom-noise-1: "Low Pitched Boom Noise" by soapybubl, CC0, https://freesound.org/people/soapybubl/sounds/423458
+- boom/fs-503774-bass-drop-wav-1: "bass drop.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503774
+- boom/fs-535615-low-bit-boom-1: "LOW BIT BOOM" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/535615
+- boom/fs-539968-deep-boom-3: "Deep Boom" by Za-Games, CC0, https://freesound.org/people/Za-Games/sounds/539968
+- boom/fs-559994-108-trance-loop-wav-1: "108_trance_loop.wav" by Snapper4298, CC0, https://freesound.org/people/Snapper4298/sounds/559994
+- boom/fs-569414-sfx-whoosh-deep-vent-1-12-wa-2: "Sfx Whoosh Deep Vent 1 12.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569414
+- boom/fs-569415-sfx-whoosh-deep-vent-1-11-wa-1: "Sfx Whoosh Deep Vent 1 11.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569415
+- boom/fs-569416-sfx-whoosh-deep-vent-1-10-wa-3: "Sfx Whoosh Deep Vent 1 10.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569416
+- boom/fs-569417-sfx-whoosh-deep-vent-1-1-wav-3: "Sfx Whoosh Deep Vent 1 1.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569417
+- boom/fs-569418-sfx-whoosh-deep-vent-1-3-wav-3: "Sfx Whoosh Deep Vent 1 3.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569418
+- boom/fs-569419-sfx-whoosh-deep-vent-1-2-wav-3: "Sfx Whoosh Deep Vent 1 2.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569419
+- boom/fs-569421-sfx-whoosh-deep-vent-1-13-wa-3: "Sfx Whoosh Deep Vent 1 13.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569421
+- boom/fs-569422-sfx-whoosh-deep-vent-1-5-wav-2: "Sfx Whoosh Deep Vent 1 5.wav" by Sheyvan, CC0, https://freesound.org/people/Sheyvan/sounds/569422
+- boom/fs-581124-distant-thunder-3-2: "Distant Thunder 3" by Fission9, CC0, https://freesound.org/people/Fission9/sounds/581124
+- boom/fs-581124-distant-thunder-3-3: "Distant Thunder 3" by Fission9, CC0, https://freesound.org/people/Fission9/sounds/581124
+- boom/fs-590360-sfx-stickerripper-foil-booms-2: "SFX_STICKERRIPPER_foilBooms_01.wav" by MrFossy, CC0, https://freesound.org/people/MrFossy/sounds/590360
+- boom/fs-608429-tgn-boom-fx-01-wav-2: "TGN Boom FX 01.wav" by TGN.LiveOrganism, CC0, https://freesound.org/people/TGN.LiveOrganism/sounds/608429
+- boom/fs-611637-fx-bigchungus-aif-3: "fx_bigchungus.aif" by harrisonlace, CC0, https://freesound.org/people/harrisonlace/sounds/611637
+- boom/fs-612930-sine-bass-drop-3: "Sine Bass Drop" by josheb_policarpio, CC0, https://freesound.org/people/josheb_policarpio/sounds/612930
+- boom/fs-63138-sub-a-2-secs-wav-3: "SUB A# 2 secs.wav" by uzerx, CC0, https://freesound.org/people/uzerx/sounds/63138
+- boom/fs-636624-deep-hit-2: "Deep hit" by CogFireStudios, CC0, https://freesound.org/people/CogFireStudios/sounds/636624
+- boom/fs-638262-whoosh-whoosh-boom-2: "Whoosh Whoosh Boom" by adh.dreaming, CC0, https://freesound.org/people/adh.dreaming/sounds/638262
+- boom/fs-679779-jh-808-1-c-0-5-sec-wav-1: "JH 808 1 C (0.5 sec).wav" by Johnnie_Holiday, CC0, https://freesound.org/people/Johnnie_Holiday/sounds/679779
+- boom/fs-679782-jh-808-4-c-3-sec-wav-1: "JH 808 4 C (3 sec).wav" by Johnnie_Holiday, CC0, https://freesound.org/people/Johnnie_Holiday/sounds/679782
+- boom/fs-697144-drum-boom-1: "Drum Boom" by CHARLIESMILER, CC0, https://freesound.org/people/CHARLIESMILER/sounds/697144
+- boom/fs-720897-gloss-stomp-sub-firm-1: "gloss stomp sub firm" by hyperglosss, CC0, https://freesound.org/people/hyperglosss/sounds/720897
+- boom/fs-81144-sub-oceano-a-sharp-wav-1: "SUB OCEANO A sharp.wav" by uzerx, CC0, https://freesound.org/people/uzerx/sounds/81144
+- boom/fs-81145-sub-oceano-a-wav-1: "SUB OCEANO A.wav" by uzerx, CC0, https://freesound.org/people/uzerx/sounds/81145
+- boom/fs-81146-sub-oceano-b-wav-1: "SUB OCEANO B.wav" by uzerx, CC0, https://freesound.org/people/uzerx/sounds/81146
+- boom/fs-81147-sub-oceano-c-wav-1: "SUB OCEANO C.wav" by uzerx, CC0, https://freesound.org/people/uzerx/sounds/81147
+- boom/fs-81148-sub-oceano-d-wav-1: "SUB OCEANO D.wav" by uzerx, CC0, https://freesound.org/people/uzerx/sounds/81148
+- boom/fs-81149-sub-oceano-g-sharp-wav-1: "SUB OCEANO G sharp.wav" by uzerx, CC0, https://freesound.org/people/uzerx/sounds/81149
+- boom/fs-83940-explosion-sourde-mp3-1: "explosion_sourde.mp3" by Schnaffon, CC0, https://freesound.org/people/Schnaffon/sounds/83940
+- chime/fs-127149-ding-wav-1: "ding.wav" by Daphne_in_Wonderland, CC0, https://freesound.org/people/Daphne_in_Wonderland/sounds/127149
+- chime/fs-159011-ding2-wav-1: "ding2.wav" by mrbriandesign, CC0, https://freesound.org/people/mrbriandesign/sounds/159011
+- chime/fs-185822-single-chime-1: "Single chime" by LloydEvans09, CC0, https://freesound.org/people/LloydEvans09/sounds/185822
+- chime/fs-192761-ryuuzan-shop-door-bell00-wav-1: "Ryuuzan_shop_door_bell00.wav" by ryuuzan, CC0, https://freesound.org/people/ryuuzan/sounds/192761
+- chime/fs-221515-service-bell-ring-1: "service bell ring" by AlaskaRobotics, CC0, https://freesound.org/people/AlaskaRobotics/sounds/221515
+- chime/fs-237106-sqeeeek-bell-ting1-wav-1: "sqeeeek_bell_ting1.wav" by sqeeeek, CC0, https://freesound.org/people/sqeeeek/sounds/237106
+- chime/fs-238429-supermarket-pa-mp3-3: "Supermarket PA.mp3" by nigelcoop, CC0, https://freesound.org/people/nigelcoop/sounds/238429
+- chime/fs-243701-correct-1: "correct" by ertfelda, CC0, https://freesound.org/people/ertfelda/sounds/243701
+- chime/fs-255100-jingle1-2: "jingle1" by soneproject, CC0, https://freesound.org/people/soneproject/sounds/255100
+- chime/fs-255101-jingle2-3: "jingle2" by soneproject, CC0, https://freesound.org/people/soneproject/sounds/255101
+- chime/fs-255102-jingle3-2: "jingle3" by soneproject, CC0, https://freesound.org/people/soneproject/sounds/255102
+- chime/fs-351878-computer-chimes-program-star-3: "Computer Chimes - Program Start.aif" by TheAtomicBrain, CC0, https://freesound.org/people/TheAtomicBrain/sounds/351878
+- chime/fs-351880-computer-chimes-logged-in-ai-3: "Computer Chimes - Logged In.aif" by TheAtomicBrain, CC0, https://freesound.org/people/TheAtomicBrain/sounds/351880
+- chime/fs-404104-glass-ding-1: "Glass ding" by Counter-gamer, CC0, https://freesound.org/people/Counter-gamer/sounds/404104
+- chime/fs-404104-glass-ding-2: "Glass ding" by Counter-gamer, CC0, https://freesound.org/people/Counter-gamer/sounds/404104
+- chime/fs-404104-glass-ding-3: "Glass ding" by Counter-gamer, CC0, https://freesound.org/people/Counter-gamer/sounds/404104
+- chime/fs-515643-ding2-wav-1: "ding2.wav" by MashedTatoes2, CC0, https://freesound.org/people/MashedTatoes2/sounds/515643
+- chime/fs-570243-point-in-space-ogg-1: "point-in-space.ogg" by bluetshirt, CC0, https://freesound.org/people/bluetshirt/sounds/570243
+- chime/fs-571513-soft-notifications-bell-ding-2: "Soft-Notifications - Bell - Ding-Dong.mp3" by LegitCheese, CC0, https://freesound.org/people/LegitCheese/sounds/571513
+- chime/fs-582655-long-rising-tones-16-wav-2: "Long Rising Tones 16.wav" by ironcross32, CC0, https://freesound.org/people/ironcross32/sounds/582655
+- chime/fs-615949-ding-effect-wav-1: "Ding Effect.wav" by JulesV4, CC0, https://freesound.org/people/JulesV4/sounds/615949
+- chime/fs-80997-ding-mp3-1: "Ding.mp3" by payattention, CC0, https://freesound.org/people/payattention/sounds/80997
+- click/fs-146877-mouse-clicks-and-scroll-whee: "Mouse clicks and scroll wheel" by tgfcoder, CC0, https://freesound.org/people/tgfcoder/sounds/146877
+- click/fs-399443-mouse-clicks: "mouse clicks" by chestnutjam, CC0, https://freesound.org/people/chestnutjam/sounds/399443
+- click/fs-534104-mouse-click-double-00-flac: "mouse-click-double-00.flac" by pbimal, CC0, https://freesound.org/people/pbimal/sounds/534104
+- glitch/fs-107369-wierd-glitch-loop-wav-2: "WierdGlitchLoop.wav" by Kumquaticus, CC0, https://freesound.org/people/Kumquaticus/sounds/107369
+- glitch/fs-107369-wierd-glitch-loop-wav-3: "WierdGlitchLoop.wav" by Kumquaticus, CC0, https://freesound.org/people/Kumquaticus/sounds/107369
+- glitch/fs-128657-5-8-glitch-beat-wav-1: "5/8 glitch beat.wav" by gusgus26, CC0, https://freesound.org/people/gusgus26/sounds/128657
+- glitch/fs-128657-5-8-glitch-beat-wav-3: "5/8 glitch beat.wav" by gusgus26, CC0, https://freesound.org/people/gusgus26/sounds/128657
+- glitch/fs-131592-transformer-024-camera-wav-1: "Transformer 024 Camera.wav" by gowers, CC0, https://freesound.org/people/gowers/sounds/131592
+- glitch/fs-191012-sci-fi-glitch-sound-wav-1: "Sci Fi Glitch Sound.wav" by waterboy920, CC0, https://freesound.org/people/waterboy920/sounds/191012
+- glitch/fs-194105-glitch-click-wav-1: "Glitch Click.wav" by potentjello, CC0, https://freesound.org/people/potentjello/sounds/194105
+- glitch/fs-194105-glitch-click-wav-2: "Glitch Click.wav" by potentjello, CC0, https://freesound.org/people/potentjello/sounds/194105
+- glitch/fs-195541-glitch-1: "glitch" by mjan1, CC0, https://freesound.org/people/mjan1/sounds/195541
+- glitch/fs-195541-glitch-2: "glitch" by mjan1, CC0, https://freesound.org/people/mjan1/sounds/195541
+- glitch/fs-195541-glitch-3: "glitch" by mjan1, CC0, https://freesound.org/people/mjan1/sounds/195541
+- glitch/fs-204533-blazeimport-wav-2: "blazeimport.wav" by Vitouliss, CC0, https://freesound.org/people/Vitouliss/sounds/204533
+- glitch/fs-237605-glitch-03-1: "Glitch 03" by JacksonMiller0, CC0, https://freesound.org/people/JacksonMiller0/sounds/237605
+- glitch/fs-237607-glitch-01-1: "Glitch 01" by JacksonMiller0, CC0, https://freesound.org/people/JacksonMiller0/sounds/237607
+- glitch/fs-238340-sfx-random-glitched-effect-s-1: "[SFX] random glitched effect seq" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/238340
+- glitch/fs-238340-sfx-random-glitched-effect-s-2: "[SFX] random glitched effect seq" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/238340
+- glitch/fs-238340-sfx-random-glitched-effect-s-3: "[SFX] random glitched effect seq" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/238340
+- glitch/fs-238818-glitchscream-wav-1: "glitchscream.wav" by Erlbaum, CC0, https://freesound.org/people/Erlbaum/sounds/238818
+- glitch/fs-238818-glitchscream-wav-2: "glitchscream.wav" by Erlbaum, CC0, https://freesound.org/people/Erlbaum/sounds/238818
+- glitch/fs-238818-glitchscream-wav-3: "glitchscream.wav" by Erlbaum, CC0, https://freesound.org/people/Erlbaum/sounds/238818
+- glitch/fs-251678-fx-shortage-1-1: "fx_shortage-1" by _jack, CC0, https://freesound.org/people/_jack/sounds/251678
+- glitch/fs-259167-4-bar-edm-loop-aif-2: "4 bar EDM loop.aif" by soundprojektstudios, CC0, https://freesound.org/people/soundprojektstudios/sounds/259167
+- glitch/fs-259167-4-bar-edm-loop-aif-3: "4 bar EDM loop.aif" by soundprojektstudios, CC0, https://freesound.org/people/soundprojektstudios/sounds/259167
+- glitch/fs-262858-blip-1-2: "Blip 1" by deleted_user_2906614, CC0, https://freesound.org/people/deleted_user_2906614/sounds/262858
+- glitch/fs-264894-stabz02-wav-1: "stabz02.wav" by _jack, CC0, https://freesound.org/people/_jack/sounds/264894
+- glitch/fs-264894-stabz02-wav-2: "stabz02.wav" by _jack, CC0, https://freesound.org/people/_jack/sounds/264894
+- glitch/fs-264894-stabz02-wav-3: "stabz02.wav" by _jack, CC0, https://freesound.org/people/_jack/sounds/264894
+- glitch/fs-27436-fm-voices-01-wav-1: "FM_Voices_01.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/27436
+- glitch/fs-27436-fm-voices-01-wav-2: "FM_Voices_01.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/27436
+- glitch/fs-27436-fm-voices-01-wav-3: "FM_Voices_01.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/27436
+- glitch/fs-30392-79937-glitchy-scratch-wav-1: "79937_Glitchy_Scratch.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/30392
+- glitch/fs-30392-79937-glitchy-scratch-wav-2: "79937_Glitchy_Scratch.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/30392
+- glitch/fs-30392-79937-glitchy-scratch-wav-3: "79937_Glitchy_Scratch.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/30392
+- glitch/fs-30913-b01093-wav-1: "b01093.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/30913
+- glitch/fs-319612-dub-dnb-glitch-hop-koan-styl-1: "Dub/Dnb/Glitch-Hop Koan Style Snare" by Hybrid_V, CC0, https://freesound.org/people/Hybrid_V/sounds/319612
+- glitch/fs-320827-snare-stutter-slice-wav-1: "Snare Stutter Slice.wav" by johnnypanic, CC0, https://freesound.org/people/johnnypanic/sounds/320827
+- glitch/fs-345923-fade-in-rise-up-stutter-1: "Fade-in Rise up Stutter" by gerainsan, CC0, https://freesound.org/people/gerainsan/sounds/345923
+- glitch/fs-345923-fade-in-rise-up-stutter-2: "Fade-in Rise up Stutter" by gerainsan, CC0, https://freesound.org/people/gerainsan/sounds/345923
+- glitch/fs-345923-fade-in-rise-up-stutter-3: "Fade-in Rise up Stutter" by gerainsan, CC0, https://freesound.org/people/gerainsan/sounds/345923
+- glitch/fs-347180-glitch-1: "Glitch" by smokevhstapes, CC0, https://freesound.org/people/smokevhstapes/sounds/347180
+- glitch/fs-347698-electric-static-interference-1: "Electric static interference sound" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/347698
+- glitch/fs-349314-brown-noise-10s-wav-1: "BROWN_NOISE-10s.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/349314
+- glitch/fs-349314-brown-noise-10s-wav-3: "BROWN_NOISE-10s.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/349314
+- glitch/fs-349315-white-noise-10s-wav-1: "WHITE_NOISE-10s.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/349315
+- glitch/fs-349315-white-noise-10s-wav-2: "WHITE_NOISE-10s.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/349315
+- glitch/fs-349315-white-noise-10s-wav-3: "WHITE_NOISE-10s.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/349315
+- glitch/fs-349900-digital-glitches-1: "Digital Glitches" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/349900
+- glitch/fs-349900-digital-glitches-2: "Digital Glitches" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/349900
+- glitch/fs-349900-digital-glitches-3: "Digital Glitches" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/349900
+- glitch/fs-362510-crackle-glitch-1: "crackle_glitch" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/362510
+- glitch/fs-362510-crackle-glitch-2: "crackle_glitch" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/362510
+- glitch/fs-362510-crackle-glitch-3: "crackle_glitch" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/362510
+- glitch/fs-367960-zap-wav-1: "Zap.wav" by TRNGLE, CC0, https://freesound.org/people/TRNGLE/sounds/367960
+- glitch/fs-369145-glitch-noise-1-electrical-tr-1: "Glitch Noise 1 - (Electrical, Transmission, Perturbation...)" by Flying_Deer_Fx, CC0, https://freesound.org/people/Flying_Deer_Fx/sounds/369145
+- glitch/fs-369145-glitch-noise-1-electrical-tr-2: "Glitch Noise 1 - (Electrical, Transmission, Perturbation...)" by Flying_Deer_Fx, CC0, https://freesound.org/people/Flying_Deer_Fx/sounds/369145
+- glitch/fs-369859-digital-computer-blips-and-p-1: "Digital computer blips and pops.wav" by SpliceSound, CC0, https://freesound.org/people/SpliceSound/sounds/369859
+- glitch/fs-369859-digital-computer-blips-and-p-2: "Digital computer blips and pops.wav" by SpliceSound, CC0, https://freesound.org/people/SpliceSound/sounds/369859
+- glitch/fs-369859-digital-computer-blips-and-p-3: "Digital computer blips and pops.wav" by SpliceSound, CC0, https://freesound.org/people/SpliceSound/sounds/369859
+- glitch/fs-371603-odd-glitch-wav-1: "Odd glitch .wav" by JacksonMiller0, CC0, https://freesound.org/people/JacksonMiller0/sounds/371603
+- glitch/fs-371603-odd-glitch-wav-2: "Odd glitch .wav" by JacksonMiller0, CC0, https://freesound.org/people/JacksonMiller0/sounds/371603
+- glitch/fs-371603-odd-glitch-wav-3: "Odd glitch .wav" by JacksonMiller0, CC0, https://freesound.org/people/JacksonMiller0/sounds/371603
+- glitch/fs-376700-digital-madness-1: "Digital Madness" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/376700
+- glitch/fs-376700-digital-madness-2: "Digital Madness" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/376700
+- glitch/fs-376700-digital-madness-3: "Digital Madness" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/376700
+- glitch/fs-377334-stutter-wav-1: "Stutter.wav" by SukritSen, CC0, https://freesound.org/people/SukritSen/sounds/377334
+- glitch/fs-390145-glitchy-tape-1: "Glitchy tape" by CuddleNucks, CC0, https://freesound.org/people/CuddleNucks/sounds/390145
+- glitch/fs-390145-glitchy-tape-2: "Glitchy tape" by CuddleNucks, CC0, https://freesound.org/people/CuddleNucks/sounds/390145
+- glitch/fs-390145-glitchy-tape-3: "Glitchy tape" by CuddleNucks, CC0, https://freesound.org/people/CuddleNucks/sounds/390145
+- glitch/fs-390146-skipping-glitch-tape-5-wav-1: "skipping glitch tape 5.wav" by CuddleNucks, CC0, https://freesound.org/people/CuddleNucks/sounds/390146
+- glitch/fs-390146-skipping-glitch-tape-5-wav-2: "skipping glitch tape 5.wav" by CuddleNucks, CC0, https://freesound.org/people/CuddleNucks/sounds/390146
+- glitch/fs-392602-glitch-2: "Glitch" by Poligonstudio, CC0, https://freesound.org/people/Poligonstudio/sounds/392602
+- glitch/fs-392602-glitch-3: "Glitch" by Poligonstudio, CC0, https://freesound.org/people/Poligonstudio/sounds/392602
+- glitch/fs-395804-hard-static-loop-1: "hard static loop" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/395804
+- glitch/fs-395804-hard-static-loop-2: "hard static loop" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/395804
+- glitch/fs-395804-hard-static-loop-3: "hard static loop" by dotY21, CC0, https://freesound.org/people/dotY21/sounds/395804
+- glitch/fs-404358-success-wav-2: "Success.wav" by Kagateni, CC0, https://freesound.org/people/Kagateni/sounds/404358
+- glitch/fs-414495-robot-machine-malfunction-1: "Robot/Machine Malfunction" by Mr_KeybOred, CC0, https://freesound.org/people/Mr_KeybOred/sounds/414495
+- glitch/fs-414495-robot-machine-malfunction-2: "Robot/Machine Malfunction" by Mr_KeybOred, CC0, https://freesound.org/people/Mr_KeybOred/sounds/414495
+- glitch/fs-414495-robot-machine-malfunction-3: "Robot/Machine Malfunction" by Mr_KeybOred, CC0, https://freesound.org/people/Mr_KeybOred/sounds/414495
+- glitch/fs-416143-this-is-dj-roneo-full-stutte-1: "This is DJ Roneo (full stutter chorus).wav" by balloonhead, CC0, https://freesound.org/people/balloonhead/sounds/416143
+- glitch/fs-416143-this-is-dj-roneo-full-stutte-2: "This is DJ Roneo (full stutter chorus).wav" by balloonhead, CC0, https://freesound.org/people/balloonhead/sounds/416143
+- glitch/fs-416143-this-is-dj-roneo-full-stutte-3: "This is DJ Roneo (full stutter chorus).wav" by balloonhead, CC0, https://freesound.org/people/balloonhead/sounds/416143
+- glitch/fs-416147-this-is-dj-roneo-tripled-stu-1: "This is DJ Roneo (tripled stutter wide stereo).wav" by balloonhead, CC0, https://freesound.org/people/balloonhead/sounds/416147
+- glitch/fs-416147-this-is-dj-roneo-tripled-stu-2: "This is DJ Roneo (tripled stutter wide stereo).wav" by balloonhead, CC0, https://freesound.org/people/balloonhead/sounds/416147
+- glitch/fs-416147-this-is-dj-roneo-tripled-stu-3: "This is DJ Roneo (tripled stutter wide stereo).wav" by balloonhead, CC0, https://freesound.org/people/balloonhead/sounds/416147
+- glitch/fs-424374-glitched-sound-2-wav-1: "glitched sound 2.wav" by Elnosos, CC0, https://freesound.org/people/Elnosos/sounds/424374
+- glitch/fs-424374-glitched-sound-2-wav-3: "glitched sound 2.wav" by Elnosos, CC0, https://freesound.org/people/Elnosos/sounds/424374
+- glitch/fs-424375-glitched-sound-1-wav-1: "glitched sound 1.wav" by Elnosos, CC0, https://freesound.org/people/Elnosos/sounds/424375
+- glitch/fs-431241-futuristic-organic-effect-51-1: "Futuristic organic effect (51).wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/431241
+- glitch/fs-431241-futuristic-organic-effect-51-2: "Futuristic organic effect (51).wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/431241
+- glitch/fs-431286-futuristic-organic-effect-46-1: "Futuristic organic effect (46).wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/431286
+- glitch/fs-431286-futuristic-organic-effect-46-2: "Futuristic organic effect (46).wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/431286
+- glitch/fs-431286-futuristic-organic-effect-46-3: "Futuristic organic effect (46).wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/431286
+- glitch/fs-440403-morph-transforms-sound-effec-1: "Morph transforms sound effect 18.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/440403
+- glitch/fs-440403-morph-transforms-sound-effec-2: "Morph transforms sound effect 18.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/440403
+- glitch/fs-440403-morph-transforms-sound-effec-3: "Morph transforms sound effect 18.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/440403
+- glitch/fs-440405-morph-transforms-sound-effec-1: "Morph transforms sound effect 2.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/440405
+- glitch/fs-440405-morph-transforms-sound-effec-2: "Morph transforms sound effect 2.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/440405
+- glitch/fs-440738-glitch001-wav-1: "Glitch001.wav" by Zeraora, CC0, https://freesound.org/people/Zeraora/sounds/440738
+- glitch/fs-440738-glitch001-wav-2: "Glitch001.wav" by Zeraora, CC0, https://freesound.org/people/Zeraora/sounds/440738
+- glitch/fs-440738-glitch001-wav-3: "Glitch001.wav" by Zeraora, CC0, https://freesound.org/people/Zeraora/sounds/440738
+- glitch/fs-441965-glitch-2-wav-1: "glitch 2.wav" by detringer, CC0, https://freesound.org/people/detringer/sounds/441965
+- glitch/fs-441965-glitch-2-wav-2: "glitch 2.wav" by detringer, CC0, https://freesound.org/people/detringer/sounds/441965
+- glitch/fs-441965-glitch-2-wav-3: "glitch 2.wav" by detringer, CC0, https://freesound.org/people/detringer/sounds/441965
+- glitch/fs-442327-fx-retro-videogame-click-men-1: "FX - Retro videogame - CLICK MENU OPTION" by bolkmar, CC0, https://freesound.org/people/bolkmar/sounds/442327
+- glitch/fs-442327-fx-retro-videogame-click-men-2: "FX - Retro videogame - CLICK MENU OPTION" by bolkmar, CC0, https://freesound.org/people/bolkmar/sounds/442327
+- glitch/fs-442805-radio-glitch-1: "Radio Glitch" by Poligonstudio, CC0, https://freesound.org/people/Poligonstudio/sounds/442805
+- glitch/fs-442805-radio-glitch-2: "Radio Glitch" by Poligonstudio, CC0, https://freesound.org/people/Poligonstudio/sounds/442805
+- glitch/fs-442805-radio-glitch-3: "Radio Glitch" by Poligonstudio, CC0, https://freesound.org/people/Poligonstudio/sounds/442805
+- glitch/fs-444635-swoosh-9-wav-1: "Swoosh 9.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/444635
+- glitch/fs-444635-swoosh-9-wav-2: "Swoosh 9.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/444635
+- glitch/fs-444635-swoosh-9-wav-3: "Swoosh 9.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/444635
+- glitch/fs-444639-swoosh-20-wav-1: "Swoosh 20.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/444639
+- glitch/fs-444639-swoosh-20-wav-2: "Swoosh 20.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/444639
+- glitch/fs-444639-swoosh-20-wav-3: "Swoosh 20.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/444639
+- glitch/fs-458064-digital-glitch-v2-wav-1: "Digital Glitch_v2.wav" by tadaizm, CC0, https://freesound.org/people/tadaizm/sounds/458064
+- glitch/fs-458064-digital-glitch-v2-wav-2: "Digital Glitch_v2.wav" by tadaizm, CC0, https://freesound.org/people/tadaizm/sounds/458064
+- glitch/fs-458065-digital-glitch-v1-wav-1: "Digital Glitch_v1.wav" by tadaizm, CC0, https://freesound.org/people/tadaizm/sounds/458065
+- glitch/fs-458065-digital-glitch-v1-wav-2: "Digital Glitch_v1.wav" by tadaizm, CC0, https://freesound.org/people/tadaizm/sounds/458065
+- glitch/fs-467122-dive-into-dirt-wav-1: "Dive into Dirt.wav" by CalGre, CC0, https://freesound.org/people/CalGre/sounds/467122
+- glitch/fs-51105-sounds-for-earthquakes-kitch-1: "Sounds For Earthquakes - Kitchen Utilery 2 Metal.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51105
+- glitch/fs-51105-sounds-for-earthquakes-kitch-2: "Sounds For Earthquakes - Kitchen Utilery 2 Metal.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51105
+- glitch/fs-51105-sounds-for-earthquakes-kitch-3: "Sounds For Earthquakes - Kitchen Utilery 2 Metal.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51105
+- glitch/fs-51107-sounds-for-earthquakes-metal-1: "Sounds For Earthquakes - Metal Rattling.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51107
+- glitch/fs-51107-sounds-for-earthquakes-metal-2: "Sounds For Earthquakes - Metal Rattling.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51107
+- glitch/fs-51107-sounds-for-earthquakes-metal-3: "Sounds For Earthquakes - Metal Rattling.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51107
+- glitch/fs-51113-sounds-for-earthquakes-rando-1: "Sounds For Earthquakes - Random Stuff Shaking.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51113
+- glitch/fs-51113-sounds-for-earthquakes-rando-2: "Sounds For Earthquakes - Random Stuff Shaking.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51113
+- glitch/fs-51113-sounds-for-earthquakes-rando-3: "Sounds For Earthquakes - Random Stuff Shaking.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51113
+- glitch/fs-51117-sounds-for-earthquakes-spoon-1: "Sounds For Earthquakes - Spoon Cup Plate.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51117
+- glitch/fs-51117-sounds-for-earthquakes-spoon-2: "Sounds For Earthquakes - Spoon Cup Plate.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51117
+- glitch/fs-51117-sounds-for-earthquakes-spoon-3: "Sounds For Earthquakes - Spoon Cup Plate.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51117
+- glitch/fs-51118-sounds-for-earthquakes-stuff-1: "Sounds For Earthquakes - Stuff in Closet.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51118
+- glitch/fs-51118-sounds-for-earthquakes-stuff-2: "Sounds For Earthquakes - Stuff in Closet.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51118
+- glitch/fs-51118-sounds-for-earthquakes-stuff-3: "Sounds For Earthquakes - Stuff in Closet.wav" by RutgerMuller, CC0, https://freesound.org/people/RutgerMuller/sounds/51118
+- glitch/fs-518753-glitchy-robot-scream-11-wav-1: "Glitchy Robot Scream - 11.wav" by Creat142100, CC0, https://freesound.org/people/Creat142100/sounds/518753
+- glitch/fs-518753-glitchy-robot-scream-11-wav-2: "Glitchy Robot Scream - 11.wav" by Creat142100, CC0, https://freesound.org/people/Creat142100/sounds/518753
+- glitch/fs-528740-glitch-sound-effect-1: "Glitch Sound Effect" by iwanPlays, CC0, https://freesound.org/people/iwanPlays/sounds/528740
+- glitch/fs-528740-glitch-sound-effect-2: "Glitch Sound Effect" by iwanPlays, CC0, https://freesound.org/people/iwanPlays/sounds/528740
+- glitch/fs-531039-stuttering-loop-mp3-1: "Stuttering Loop.mp3" by younoise, CC0, https://freesound.org/people/younoise/sounds/531039
+- glitch/fs-531039-stuttering-loop-mp3-2: "Stuttering Loop.mp3" by younoise, CC0, https://freesound.org/people/younoise/sounds/531039
+- glitch/fs-531039-stuttering-loop-mp3-3: "Stuttering Loop.mp3" by younoise, CC0, https://freesound.org/people/younoise/sounds/531039
+- glitch/fs-534734-digital-glitch-2-2: "Digital Glitch 2" by Diicorp95, CC0, https://freesound.org/people/Diicorp95/sounds/534734
+- glitch/fs-534735-digital-glitch-static-noise-1: "Digital Glitch, Static Noise" by Diicorp95, CC0, https://freesound.org/people/Diicorp95/sounds/534735
+- glitch/fs-534735-digital-glitch-static-noise-2: "Digital Glitch, Static Noise" by Diicorp95, CC0, https://freesound.org/people/Diicorp95/sounds/534735
+- glitch/fs-534735-digital-glitch-static-noise-3: "Digital Glitch, Static Noise" by Diicorp95, CC0, https://freesound.org/people/Diicorp95/sounds/534735
+- glitch/fs-554293-glitch-beat-1-1: "Glitch Beat #1" by Diicorp95, CC0, https://freesound.org/people/Diicorp95/sounds/554293
+- glitch/fs-554293-glitch-beat-1-2: "Glitch Beat #1" by Diicorp95, CC0, https://freesound.org/people/Diicorp95/sounds/554293
+- glitch/fs-554293-glitch-beat-1-3: "Glitch Beat #1" by Diicorp95, CC0, https://freesound.org/people/Diicorp95/sounds/554293
+- glitch/fs-560012-remixed-static-wav-1: "Remixed static.wav" by VonKrapFamily, CC0, https://freesound.org/people/VonKrapFamily/sounds/560012
+- glitch/fs-560012-remixed-static-wav-2: "Remixed static.wav" by VonKrapFamily, CC0, https://freesound.org/people/VonKrapFamily/sounds/560012
+- glitch/fs-560012-remixed-static-wav-3: "Remixed static.wav" by VonKrapFamily, CC0, https://freesound.org/people/VonKrapFamily/sounds/560012
+- glitch/fs-560013-remixed-static-with-verb-wav-1: "Remixed static with verb.wav" by VonKrapFamily, CC0, https://freesound.org/people/VonKrapFamily/sounds/560013
+- glitch/fs-560013-remixed-static-with-verb-wav-2: "Remixed static with verb.wav" by VonKrapFamily, CC0, https://freesound.org/people/VonKrapFamily/sounds/560013
+- glitch/fs-560013-remixed-static-with-verb-wav-3: "Remixed static with verb.wav" by VonKrapFamily, CC0, https://freesound.org/people/VonKrapFamily/sounds/560013
+- glitch/fs-572773-glitch019-computer-startup-w-1: "Glitch019 / Computer Startup.wav" by Zeraora, CC0, https://freesound.org/people/Zeraora/sounds/572773
+- glitch/fs-572773-glitch019-computer-startup-w-2: "Glitch019 / Computer Startup.wav" by Zeraora, CC0, https://freesound.org/people/Zeraora/sounds/572773
+- glitch/fs-572773-glitch019-computer-startup-w-3: "Glitch019 / Computer Startup.wav" by Zeraora, CC0, https://freesound.org/people/Zeraora/sounds/572773
+- glitch/fs-57916-hinge-wav-1: "hinge.wav" by denalwa, CC0, https://freesound.org/people/denalwa/sounds/57916
+- glitch/fs-57916-hinge-wav-2: "hinge.wav" by denalwa, CC0, https://freesound.org/people/denalwa/sounds/57916
+- glitch/fs-58929-interference-aif-1: "interference.aif" by mattwasser, CC0, https://freesound.org/people/mattwasser/sounds/58929
+- glitch/fs-58929-interference-aif-2: "interference.aif" by mattwasser, CC0, https://freesound.org/people/mattwasser/sounds/58929
+- glitch/fs-58929-interference-aif-3: "interference.aif" by mattwasser, CC0, https://freesound.org/people/mattwasser/sounds/58929
+- glitch/fs-58930-interference2-aif-1: "interference2.aif" by mattwasser, CC0, https://freesound.org/people/mattwasser/sounds/58930
+- glitch/fs-58930-interference2-aif-2: "interference2.aif" by mattwasser, CC0, https://freesound.org/people/mattwasser/sounds/58930
+- glitch/fs-58931-static-glitch-aif-2: "static_glitch.aif" by mattwasser, CC0, https://freesound.org/people/mattwasser/sounds/58931
+- glitch/fs-617144-stutter-vox-1: "Stutter Vox" by adh.dreaming, CC0, https://freesound.org/people/adh.dreaming/sounds/617144
+- glitch/fs-617144-stutter-vox-2: "Stutter Vox" by adh.dreaming, CC0, https://freesound.org/people/adh.dreaming/sounds/617144
+- glitch/fs-617144-stutter-vox-3: "Stutter Vox" by adh.dreaming, CC0, https://freesound.org/people/adh.dreaming/sounds/617144
+- glitch/fs-620108-stutter-turn-around-loop-1: "Stutter Turn Around Loop" by adh.dreaming, CC0, https://freesound.org/people/adh.dreaming/sounds/620108
+- glitch/fs-620108-stutter-turn-around-loop-2: "Stutter Turn Around Loop" by adh.dreaming, CC0, https://freesound.org/people/adh.dreaming/sounds/620108
+- glitch/fs-620108-stutter-turn-around-loop-3: "Stutter Turn Around Loop" by adh.dreaming, CC0, https://freesound.org/people/adh.dreaming/sounds/620108
+- glitch/fs-644603-radio-communication-transmis-1: "Radio Communication Transmission weird interference" by I_Played_AmongUs_w_Sodapoppin9, CC0, https://freesound.org/people/I_Played_AmongUs_w_Sodapoppin9/sounds/644603
+- glitch/fs-644603-radio-communication-transmis-2: "Radio Communication Transmission weird interference" by I_Played_AmongUs_w_Sodapoppin9, CC0, https://freesound.org/people/I_Played_AmongUs_w_Sodapoppin9/sounds/644603
+- glitch/fs-644603-radio-communication-transmis-3: "Radio Communication Transmission weird interference" by I_Played_AmongUs_w_Sodapoppin9, CC0, https://freesound.org/people/I_Played_AmongUs_w_Sodapoppin9/sounds/644603
+- glitch/fs-657803-electric-shock-2-hit-1: "Electric Shock 2 Hit" by The-Sacha-Rush, CC0, https://freesound.org/people/The-Sacha-Rush/sounds/657803
+- glitch/fs-696717-2023-07-22-ableton-8-effect-1: "2023-07-22-ableton-8-effect-glitch-hit-003.wav" by ilmari_freesound, CC0, https://freesound.org/people/ilmari_freesound/sounds/696717
+- glitch/fs-9940-boink-0017-wav-1: "boink 0017.wav" by davepape, CC0, https://freesound.org/people/davepape/sounds/9940
+- glitch/fs-9943-boink-0020-wav-1: "boink 0020.wav" by davepape, CC0, https://freesound.org/people/davepape/sounds/9943
+- hit/fs-113746-kl-ex1-wav-2: "kl_ex1.wav" by Klerrp, CC0, https://freesound.org/people/Klerrp/sounds/113746
+- hit/fs-113747-kl-ex1bb-wav-2: "kl_ex1bb.wav" by Klerrp, CC0, https://freesound.org/people/Klerrp/sounds/113747
+- hit/fs-113748-kl-ex1c-wav-3: "kl_ex1c.wav" by Klerrp, CC0, https://freesound.org/people/Klerrp/sounds/113748
+- hit/fs-113749-kl-ex1dd-wav-3: "kl_ex1dd.wav" by Klerrp, CC0, https://freesound.org/people/Klerrp/sounds/113749
+- hit/fs-117780-verbyhit-wav-2: "verbyhit.wav" by metmass, CC0, https://freesound.org/people/metmass/sounds/117780
+- hit/fs-118934-whoosh-boom-wav-1: "whoosh+boom.wav" by Capashen, CC0, https://freesound.org/people/Capashen/sounds/118934
+- hit/fs-12817-snare-hit-a-wav-1: "snare hit a.wav" by lofabred, CC0, https://freesound.org/people/lofabred/sounds/12817
+- hit/fs-12819-snare-hit-c-wav-1: "snare hit c.wav" by lofabred, CC0, https://freesound.org/people/lofabred/sounds/12819
+- hit/fs-128976-snare-hit-1: "Snare Hit" by deadpoetsocietyband, CC0, https://freesound.org/people/deadpoetsocietyband/sounds/128976
+- hit/fs-130855-cold-cave-a-mp3-1: "Cold Cave A.mp3" by DJmastah, CC0, https://freesound.org/people/DJmastah/sounds/130855
+- hit/fs-13853-1-wav-1: "1.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/13853
+- hit/fs-13854-2-wav-1: "2.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/13854
+- hit/fs-150523-percussive-sounddesign-1-f-3: "Percussive Sounddesign 1 (F)" by Khoon, CC0, https://freesound.org/people/Khoon/sounds/150523
+- hit/fs-150566-percussive-sounddesign-2-f1-2: "Percussive Sounddesign 2 (F1)" by Khoon, CC0, https://freesound.org/people/Khoon/sounds/150566
+- hit/fs-150567-percussive-sounddesign-2-eb2-3: "Percussive Sounddesign 2 (Eb2)" by Khoon, CC0, https://freesound.org/people/Khoon/sounds/150567
+- hit/fs-151179-glass-slider-door-closet-wav-3: "Glass Slider Door Closet.wav" by afleetingspeck, CC0, https://freesound.org/people/afleetingspeck/sounds/151179
+- hit/fs-155790-shipboard-railgun-mp3-1: "shipboard_railgun.mp3" by deleted_user_1941307, CC0, https://freesound.org/people/deleted_user_1941307/sounds/155790
+- hit/fs-156680-stezzer-102-break-wav-2: "Stezzer 102 break.wav" by Snapper4298, CC0, https://freesound.org/people/Snapper4298/sounds/156680
+- hit/fs-172393-pulse3d-wav-3: "pulse3D.wav" by Sclolex, CC0, https://freesound.org/people/Sclolex/sounds/172393
+- hit/fs-173021-105-stezzer-break-1-wav-1: "105_stezzer_break_1.wav" by Snapper4298, CC0, https://freesound.org/people/Snapper4298/sounds/173021
+- hit/fs-173021-105-stezzer-break-1-wav-3: "105_stezzer_break_1.wav" by Snapper4298, CC0, https://freesound.org/people/Snapper4298/sounds/173021
+- hit/fs-187535-drums-crash-cymbol-3: "[Drums] Crash cymbol" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/187535
+- hit/fs-187541-noisy-whooshes-flac-2: "Noisy Whooshes.flac" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/187541
+- hit/fs-187541-noisy-whooshes-flac-3: "Noisy Whooshes.flac" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/187541
+- hit/fs-192446-massive-drop-2: "Massive Drop" by DaveN, CC0, https://freesound.org/people/DaveN/sounds/192446
+- hit/fs-197739-ochestra-hit-stab-cmin-wav-2: "ochestra hit_stab Cmin.wav" by parabolix, CC0, https://freesound.org/people/parabolix/sounds/197739
+- hit/fs-198113-clang-4-1: "Clang 4" by editor_adp, CC0, https://freesound.org/people/editor_adp/sounds/198113
+- hit/fs-198114-clang-3-1: "Clang 3" by editor_adp, CC0, https://freesound.org/people/editor_adp/sounds/198114
+- hit/fs-198115-clang-2-1: "Clang 2" by editor_adp, CC0, https://freesound.org/people/editor_adp/sounds/198115
+- hit/fs-198116-clang-1-1: "Clang 1" by editor_adp, CC0, https://freesound.org/people/editor_adp/sounds/198116
+- hit/fs-201570-jm-fx-hit-01a-dark-wav-1: "JM_FX_Hit 01a - Dark.wav" by Julien Matthey, CC0, https://freesound.org/people/Julien%20Matthey/sounds/201570
+- hit/fs-217342-munch-9-wav-1: "Munch 9.wav" by JarredGibb, CC0, https://freesound.org/people/JarredGibb/sounds/217342
+- hit/fs-241950-punches-and-hits-3: "Punches and hits" by DSPena, CC0, https://freesound.org/people/DSPena/sounds/241950
+- hit/fs-243375-tire-puncture-pop-hit-punch-1: "Tire Puncture Pop Hit Punch" by JohnsonBrandEditing, CC0, https://freesound.org/people/JohnsonBrandEditing/sounds/243375
+- hit/fs-243375-tire-puncture-pop-hit-punch-2: "Tire Puncture Pop Hit Punch" by JohnsonBrandEditing, CC0, https://freesound.org/people/JohnsonBrandEditing/sounds/243375
+- hit/fs-244983-ani-big-pipe-hit-1: "ANI Big Pipe Hit" by ani_music, CC0, https://freesound.org/people/ani_music/sounds/244983
+- hit/fs-256960-supernatural-explosion-3: "Supernatural Explosion" by Quaker540, CC0, https://freesound.org/people/Quaker540/sounds/256960
+- hit/fs-262448-orchestra-stab-mp3-2: "Orchestra Stab.mp3" by FastForwardSoundEffects, CC0, https://freesound.org/people/FastForwardSoundEffects/sounds/262448
+- hit/fs-264066-title-hits-layered-3: "Title Hits Layered" by Paul368, CC0, https://freesound.org/people/Paul368/sounds/264066
+- hit/fs-266823-punch-impact-sound-wav-1: "Punch impact sound.wav" by ms107, CC0, https://freesound.org/people/ms107/sounds/266823
+- hit/fs-268084-bass-boom-3: "Bass Boom" by LordHannes, CC0, https://freesound.org/people/LordHannes/sounds/268084
+- hit/fs-268500-door-knock-wav-2: "door_knock.wav" by wjtaylor, CC0, https://freesound.org/people/wjtaylor/sounds/268500
+- hit/fs-268500-door-knock-wav-3: "door_knock.wav" by wjtaylor, CC0, https://freesound.org/people/wjtaylor/sounds/268500
+- hit/fs-269028-face-punch-3-1: "Face Punch (3)" by johnfolker, CC0, https://freesound.org/people/johnfolker/sounds/269028
+- hit/fs-272065-thrown-object-3: "Thrown Object" by Bexhillcollege, CC0, https://freesound.org/people/Bexhillcollege/sounds/272065
+- hit/fs-276600-body-hit-wav-1: "body_hit.wav" by insanity54, CC0, https://freesound.org/people/insanity54/sounds/276600
+- hit/fs-321482-metal-hit-2-1: "Metal Hit 2" by dslrguide, CC0, https://freesound.org/people/dslrguide/sounds/321482
+- hit/fs-328448-hard-cinematic-hit-2: "Hard Cinematic Hit" by Vendarro, CC0, https://freesound.org/people/Vendarro/sounds/328448
+- hit/fs-337831-long-metal-hit-02-wav-1: "long-metal-hit-02.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337831
+- hit/fs-337832-long-metal-hit-01-wav-2: "long-metal-hit-01.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337832
+- hit/fs-337833-med-metal-hit-01-wav-1: "med-metal-hit-01.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337833
+- hit/fs-337837-med-metal-hit-03-wav-2: "med-metal-hit-03.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337837
+- hit/fs-337851-small-metal-hit-02-wav-2: "small-metal-hit-02.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337851
+- hit/fs-337854-small-metal-hit-01-wav-1: "small-metal-hit-01.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337854
+- hit/fs-337859-med-metal-hit-04-wav-1: "med-metal-hit-04.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337859
+- hit/fs-337868-small-metal-hit-07-wav-1: "small-metal-hit-07.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337868
+- hit/fs-337870-small-metal-hit-09-wav-1: "small-metal-hit-09.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337870
+- hit/fs-337871-small-metal-hit-08-wav-1: "small-metal-hit-08.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337871
+- hit/fs-337872-small-metal-hit-11-wav-1: "small-metal-hit-11.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337872
+- hit/fs-337873-small-metal-hit-10-wav-1: "small-metal-hit-10.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337873
+- hit/fs-337874-small-metal-hit-13-wav-1: "small-metal-hit-13.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337874
+- hit/fs-337875-small-metal-hit-12-wav-1: "small-metal-hit-12.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/337875
+- hit/fs-359139-low-metal-hit-3-wav-1: "Low Metal Hit 3.wav" by zazz.sound.design, CC0, https://freesound.org/people/zazz.sound.design/sounds/359139
+- hit/fs-359140-low-metal-hit-2-wav-1: "Low Metal Hit 2.wav" by zazz.sound.design, CC0, https://freesound.org/people/zazz.sound.design/sounds/359140
+- hit/fs-359141-low-metal-hit-1-wav-1: "Low Metal Hit 1.wav" by zazz.sound.design, CC0, https://freesound.org/people/zazz.sound.design/sounds/359141
+- hit/fs-364706-metal-hit-1: "Metal Hit" by alegemaate, CC0, https://freesound.org/people/alegemaate/sounds/364706
+- hit/fs-369988-lid-of-chest-hitting-norther-2: "Lid of chest hitting_northern87" by northern87, CC0, https://freesound.org/people/northern87/sounds/369988
+- hit/fs-369988-lid-of-chest-hitting-norther-3: "Lid of chest hitting_northern87" by northern87, CC0, https://freesound.org/people/northern87/sounds/369988
+- hit/fs-370203-shield-guard-1: "shield guard" by nekoninja, CC0, https://freesound.org/people/nekoninja/sounds/370203
+- hit/fs-380706-lord-boner101-s-reverse-door-3: "LordBoner101's Reverse Door Slam but THICC.wav" by coolernow123, CC0, https://freesound.org/people/coolernow123/sounds/380706
+- hit/fs-389630-thump-2-1: "Thump 2" by _stubb, CC0, https://freesound.org/people/_stubb/sounds/389630
+- hit/fs-39473-0129-walking-on-metal-1-wav-1: "0129_Walking on Metal 1.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/39473
+- hit/fs-39473-0129-walking-on-metal-1-wav-2: "0129_Walking on Metal 1.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/39473
+- hit/fs-39473-0129-walking-on-metal-1-wav-3: "0129_Walking on Metal 1.wav" by hello_flowers, CC0, https://freesound.org/people/hello_flowers/sounds/39473
+- hit/fs-397596-heavy-impacts-1: "Heavy Impacts" by Nightflame, CC0, https://freesound.org/people/Nightflame/sounds/397596
+- hit/fs-397596-heavy-impacts-2: "Heavy Impacts" by Nightflame, CC0, https://freesound.org/people/Nightflame/sounds/397596
+- hit/fs-397596-heavy-impacts-3: "Heavy Impacts" by Nightflame, CC0, https://freesound.org/people/Nightflame/sounds/397596
+- hit/fs-401100-cinematic-rise-and-hit-03-wa-2: "Cinematic Rise-and-Hit_03.wav" by s-cheremisinov, CC0, https://freesound.org/people/s-cheremisinov/sounds/401100
+- hit/fs-401100-cinematic-rise-and-hit-03-wa-3: "Cinematic Rise-and-Hit_03.wav" by s-cheremisinov, CC0, https://freesound.org/people/s-cheremisinov/sounds/401100
+- hit/fs-402692-sfx-short-bassy-industrial-h-1: "[SFX] Short Bassy Industrial Hit" by waveplaySFX, CC0, https://freesound.org/people/waveplaySFX/sounds/402692
+- hit/fs-405251-punches-and-hits-wav-1: "Punches and hits.wav" by Oberon81, CC0, https://freesound.org/people/Oberon81/sounds/405251
+- hit/fs-406528-hit-metallic-trailer-back-of-1: "hit - metallic - trailer - back of metal trailer 01.wav" by Anthousai, CC0, https://freesound.org/people/Anthousai/sounds/406528
+- hit/fs-414834-hit-me-mp3-1: "HIT me.mp3" by Link-Boy, CC0, https://freesound.org/people/Link-Boy/sounds/414834
+- hit/fs-428574-whoosh-hit-faller-3: "WHOOSH-HIT-FALLER" by vykroft, CC0, https://freesound.org/people/vykroft/sounds/428574
+- hit/fs-428575-whoosh-hit-braam-2-3: "WHOOSH-HIT-BRAAM 2" by vykroft, CC0, https://freesound.org/people/vykroft/sounds/428575
+- hit/fs-430978-low-impact-wav-3: "Low impact.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/430978
+- hit/fs-431309-braam-2-3: "BRAAM-2" by vykroft, CC0, https://freesound.org/people/vykroft/sounds/431309
+- hit/fs-431311-braam-high-3-3: "BRAAM-HIGH-3" by vykroft, CC0, https://freesound.org/people/vykroft/sounds/431311
+- hit/fs-432292-swoosh-wav-1: "Swoosh.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/432292
+- hit/fs-441342-stinger-3-wav-3: "Stinger 3.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/441342
+- hit/fs-441384-stinger-4-wav-3: "Stinger 4.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/441384
+- hit/fs-441593-deep-impact-1: "Deep Impact" by Poligonstudio, CC0, https://freesound.org/people/Poligonstudio/sounds/441593
+- hit/fs-442325-fx-hit-impact-retro-videogam-1: "FX - HIT IMPACT - Retro Videogame" by bolkmar, CC0, https://freesound.org/people/bolkmar/sounds/442325
+- hit/fs-443494-thud2-wav-1: "thud2.wav" by Topschool, CC0, https://freesound.org/people/Topschool/sounds/443494
+- hit/fs-449714-crazy-impact-4-wav-3: "Crazy impact 4.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/449714
+- hit/fs-449715-crazy-impact-3-wav-2: "Crazy impact 3.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/449715
+- hit/fs-449715-crazy-impact-3-wav-3: "Crazy impact 3.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/449715
+- hit/fs-449716-crazy-impact-2-wav-3: "Crazy impact 2.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/449716
+- hit/fs-449717-crazy-impact-1-wav-3: "Crazy impact 1.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/449717
+- hit/fs-449718-crazy-impact-5-wav-3: "Crazy impact 5.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/449718
+- hit/fs-451289-crazy-impact-13-wav-3: "Crazy impact 13.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/451289
+- hit/fs-452262-metal-hits-clanks-soft-flac-2: "metal hits clanks soft.flac" by kyles, CC0, https://freesound.org/people/kyles/sounds/452262
+- hit/fs-452593-door-metal-screen-door-in-tr-1: "door metal screen door in trailer rv close hard slam or hit close various.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452593
+- hit/fs-452593-door-metal-screen-door-in-tr-2: "door metal screen door in trailer rv close hard slam or hit close various.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452593
+- hit/fs-452593-door-metal-screen-door-in-tr-3: "door metal screen door in trailer rv close hard slam or hit close various.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452593
+- hit/fs-452596-door-wood-impact-hit-kick-op-1: "door wood impact hit kick open sudden explode.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452596
+- hit/fs-452609-door-wood-old-heavy-kick-ope-1: "door wood old heavy kick open good impact 1 with rattle 1 without.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452609
+- hit/fs-452609-door-wood-old-heavy-kick-ope-2: "door wood old heavy kick open good impact 1 with rattle 1 without.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452609
+- hit/fs-452610-door-wood-old-with-inlaid-gl-1: "door wood old with inlaid glass impact hit rattle from inside.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452610
+- hit/fs-452610-door-wood-old-with-inlaid-gl-2: "door wood old with inlaid glass impact hit rattle from inside.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452610
+- hit/fs-452610-door-wood-old-with-inlaid-gl-3: "door wood old with inlaid glass impact hit rattle from inside.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452610
+- hit/fs-452665-wheelbarrow-down-on-concrete-1: "wheelbarrow down on concrete floor metal hits impacts thuds and slide.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452665
+- hit/fs-452665-wheelbarrow-down-on-concrete-2: "wheelbarrow down on concrete floor metal hits impacts thuds and slide.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452665
+- hit/fs-452665-wheelbarrow-down-on-concrete-3: "wheelbarrow down on concrete floor metal hits impacts thuds and slide.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452665
+- hit/fs-466007-8-bit-explosion-long-downsam-2: "8-bit explosion long downsampling.wav" by s9menine, CC0, https://freesound.org/people/s9menine/sounds/466007
+- hit/fs-482686-war-horn-blast-3: "War Horn Blast" by jocmusic, CC0, https://freesound.org/people/jocmusic/sounds/482686
+- hit/fs-500651-breathy-wav-3: "Breathy.wav" by Reg1n0ld, CC0, https://freesound.org/people/Reg1n0ld/sounds/500651
+- hit/fs-500654-massive-hit-1-wav-2: "Massive Hit 1.wav" by Reg1n0ld, CC0, https://freesound.org/people/Reg1n0ld/sounds/500654
+- hit/fs-500655-jingle-all-the-way-wav-2: "Jingle all the way.wav" by Reg1n0ld, CC0, https://freesound.org/people/Reg1n0ld/sounds/500655
+- hit/fs-500658-vocal-bit-wav-1: "Vocal Bit.wav" by Reg1n0ld, CC0, https://freesound.org/people/Reg1n0ld/sounds/500658
+- hit/fs-500660-whoosh-wav-3: "Whoosh.wav" by Reg1n0ld, CC0, https://freesound.org/people/Reg1n0ld/sounds/500660
+- hit/fs-500661-wet-air-wav-1: "Wet Air.wav" by Reg1n0ld, CC0, https://freesound.org/people/Reg1n0ld/sounds/500661
+- hit/fs-512389-bass-impact-ki-01-mp3-2: "Bass Impact - Ki_01.mp3" by Kievinay, CC0, https://freesound.org/people/Kievinay/sounds/512389
+- hit/fs-513110-cinematic-trailer-hit-explos-1: "Cinematic Trailer Hit Explosion CC0.mp3" by Wakerone, CC0, https://freesound.org/people/Wakerone/sounds/513110
+- hit/fs-529924-distorted-braam-pitch-up-sd-1: "distorted braam pitch up SD.wav" by TDPK_Music, CC0, https://freesound.org/people/TDPK_Music/sounds/529924
+- hit/fs-529924-distorted-braam-pitch-up-sd-3: "distorted braam pitch up SD.wav" by TDPK_Music, CC0, https://freesound.org/people/TDPK_Music/sounds/529924
+- hit/fs-530486-metal-impact-1: "Metal Impact" by Rickplayer, CC0, https://freesound.org/people/Rickplayer/sounds/530486
+- hit/fs-531862-seismic-slam-3: "Seismic Slam" by magnuswaker, CC0, https://freesound.org/people/magnuswaker/sounds/531862
+- hit/fs-535362-punching-impact-sound-1: "Punching Impact Sound" by EminYILDIRIM, CC0, https://freesound.org/people/EminYILDIRIM/sounds/535362
+- hit/fs-535362-punching-impact-sound-2: "Punching Impact Sound" by EminYILDIRIM, CC0, https://freesound.org/people/EminYILDIRIM/sounds/535362
+- hit/fs-535362-punching-impact-sound-3: "Punching Impact Sound" by EminYILDIRIM, CC0, https://freesound.org/people/EminYILDIRIM/sounds/535362
+- hit/fs-535413-cinematic-impact-boom-metali-2: "Cinematic Impact Boom Metalic" by EminYILDIRIM, CC0, https://freesound.org/people/EminYILDIRIM/sounds/535413
+- hit/fs-535413-cinematic-impact-boom-metali-3: "Cinematic Impact Boom Metalic" by EminYILDIRIM, CC0, https://freesound.org/people/EminYILDIRIM/sounds/535413
+- hit/fs-535554-impact-downer-1: "IMPACT DOWNER" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/535554
+- hit/fs-535594-impact-stacked-1: "IMPACT STACKED" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/535594
+- hit/fs-535594-impact-stacked-2: "IMPACT STACKED" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/535594
+- hit/fs-536736-chop-ogg-1: "Chop.ogg" by egomassive, CC0, https://freesound.org/people/egomassive/sounds/536736
+- hit/fs-545799-low-space-braaams-wav-1: "Low Space Braaams.wav" by eldiariosonoro_, CC0, https://freesound.org/people/eldiariosonoro_/sounds/545799
+- hit/fs-545799-low-space-braaams-wav-2: "Low Space Braaams.wav" by eldiariosonoro_, CC0, https://freesound.org/people/eldiariosonoro_/sounds/545799
+- hit/fs-547036-hit-impact-sword-2-1: "Hit Impact Sword 2" by Eponn, CC0, https://freesound.org/people/Eponn/sounds/547036
+- hit/fs-547038-hit-swing-sword-1: "Hit Swing Sword" by CogFireStudios, CC0, https://freesound.org/people/CogFireStudios/sounds/547038
+- hit/fs-547039-hit-swing-sword-small-1: "Hit Swing Sword Small" by CogFireStudios, CC0, https://freesound.org/people/CogFireStudios/sounds/547039
+- hit/fs-547041-hit-swing-sword-small-3-1: "Hit Swing Sword Small 3" by CogFireStudios, CC0, https://freesound.org/people/CogFireStudios/sounds/547041
+- hit/fs-547042-hit-impact-sword-3-1: "Hit Impact Sword 3" by CogFireStudios, CC0, https://freesound.org/people/CogFireStudios/sounds/547042
+- hit/fs-550918-fxsa-sc-wood-tree-trunk-impa-2: "FXSaSc Wood Tree Trunk Impact Ground Forest 5 Variants" by Profispiesser, CC0, https://freesound.org/people/Profispiesser/sounds/550918
+- hit/fs-550918-fxsa-sc-wood-tree-trunk-impa-3: "FXSaSc Wood Tree Trunk Impact Ground Forest 5 Variants" by Profispiesser, CC0, https://freesound.org/people/Profispiesser/sounds/550918
+- hit/fs-556708-metal-hit-2: "Metal Hit" by NachtmahrTV, CC0, https://freesound.org/people/NachtmahrTV/sounds/556708
+- hit/fs-558238-distorted-impact-short-wav-1: "Distorted Impact Short.wav" by Rizzard, CC0, https://freesound.org/people/Rizzard/sounds/558238
+- hit/fs-559387-cinematic-impact-2: "Cinematic Impact" by Rizzard, CC0, https://freesound.org/people/Rizzard/sounds/559387
+- hit/fs-559391-orchestral-hit-1: "Orchestral Hit" by Rizzard, CC0, https://freesound.org/people/Rizzard/sounds/559391
+- hit/fs-559999-big-cinematic-impact-2: "Big Cinematic Impact" by Rizzard, CC0, https://freesound.org/people/Rizzard/sounds/559999
+- hit/fs-560156-soft-cinematic-impact-2: "Soft Cinematic Impact" by Rizzard, CC0, https://freesound.org/people/Rizzard/sounds/560156
+- hit/fs-560157-cinematic-alarm-hit-1: "Cinematic Alarm Hit" by Rizzard, CC0, https://freesound.org/people/Rizzard/sounds/560157
+- hit/fs-569973-foley-impact-metal-movement-1: "Foley_Impact_Metal_Movement_Mono.wav" by Nox_Sound, CC0, https://freesound.org/people/Nox_Sound/sounds/569973
+- hit/fs-569973-foley-impact-metal-movement-3: "Foley_Impact_Metal_Movement_Mono.wav" by Nox_Sound, CC0, https://freesound.org/people/Nox_Sound/sounds/569973
+- hit/fs-573243-dark-timpani-3-wav-1: "Dark Timpani 3.wav" by Sorinious_Genious, CC0, https://freesound.org/people/Sorinious_Genious/sounds/573243
+- hit/fs-573244-dark-timpani-2-wav-1: "Dark Timpani 2.wav" by Sorinious_Genious, CC0, https://freesound.org/people/Sorinious_Genious/sounds/573244
+- hit/fs-573245-dark-timpani-1-wav-1: "Dark Timpani 1.wav" by Sorinious_Genious, CC0, https://freesound.org/people/Sorinious_Genious/sounds/573245
+- hit/fs-573246-dark-timpani-8-wav-1: "Dark Timpani 8.wav" by Sorinious_Genious, CC0, https://freesound.org/people/Sorinious_Genious/sounds/573246
+- hit/fs-574821-slash1-ogg-1: "Slash1.ogg" by wesleyextreme_gamer, CC0, https://freesound.org/people/wesleyextreme_gamer/sounds/574821
+- hit/fs-578371-shock-stab-09-1: "Shock Stab 09" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578371
+- hit/fs-578372-shock-stab-10-2: "Shock Stab 10" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578372
+- hit/fs-578373-shock-stab-03-2: "Shock Stab 03" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578373
+- hit/fs-578374-shock-stab-04-1: "Shock Stab 04" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578374
+- hit/fs-578378-shock-stab-08-1: "Shock Stab 08" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578378
+- hit/fs-578379-shock-stab-05-1: "Shock Stab 05" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578379
+- hit/fs-578381-shock-stab-11-1: "Shock Stab 11" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578381
+- hit/fs-578382-shock-stab-12-1: "Shock Stab 12" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578382
+- hit/fs-578574-timpani-crescendo-3: "Timpani Crescendo" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578574
+- hit/fs-578575-dark-crescendo-2-3: "Dark Crescendo 2" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578575
+- hit/fs-578576-dark-crescendo-1-3: "Dark Crescendo 1" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578576
+- hit/fs-578789-metal-hit-2-1: "Metal Hit 2" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578789
+- hit/fs-578790-metal-hit-1-1: "Metal Hit 1" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578790
+- hit/fs-57893-dun-wav-1: "dun.wav" by guitarguy1985, CC0, https://freesound.org/people/guitarguy1985/sounds/57893
+- hit/fs-57893-dun-wav-3: "dun.wav" by guitarguy1985, CC0, https://freesound.org/people/guitarguy1985/sounds/57893
+- hit/fs-580505-sound-design-cinematic-drone-2: "Sound design cinematic drone sweep" by leonelmail, CC0, https://freesound.org/people/leonelmail/sounds/580505
+- hit/fs-588391-music-dramatic-orchestral-en-3: "Music Dramatic Orchestral Ending 3.mp3" by FunWithSound, CC0, https://freesound.org/people/FunWithSound/sounds/588391
+- hit/fs-592034-braams-hit-1-1: "BRAAMS HIT - 1" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/592034
+- hit/fs-592041-braams-and-timpani-3: "BRAAMS and TIMPANI" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/592041
+- hit/fs-592066-horns-edited-1-3: "HORNS - EDITED - 1" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/592066
+- hit/fs-592067-horns-edited-2-3: "HORNS - EDITED - 2" by XHALE303, CC0, https://freesound.org/people/XHALE303/sounds/592067
+- hit/fs-592096-triumph-tada-horns-1-eo-wav-3: "triumph tada horns 1 eo.wav" by Empiremonkey, CC0, https://freesound.org/people/Empiremonkey/sounds/592096
+- hit/fs-612080-metal-hit-02-1: "Metal hit 02" by xkeril, CC0, https://freesound.org/people/xkeril/sounds/612080
+- hit/fs-612081-metal-hit-01-1: "Metal hit 01" by xkeril, CC0, https://freesound.org/people/xkeril/sounds/612081
+- hit/fs-613842-dropping-a-speaker-or-heavy-1: "Dropping a speaker or heavy plastic device" by exorsten, CC0, https://freesound.org/people/exorsten/sounds/613842
+- hit/fs-613842-dropping-a-speaker-or-heavy-2: "Dropping a speaker or heavy plastic device" by exorsten, CC0, https://freesound.org/people/exorsten/sounds/613842
+- hit/fs-613842-dropping-a-speaker-or-heavy-3: "Dropping a speaker or heavy plastic device" by exorsten, CC0, https://freesound.org/people/exorsten/sounds/613842
+- hit/fs-614063-heavy-metal-impact-2-1: "Heavy Metal Impact 2" by magnuswaker, CC0, https://freesound.org/people/magnuswaker/sounds/614063
+- hit/fs-637988-wheelbarrow-put-down-on-conc-1: "wheelbarrow put down on concrete floor metal hits impacts thuds and slide.flac" by kyles, CC0, https://freesound.org/people/kyles/sounds/637988
+- hit/fs-637988-wheelbarrow-put-down-on-conc-2: "wheelbarrow put down on concrete floor metal hits impacts thuds and slide.flac" by kyles, CC0, https://freesound.org/people/kyles/sounds/637988
+- hit/fs-637988-wheelbarrow-put-down-on-conc-3: "wheelbarrow put down on concrete floor metal hits impacts thuds and slide.flac" by kyles, CC0, https://freesound.org/people/kyles/sounds/637988
+- hit/fs-640204-heavy-metal-thud-on-ground-1: "Heavy Metal Thud on Ground" by 7of9Designs, CC0, https://freesound.org/people/7of9Designs/sounds/640204
+- hit/fs-647712-braam-3: "Braam" by unfa, CC0, https://freesound.org/people/unfa/sounds/647712
+- hit/fs-653370-dull-thud-wav-1: "DullThud.wav" by TriqyStudio, CC0, https://freesound.org/people/TriqyStudio/sounds/653370
+- hit/fs-653604-brass-hit-jean-flac-2: "brass_Hit_Jean.flac" by germona, CC0, https://freesound.org/people/germona/sounds/653604
+- hit/fs-665091-hard-metal-hit-1: "Hard metal hit" by tgerginov, CC0, https://freesound.org/people/tgerginov/sounds/665091
+- hit/fs-671375-fx-cinematic-impact-wav-1: "FX Cinematic Impact.wav" by Johnnie_Holiday, CC0, https://freesound.org/people/Johnnie_Holiday/sounds/671375
+- hit/fs-678901-cinematic-synth-explosion-ma-3: "Cinematic Synth Explosion (Magic).wav" by Skrecky, CC0, https://freesound.org/people/Skrecky/sounds/678901
+- hit/fs-687925-jh-big-tom-1-c-2-sec-wav-1: "JH Big Tom 1 (C 2 sec).wav" by Johnnie_Holiday, CC0, https://freesound.org/people/Johnnie_Holiday/sounds/687925
+- hit/fs-687926-jh-big-tom-3-c-1-5-sec-wav-1: "JH Big Tom 3 (C 1.5 sec).wav" by Johnnie_Holiday, CC0, https://freesound.org/people/Johnnie_Holiday/sounds/687926
+- hit/fs-696119-indu-drum1-wav-1: "InduDrum1.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696119
+- hit/fs-696120-indu-drum11-wav-1: "InduDrum11.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696120
+- hit/fs-696122-indu-drum20-wav-1: "InduDrum20.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696122
+- hit/fs-696123-indu-drum23-wav-1: "InduDrum23.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696123
+- hit/fs-696124-indu-drum24-wav-1: "InduDrum24.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696124
+- hit/fs-696125-indu-drum27-wav-1: "InduDrum27.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696125
+- hit/fs-696126-indu-drum28-wav-1: "InduDrum28.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696126
+- hit/fs-696127-indu-drum30-wav-1: "InduDrum30.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696127
+- hit/fs-696128-indu-drum33-wav-1: "InduDrum33.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696128
+- hit/fs-696129-indu-drum34-wav-1: "InduDrum34.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696129
+- hit/fs-696130-indu-drum38-wav-1: "InduDrum38.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696130
+- hit/fs-696131-indu-drum40-wav-2: "InduDrum40.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696131
+- hit/fs-696132-indu-drum41-wav-1: "InduDrum41.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696132
+- hit/fs-696133-indu-drum49-wav-3: "InduDrum49.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696133
+- hit/fs-696134-indu-drum50-wav-1: "InduDrum50.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696134
+- hit/fs-696135-indu-drum51-wav-1: "InduDrum51.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696135
+- hit/fs-696139-indu-drum8-wav-1: "InduDrum8.wav" by piwilliwillski, CC0, https://freesound.org/people/piwilliwillski/sounds/696139
+- hit/fs-701309-hit-reverb-natural-1: "Hit reverb (natural)" by xkeril, CC0, https://freesound.org/people/xkeril/sounds/701309
+- hit/fs-710368-cinematic-punch-1: "Cinematic Punch" by mittenboy, CC0, https://freesound.org/people/mittenboy/sounds/710368
+- hit/fs-728515-impact-hit-at-soft-but-big-m-2: "Impact Hit at soft but big material" by doudar41, CC0, https://freesound.org/people/doudar41/sounds/728515
+- hit/fs-772619-4-metal-hits-1: "4 metal hits" by ChemiCatz, CC0, https://freesound.org/people/ChemiCatz/sounds/772619
+- hit/fs-772619-4-metal-hits-3: "4 metal hits" by ChemiCatz, CC0, https://freesound.org/people/ChemiCatz/sounds/772619
+- key/fs-180974-key-1: "ä key" by uEffects, CC0, https://freesound.org/people/uEffects/sounds/180974
+- key/fs-180997-enter-key-2: "enter key" by uEffects, CC0, https://freesound.org/people/uEffects/sounds/180997
+- key/fs-194795-vintage-keyboard-1-1: "Vintage Keyboard 1" by jim-ph, CC0, https://freesound.org/people/jim-ph/sounds/194795
+- key/fs-194795-vintage-keyboard-1-2: "Vintage Keyboard 1" by jim-ph, CC0, https://freesound.org/people/jim-ph/sounds/194795
+- key/fs-194796-vintage-keyboard-2-1: "Vintage Keyboard 2" by jim-ph, CC0, https://freesound.org/people/jim-ph/sounds/194796
+- key/fs-194797-vintage-keyboard-3-1: "Vintage Keyboard 3" by jim-ph, CC0, https://freesound.org/people/jim-ph/sounds/194797
+- key/fs-194798-vintage-keyboard-4-1: "Vintage Keyboard 4" by jim-ph, CC0, https://freesound.org/people/jim-ph/sounds/194798
+- key/fs-194799-keyboard5-wav-1: "keyboard5.wav" by jim-ph, CC0, https://freesound.org/people/jim-ph/sounds/194799
+- key/fs-348238-mech-keyboard-02-wav-1: "MECH-KEYBOARD-02.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/348238
+- key/fs-348239-mech-keyboard-01-wav-1: "MECH-KEYBOARD-01.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/348239
+- key/fs-348240-cashier-register-keyboard-be-1: "CASHIER-REGISTER-KEYBOARD-BEEP-CALC.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/348240
+- key/fs-348240-cashier-register-keyboard-be-2: "CASHIER-REGISTER-KEYBOARD-BEEP-CALC.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/348240
+- key/fs-348240-cashier-register-keyboard-be-3: "CASHIER-REGISTER-KEYBOARD-BEEP-CALC.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/348240
+- key/fs-365543-typing-on-an-i-phone-mp3-1: "Typing on an iPhone.mp3" by Caitlin_100, CC0, https://freesound.org/people/Caitlin_100/sounds/365543
+- key/fs-365543-typing-on-an-i-phone-mp3-2: "Typing on an iPhone.mp3" by Caitlin_100, CC0, https://freesound.org/people/Caitlin_100/sounds/365543
+- key/fs-365543-typing-on-an-i-phone-mp3-3: "Typing on an iPhone.mp3" by Caitlin_100, CC0, https://freesound.org/people/Caitlin_100/sounds/365543
+- key/fs-442649-keyboard-click-mp3: "Keyboard Click.mp3" by asetkeyzet, CC0, https://freesound.org/people/asetkeyzet/sounds/442649
+- key/fs-539146-keyboard-typing-001-wav-2: "Keyboard Typing 001.wav" by ristooooo1, CC0, https://freesound.org/people/ristooooo1/sounds/539146
+- key/fs-539146-keyboard-typing-001-wav-3: "Keyboard Typing 001.wav" by ristooooo1, CC0, https://freesound.org/people/ristooooo1/sounds/539146
+- key/fs-570755-keyboard-key-release-1: "Keyboard - Key release" by Foxfire-, CC0, https://freesound.org/people/Foxfire-/sounds/570755
+- paper/fs-140463-packaging-paper-rub-sliding-1: "Packaging Paper Rub Sliding Between Hands.wav" by afleetingspeck, CC0, https://freesound.org/people/afleetingspeck/sounds/140463
+- paper/fs-151221-page-turn-2-2: "Page Turn (2)" by OwlStorm, CC0, https://freesound.org/people/OwlStorm/sounds/151221
+- paper/fs-389442-paper-throw-into-air-fuller-3: "Paper Throw Into Air(fuller) 2.wav" by RossBell, CC0, https://freesound.org/people/RossBell/sounds/389442
+- paper/fs-397550-page-turn-03-wav-2: "Page Turn 03.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/397550
+- paper/fs-397551-page-turn-04-wav-3: "Page Turn 04.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/397551
+- paper/fs-428338-underlining-stroke-on-paper-1: "Underlining Stroke on Paper" by zembacraftworks, CC0, https://freesound.org/people/zembacraftworks/sounds/428338
+- paper/fs-442857-page-turn-1: "Page Turn" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/442857
+- paper/fs-484920-page-slides-1-3: "Page Slides - 1" by SpaceJoe, CC0, https://freesound.org/people/SpaceJoe/sounds/484920
+- paper/fs-614080-page-turn-2-2: "Page Turn 2" by mateusboga, CC0, https://freesound.org/people/mateusboga/sounds/614080
+- paper/fs-677857-game-ui-screen-transition-bo-1: "Game UI Screen Transition Book Page Turn" by el_boss, CC0, https://freesound.org/people/el_boss/sounds/677857
+- paper/fs-677857-game-ui-screen-transition-bo-2: "Game UI Screen Transition Book Page Turn" by el_boss, CC0, https://freesound.org/people/el_boss/sounds/677857
+- pop/fs-174695-sci-fi-bubble-pop-1: "Sci-Fi Bubble Pop" by paespedro, CC0, https://freesound.org/people/paespedro/sounds/174695
+- pop/fs-174695-sci-fi-bubble-pop-3: "Sci-Fi Bubble Pop" by paespedro, CC0, https://freesound.org/people/paespedro/sounds/174695
+- pop/fs-187342-wine-bottle-opening-wav-1: "Wine Bottle Opening.wav" by baidonovan, CC0, https://freesound.org/people/baidonovan/sounds/187342
+- pop/fs-188381-3-popping-pops-1: "3 Popping Pops" by wubitog, CC0, https://freesound.org/people/wubitog/sounds/188381
+- pop/fs-188381-3-popping-pops-2: "3 Popping Pops" by wubitog, CC0, https://freesound.org/people/wubitog/sounds/188381
+- pop/fs-188381-3-popping-pops-3: "3 Popping Pops" by wubitog, CC0, https://freesound.org/people/wubitog/sounds/188381
+- pop/fs-206152-bottlepop44-wav-1: "bottlepop44.wav" by ahill86, CC0, https://freesound.org/people/ahill86/sounds/206152
+- pop/fs-221091-cartoon-pop-or-drip-1: "cartoon pop or drip" by AlaskaRobotics, CC0, https://freesound.org/people/AlaskaRobotics/sounds/221091
+- pop/fs-242113-pop-or-bloop-1: "Pop or bloop" by ScratchnSniff, CC0, https://freesound.org/people/ScratchnSniff/sounds/242113
+- pop/fs-242113-pop-or-bloop-2: "Pop or bloop" by ScratchnSniff, CC0, https://freesound.org/people/ScratchnSniff/sounds/242113
+- pop/fs-242113-pop-or-bloop-3: "Pop or bloop" by ScratchnSniff, CC0, https://freesound.org/people/ScratchnSniff/sounds/242113
+- pop/fs-244652-pop-4-1: "Pop 4" by greenvwbeetle, CC0, https://freesound.org/people/greenvwbeetle/sounds/244652
+- pop/fs-244654-pop-2-1: "Pop 2" by greenvwbeetle, CC0, https://freesound.org/people/greenvwbeetle/sounds/244654
+- pop/fs-244657-pop-5-1: "Pop 5" by greenvwbeetle, CC0, https://freesound.org/people/greenvwbeetle/sounds/244657
+- pop/fs-253956-bubble-pop-1: "Bubble Pop" by Mafon2, CC0, https://freesound.org/people/Mafon2/sounds/253956
+- pop/fs-254892-bubble-pop-out-1: "bubble pop out" by tsidilin, CC0, https://freesound.org/people/tsidilin/sounds/254892
+- pop/fs-258269-mouth-pop-1: "Mouth pop" by jcallison, CC0, https://freesound.org/people/jcallison/sounds/258269
+- pop/fs-269583-bubble-1: "Bubble" by deleted_user_3854053, CC0, https://freesound.org/people/deleted_user_3854053/sounds/269583
+- pop/fs-319107-pop-made-by-duffy-bro-1: "Pop (made by DuffyBro)" by DuffyBro, CC0, https://freesound.org/people/DuffyBro/sounds/319107
+- pop/fs-328117-pop-8-1: "Pop 8" by greenvwbeetle, CC0, https://freesound.org/people/greenvwbeetle/sounds/328117
+- pop/fs-328118-pop-7-1: "Pop 7" by greenvwbeetle, CC0, https://freesound.org/people/greenvwbeetle/sounds/328118
+- pop/fs-335358-cork-pop-2-1: "Cork pop 2" by Andre_Desartistes, CC0, https://freesound.org/people/Andre_Desartistes/sounds/335358
+- pop/fs-347353-squeaky-cork-pull-1: "Squeaky cork pull" by Kinoton, CC0, https://freesound.org/people/Kinoton/sounds/347353
+- pop/fs-392624-champagne-cork-1: "Champagne Cork" by KenRT, CC0, https://freesound.org/people/KenRT/sounds/392624
+- pop/fs-401542-pop-sound-1: "Pop Sound" by ConarB13, CC0, https://freesound.org/people/ConarB13/sounds/401542
+- pop/fs-458398-balloon-pop-christmas-cracke-1: "Balloon Pop / Christmas cracker / Confetti Cannon" by Breviceps, CC0, https://freesound.org/people/Breviceps/sounds/458398
+- pop/fs-458886-bottle-open-flac-1: "bottle_open.flac" by drummy, CC0, https://freesound.org/people/drummy/sounds/458886
+- pop/fs-458886-bottle-open-flac-2: "bottle_open.flac" by drummy, CC0, https://freesound.org/people/drummy/sounds/458886
+- pop/fs-458886-bottle-open-flac-3: "bottle_open.flac" by drummy, CC0, https://freesound.org/people/drummy/sounds/458886
+- pop/fs-459582-bubbles-popping-on-the-surfa: "Bubbles popping on the surface of water" by vintage2005, CC0, https://freesound.org/people/vintage2005/sounds/459582
+- pop/fs-474245-pour-wav-2: "Pour.wav" by euphorix, CC0, https://freesound.org/people/euphorix/sounds/474245
+- pop/fs-474245-pour-wav-3: "Pour.wav" by euphorix, CC0, https://freesound.org/people/euphorix/sounds/474245
+- pop/fs-503162-mouth-pops-magic-bottle-cork-1: "MOUTH POPS - MAGIC BOTTLE CORK OPEN.wav" by BathroomCrooner, CC0, https://freesound.org/people/BathroomCrooner/sounds/503162
+- pop/fs-503162-mouth-pops-magic-bottle-cork-2: "MOUTH POPS - MAGIC BOTTLE CORK OPEN.wav" by BathroomCrooner, CC0, https://freesound.org/people/BathroomCrooner/sounds/503162
+- pop/fs-503162-mouth-pops-magic-bottle-cork-3: "MOUTH POPS - MAGIC BOTTLE CORK OPEN.wav" by BathroomCrooner, CC0, https://freesound.org/people/BathroomCrooner/sounds/503162
+- pop/fs-506545-pop-02-wav-1: "Pop 02.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/506545
+- pop/fs-506546-pop-01-wav-1: "Pop 01.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/506546
+- pop/fs-507006-soap-bubbles-pop-1: "Soap bubbles pop" by bojan_t95, CC0, https://freesound.org/people/bojan_t95/sounds/507006
+- pop/fs-507006-soap-bubbles-pop-2: "Soap bubbles pop" by bojan_t95, CC0, https://freesound.org/people/bojan_t95/sounds/507006
+- pop/fs-522122-pop-sound-1: "Pop Sound" by Bowesy, CC0, https://freesound.org/people/Bowesy/sounds/522122
+- pop/fs-546935-corkscrew-mix-1: "corkscrew mix" by trezz77, CC0, https://freesound.org/people/trezz77/sounds/546935
+- pop/fs-546935-corkscrew-mix-2: "corkscrew mix" by trezz77, CC0, https://freesound.org/people/trezz77/sounds/546935
+- pop/fs-546935-corkscrew-mix-3: "corkscrew mix" by trezz77, CC0, https://freesound.org/people/trezz77/sounds/546935
+- pop/fs-644759-soap-bubble-pop-mouth-perc-w-1: "Soap bubble pop - Mouth perc.wav" by Duisterwho, CC0, https://freesound.org/people/Duisterwho/sounds/644759
+- pop/fs-669918-the-best-bubble-pop-sound-fo-1: "The Best Bubble Pop Sound For Game and UI" by el_boss, CC0, https://freesound.org/people/el_boss/sounds/669918
+- pop/fs-796298-bubble-pop-1: "Bubble Pop" by Reza5oO, CC0, https://freesound.org/people/Reza5oO/sounds/796298
+- pop/fs-796298-bubble-pop-2: "Bubble Pop" by Reza5oO, CC0, https://freesound.org/people/Reza5oO/sounds/796298
+- pop/fs-796298-bubble-pop-3: "Bubble Pop" by Reza5oO, CC0, https://freesound.org/people/Reza5oO/sounds/796298
+- pop/fs-97978-pop-aif-1: "Pop!.aif" by oldedgar, CC0, https://freesound.org/people/oldedgar/sounds/97978
+- pop/fs-97978-pop-aif-2: "Pop!.aif" by oldedgar, CC0, https://freesound.org/people/oldedgar/sounds/97978
+- pop/fs-97978-pop-aif-3: "Pop!.aif" by oldedgar, CC0, https://freesound.org/people/oldedgar/sounds/97978
+- reverse/fs-148930-cymbal-hits-reversed-wav-1: "Cymbal Hits Reversed.wav" by HUMANOISEMAKER, CC0, https://freesound.org/people/HUMANOISEMAKER/sounds/148930
+- reverse/fs-148930-cymbal-hits-reversed-wav-2: "Cymbal Hits Reversed.wav" by HUMANOISEMAKER, CC0, https://freesound.org/people/HUMANOISEMAKER/sounds/148930
+- reverse/fs-160734-bell-1-reverse-wav-1: "Bell 1 reverse.wav" by Mornagar, CC0, https://freesound.org/people/Mornagar/sounds/160734
+- reverse/fs-163582-reverse-clap-wav-1: "reverse clap.wav" by .Andre_Onate, CC0, https://freesound.org/people/.Andre_Onate/sounds/163582
+- reverse/fs-165154-rpeople-rev-crash2-wav-1: "Rpeople_RevCrash2.wav" by rhythmpeople, CC0, https://freesound.org/people/rhythmpeople/sounds/165154
+- reverse/fs-196729-build-02-wav-1: "Build_02.wav" by PaulMorek, CC0, https://freesound.org/people/PaulMorek/sounds/196729
+- reverse/fs-198386-ani-champagne-flute-reversed-1: "ANI - Champagne flute - Reversed, Ramped" by ani_music, CC0, https://freesound.org/people/ani_music/sounds/198386
+- reverse/fs-198389-ani-cocktail-glass-hard-reve-1: "ANI - Cocktail Glass - Hard Reversed 1a" by ani_music, CC0, https://freesound.org/people/ani_music/sounds/198389
+- reverse/fs-218354-movie-short-swell-1: "Movie Short Swell" by jordivburgel, CC0, https://freesound.org/people/jordivburgel/sounds/218354
+- reverse/fs-240712-reverse-mapex-ride-mp3-1: "Reverse Mapex Ride.mp3" by MarcusGraham325, CC0, https://freesound.org/people/MarcusGraham325/sounds/240712
+- reverse/fs-244837-rev-cymb-23-wav-1: "Rev Cymb 23.wav" by JarredGibb, CC0, https://freesound.org/people/JarredGibb/sounds/244837
+- reverse/fs-244839-rev-cymb-26-wav-1: "Rev Cymb 26.wav" by JarredGibb, CC0, https://freesound.org/people/JarredGibb/sounds/244839
+- reverse/fs-244862-rev-cymb-15-reverb-wav-1: "Rev Cymb 15 reverb.wav" by JarredGibb, CC0, https://freesound.org/people/JarredGibb/sounds/244862
+- reverse/fs-244868-rev-cymb-18-reverb-wav-1: "Rev Cymb 18 reverb.wav" by JarredGibb, CC0, https://freesound.org/people/JarredGibb/sounds/244868
+- reverse/fs-383902-reverse-splash-cymbal-1: "Reverse Splash Cymbal" by deleted_user_7146007, CC0, https://freesound.org/people/deleted_user_7146007/sounds/383902
+- reverse/fs-446010-backwards-whoosh-1: "Backwards Whoosh" by SlavicMagic, CC0, https://freesound.org/people/SlavicMagic/sounds/446010
+- reverse/fs-493975-sci-fi-reverse-1-raw-wav-1: "Sci fi reverse 1 Raw.wav" by Eponn, CC0, https://freesound.org/people/Eponn/sounds/493975
+- reverse/fs-503803-reverse-fx-13-wav-1: "reverse fx 13.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503803
+- reverse/fs-503804-reverse-fx-2-wav-1: "reverse fx 2.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503804
+- reverse/fs-503805-reverse-fx-7-wav-1: "reverse fx 7.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503805
+- reverse/fs-503808-reverse-fx-5-wav-1: "reverse fx 5.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503808
+- reverse/fs-503817-gated-riser-wav-1: "gated riser.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503817
+- reverse/fs-564442-guitar-swell-wav-1: "Guitar Swell.wav" by Fester993, CC0, https://freesound.org/people/Fester993/sounds/564442
+- reverse/fs-568036-coffee-slurp-4-1: "coffee slurp 4" by benkenart, CC0, https://freesound.org/people/benkenart/sounds/568036
+- reverse/fs-568037-coffee-slurp-3-1: "coffee slurp 3" by benken.23, CC0, https://freesound.org/people/benken.23/sounds/568037
+- reverse/fs-635828-reverse-rides-fx-5-wav-1: "ReverseRidesFX-5.wav" by gmortizwavs, CC0, https://freesound.org/people/gmortizwavs/sounds/635828
+- reverse/fs-674292-reversed-crash-cymbal-low-1: "Reversed Crash Cymbal - Low" by TheEndOfACycle, CC0, https://freesound.org/people/TheEndOfACycle/sounds/674292
+- reverse/fs-710864-metal-pole-hit-reverse-1: "Metal Pole Hit Reverse" by NapierFreesound, CC0, https://freesound.org/people/NapierFreesound/sounds/710864
+- reverse/fs-710864-metal-pole-hit-reverse-2: "Metal Pole Hit Reverse" by NapierFreesound, CC0, https://freesound.org/people/NapierFreesound/sounds/710864
+- reverse/fs-710864-metal-pole-hit-reverse-3: "Metal Pole Hit Reverse" by NapierFreesound, CC0, https://freesound.org/people/NapierFreesound/sounds/710864
+- reverse/fs-725311-sucking-1: "Sucking" by oldhiccup, CC0, https://freesound.org/people/oldhiccup/sounds/725311
+- reverse/fs-9523-cymbal-reversed-glassy-reson-1: "cymbal-reversed-glassy-resonance.wav" by burnttoys, CC0, https://freesound.org/people/burnttoys/sounds/9523
+- riser/fs-192510-sl-uplifter-02-wav-1: "SL Uplifter 02.wav" by smileylovers, CC0, https://freesound.org/people/smileylovers/sounds/192510
+- riser/fs-237373-ahhhhhhhh-uplift-wav-1: "ahhhhhhhh--uplift.wav" by smileylovers, CC0, https://freesound.org/people/smileylovers/sounds/237373
+- riser/fs-244249-impact-riser-01-1: "impact riser 01" by soramoosic, CC0, https://freesound.org/people/soramoosic/sounds/244249
+- riser/fs-259880-rise1-wav-1: "rise1.wav" by soneproject, CC0, https://freesound.org/people/soneproject/sounds/259880
+- riser/fs-259885-rise2-wav-1: "rise2.wav" by soneproject, CC0, https://freesound.org/people/soneproject/sounds/259885
+- riser/fs-261415-percusive-noise-riser-wav-1: "Percusive Noise Riser.wav" by Stereo Surgeon, CC0, https://freesound.org/people/Stereo%20Surgeon/sounds/261415
+- riser/fs-268559-uplifter-01-wav-1: "Uplifter 01.wav" by digit-al, CC0, https://freesound.org/people/digit-al/sounds/268559
+- riser/fs-275512-reversed-riser-wav-1: "reversed riser .wav" by NOTOTO84, CC0, https://freesound.org/people/NOTOTO84/sounds/275512
+- riser/fs-322589-timpani-1: "λόγος Timpani" by Stereo Surgeon, CC0, https://freesound.org/people/Stereo%20Surgeon/sounds/322589
+- riser/fs-327993-textured-riser-rise-up-swirl-1: "textured riser, rise up, swirly" by MadMaxSFX, CC0, https://freesound.org/people/MadMaxSFX/sounds/327993
+- riser/fs-334522-rise-crash-wav-1: "rise-crash.wav" by soneproject, CC0, https://freesound.org/people/soneproject/sounds/334522
+- riser/fs-334525-rise5-wav-1: "rise5.wav" by soneproject, CC0, https://freesound.org/people/soneproject/sounds/334525
+- riser/fs-370834-complex-riser-2-aif-1: "Complex Riser 2.aif" by deleted_user_5959249, CC0, https://freesound.org/people/deleted_user_5959249/sounds/370834
+- riser/fs-370853-noise-gated-4n-sine-downbeat-1: "Noise Gated 4n Sine Downbeat.aif" by deleted_user_5959249, CC0, https://freesound.org/people/deleted_user_5959249/sounds/370853
+- riser/fs-370858-noise-gated-sine-1n-upbeat-a-1: "Noise Gated Sine 1n Upbeat.aif" by deleted_user_5959249, CC0, https://freesound.org/people/deleted_user_5959249/sounds/370858
+- riser/fs-387552-sweep-downwards-wav-1: "Sweep Downwards.wav" by stair, CC0, https://freesound.org/people/stair/sounds/387552
+- riser/fs-396160-scary-hits-risers-002-1: "Scary Hits & Risers 002" by Xinematix, CC0, https://freesound.org/people/Xinematix/sounds/396160
+- riser/fs-396161-scary-hits-risers-001-1: "Scary Hits & Risers 001" by Xinematix, CC0, https://freesound.org/people/Xinematix/sounds/396161
+- riser/fs-451653-metallic-riser-wav-1: "Metallic Riser.wav" by HenryRichard, CC0, https://freesound.org/people/HenryRichard/sounds/451653
+- riser/fs-503799-reverse-fx-9-wav-1: "reverse fx 9.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503799
+- riser/fs-503800-riser-1-wav-1: "riser 1.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503800
+- riser/fs-503801-reverse-fx-3-wav-1: "reverse fx 3.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503801
+- riser/fs-503802-reverse-fx-4-wav-1: "reverse fx 4.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503802
+- riser/fs-503807-reverse-fx-8-wav-1: "reverse fx 8.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503807
+- riser/fs-503810-reverse-fx-10-wav-1: "reverse fx 10.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503810
+- riser/fs-503811-reverse-fx-1-wav-1: "reverse fx 1.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503811
+- riser/fs-503816-riser-2-mp3-1: "riser 2.mp3" by neezen., CC0, https://freesound.org/people/neezen./sounds/503816
+- riser/fs-503818-riser-3-wav-1: "riser 3.wav" by neezen., CC0, https://freesound.org/people/neezen./sounds/503818
+- riser/fs-531729-energy-riser-3-1: "Energy Riser 3" by magnuswaker, CC0, https://freesound.org/people/magnuswaker/sounds/531729
+- riser/fs-545798-metallic-horror-riser-fx-wav-1: "Metallic Horror Riser FX.wav" by eldiariosonoro_, CC0, https://freesound.org/people/eldiariosonoro_/sounds/545798
+- riser/fs-555865-white-noise-fx-2-90bpm-1: "white noise fx 2 [90bpm]" by deadrobotmusic, CC0, https://freesound.org/people/deadrobotmusic/sounds/555865
+- riser/fs-561207-riser-1: "Riser" by Rizzard, CC0, https://freesound.org/people/Rizzard/sounds/561207
+- riser/fs-571112-bass-riser-fx-e-1: "bass riser fx E" by deadrobotmusic, CC0, https://freesound.org/people/deadrobotmusic/sounds/571112
+- riser/fs-608217-inhale-with-glass-wav-1: "Inhale with glass.wav" by guitargeorge-2, CC0, https://freesound.org/people/guitargeorge-2/sounds/608217
+- riser/fs-609765-bright-riser-1: "Bright riser" by xkeril, CC0, https://freesound.org/people/xkeril/sounds/609765
+- riser/fs-611170-uplifter-1-1: "Uplifter-1" by skullowner83@gmail.com, CC0, https://freesound.org/people/skullowner83@gmail.com/sounds/611170
+- riser/fs-643752-vocal-riser-rolling-r-build-1: "Vocal riser - rolling R - build-up tension" by Duisterwho, CC0, https://freesound.org/people/Duisterwho/sounds/643752
+- riser/fs-643753-vocal-riser-rolling-r-build-1: "Vocal riser - rolling R - build-up tension" by Duisterwho, CC0, https://freesound.org/people/Duisterwho/sounds/643753
+- riser/fs-647535-riser-mid-03-wav-1: "Riser_mid_03.wav" by balolo, CC0, https://freesound.org/people/balolo/sounds/647535
+- riser/fs-649825-riser-hit-sfx-045-wav-1: "Riser Hit sfx 045.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/649825
+- riser/fs-667420-particles-appear-swell-up-hz-1: "Particles appear swell up HZA 02-05-2022.wav" by hz37, CC0, https://freesound.org/people/hz37/sounds/667420
+- riser/fs-669729-distant-car-pass-wav-1: "Distant Car Pass.wav" by Geoff-Bremner-Audio, CC0, https://freesound.org/people/Geoff-Bremner-Audio/sounds/669729
+- riser/fs-669925-fx-rejuvenate-wav-1: "fx_rejuvenate.wav" by harrisonlace, CC0, https://freesound.org/people/harrisonlace/sounds/669925
+- riser/fs-673251-fx-uplifter-24-1: "FX Uplifter 24" by DaveJf, CC0, https://freesound.org/people/DaveJf/sounds/673251
+- riser/fs-673416-fx-uplifter-29-1: "FX Uplifter 29" by DaveJf, CC0, https://freesound.org/people/DaveJf/sounds/673416
+- shimmer/fs-376745-fantasy-ui-button-3-wav-2: "Fantasy_ui_Button_3.wav" by ZenithInfinitiveStudios, CC0, https://freesound.org/people/ZenithInfinitiveStudios/sounds/376745
+- shimmer/fs-376746-fantasy-ui-button-2-wav-2: "Fantasy_ui_Button_2.wav" by ZenithInfinitiveStudios, CC0, https://freesound.org/people/ZenithInfinitiveStudios/sounds/376746
+- shimmer/fs-376748-fantasy-ui-button-6-wav-1: "Fantasy_ui_Button_6.wav" by ZenithInfinitiveStudios, CC0, https://freesound.org/people/ZenithInfinitiveStudios/sounds/376748
+- shimmer/fs-388295-sparkles-and-percussion-1: "Sparkles and Percussion" by onlyhereforamenbreak, CC0, https://freesound.org/people/onlyhereforamenbreak/sounds/388295
+- shimmer/fs-389789-chimes-3: "Chimes" by fmceretta, CC0, https://freesound.org/people/fmceretta/sounds/389789
+- shimmer/fs-449644-transition-action-jump-pitch-1: "Transition,action,jump,pitch-shift,short,shimmer,whoosh,positive_r8bp.wav" by CJDeets, CC0, https://freesound.org/people/CJDeets/sounds/449644
+- shimmer/fs-449645-transition-action-jump-pitch-1: "Transition,action,jump,pitch-shift,short,shimmer,whoosh,positive,soft.wav" by CJDeets, CC0, https://freesound.org/people/CJDeets/sounds/449645
+- shimmer/fs-452371-small-bell-2: "Small Bell" by steffcaffrey, CC0, https://freesound.org/people/steffcaffrey/sounds/452371
+- shimmer/fs-462092-sparkling-star-04-wav-3: "Sparkling Star 04.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/462092
+- shimmer/fs-462095-sparkling-star-01-wav-2: "Sparkling Star 01.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/462095
+- shimmer/fs-462096-sparkling-star-05-wav-3: "Sparkling Star 05.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/462096
+- shimmer/fs-521873-glimmer-wav-3: "Glimmer.wav" by opticaillusions, CC0, https://freesound.org/people/opticaillusions/sounds/521873
+- shimmer/fs-527771-sparkling-water-maker-1: "sparkling water maker" by Garuda1982, CC0, https://freesound.org/people/Garuda1982/sounds/527771
+- shimmer/fs-578803-sparkle-1: "Sparkle" by nomiqbomi, CC0, https://freesound.org/people/nomiqbomi/sounds/578803
+- shimmer/fs-628422-giant-eagle-sparkling-water-3: "giant eagle sparkling water.m4a" by jumpinbear, CC0, https://freesound.org/people/jumpinbear/sounds/628422
+- shimmer/fs-697825-sparkle-3: "SPARKLE" by magnuswaker, CC0, https://freesound.org/people/magnuswaker/sounds/697825
+- swish/fs-14171-23-wav-1: "23.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/14171
+- swish/fs-14175-27-wav-1: "27.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/14175
+- swish/fs-14175-27-wav-2: "27.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/14175
+- swish/fs-14176-28-wav-2: "28.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/14176
+- swish/fs-14176-28-wav-3: "28.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/14176
+- swish/fs-14179-31-wav-2: "31.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/14179
+- swish/fs-14193-45-wav-1: "45.wav" by adcbicycle, CC0, https://freesound.org/people/adcbicycle/sounds/14193
+- swish/fs-254866-swish-twig-wav-1: "swish twig.wav" by blukotek, CC0, https://freesound.org/people/blukotek/sounds/254866
+- swish/fs-254866-swish-twig-wav-2: "swish twig.wav" by blukotek, CC0, https://freesound.org/people/blukotek/sounds/254866
+- swish/fs-254866-swish-twig-wav-3: "swish twig.wav" by blukotek, CC0, https://freesound.org/people/blukotek/sounds/254866
+- swish/fs-254871-swish-whip-wav-1: "swish whip.wav" by blukotek, CC0, https://freesound.org/people/blukotek/sounds/254871
+- swish/fs-254871-swish-whip-wav-2: "swish whip.wav" by blukotek, CC0, https://freesound.org/people/blukotek/sounds/254871
+- swish/fs-254871-swish-whip-wav-3: "swish whip.wav" by blukotek, CC0, https://freesound.org/people/blukotek/sounds/254871
+- swish/fs-268226-woosh-2-mp3-1: "Woosh 2.mp3" by XxChr0nosxX, CC0, https://freesound.org/people/XxChr0nosxX/sounds/268226
+- swish/fs-277715-running-across-hard-floor-or-1: "Running across hard floor or corridor" by wibwob, CC0, https://freesound.org/people/wibwob/sounds/277715
+- swish/fs-277715-running-across-hard-floor-or-2: "Running across hard floor or corridor" by wibwob, CC0, https://freesound.org/people/wibwob/sounds/277715
+- swish/fs-277715-running-across-hard-floor-or-3: "Running across hard floor or corridor" by wibwob, CC0, https://freesound.org/people/wibwob/sounds/277715
+- swish/fs-388003-double-swish-1: "Double Swish" by deleted_user_6479820, CC0, https://freesound.org/people/deleted_user_6479820/sounds/388003
+- swish/fs-393811-swish-single-4-1: "Swish Single 4" by deleted_user_6479820, CC0, https://freesound.org/people/deleted_user_6479820/sounds/393811
+- swish/fs-394878-high-pitched-bamboo-swish-1: "High Pitched Bamboo Swish" by deleted_user_6479820, CC0, https://freesound.org/people/deleted_user_6479820/sounds/394878
+- swish/fs-395263-sword-movement-single-4-1: "Sword Movement Single 4" by deleted_user_6479820, CC0, https://freesound.org/people/deleted_user_6479820/sounds/395263
+- swish/fs-395264-sword-movement-single-3-1: "Sword Movement Single 3" by deleted_user_6479820, CC0, https://freesound.org/people/deleted_user_6479820/sounds/395264
+- swish/fs-395266-sword-movement-single-1-1: "Sword Movement Single 1" by deleted_user_6479820, CC0, https://freesound.org/people/deleted_user_6479820/sounds/395266
+- swish/fs-395369-swish-4-1: "Swish 4" by ihitokage, CC0, https://freesound.org/people/ihitokage/sounds/395369
+- swish/fs-395418-multiple-swish-1: "Multiple Swish" by deleted_user_6479820, CC0, https://freesound.org/people/deleted_user_6479820/sounds/395418
+- swish/fs-445670-37-cloth-wav-2: "37-cloth.wav" by tilano408, CC0, https://freesound.org/people/tilano408/sounds/445670
+- swish/fs-524215-schwing-1-1: "Schwing 1" by magnuswaker, CC0, https://freesound.org/people/magnuswaker/sounds/524215
+- swish/fs-529925-whip-crack-m4a-1: "Whip Crack.m4a" by SciFiSounds, CC0, https://freesound.org/people/SciFiSounds/sounds/529925
+- swish/fs-580967-fabric-flaps: "Fabric flaps" by PelicanPolice, CC0, https://freesound.org/people/PelicanPolice/sounds/580967
+- swish/fs-615761-whip-and-crack-sound-1: "whip and crack sound" by JayRom01, CC0, https://freesound.org/people/JayRom01/sounds/615761
+- swish/fs-718668-wrapping-cloth-2: "Wrapping cloth" by ChuckleNutsDev, CC0, https://freesound.org/people/ChuckleNutsDev/sounds/718668
+- swish/fs-718668-wrapping-cloth-3: "Wrapping cloth" by ChuckleNutsDev, CC0, https://freesound.org/people/ChuckleNutsDev/sounds/718668
+- swish/fs-733018-whip-3-1: "Whip 3" by Geoff-Bremner-Audio, CC0, https://freesound.org/people/Geoff-Bremner-Audio/sounds/733018
+- swish/fs-733019-whip-4-1: "Whip 4" by Geoff-Bremner-Audio, CC0, https://freesound.org/people/Geoff-Bremner-Audio/sounds/733019
+- swish/fs-733020-whip-5-1: "Whip 5" by Geoff-Bremner-Audio, CC0, https://freesound.org/people/Geoff-Bremner-Audio/sounds/733020
+- swish/fs-733941-small-whip-1-1: "Small Whip 1" by Geoff-Bremner-Audio, CC0, https://freesound.org/people/Geoff-Bremner-Audio/sounds/733941
+- swish/fs-733944-small-whip-4-1: "Small Whip 4" by Geoff-Bremner-Audio, CC0, https://freesound.org/people/Geoff-Bremner-Audio/sounds/733944
+- swish/fs-733945-small-whip-5-1: "Small Whip 5" by Geoff-Bremner-Audio, CC0, https://freesound.org/people/Geoff-Bremner-Audio/sounds/733945
+- tap/fs-339364-drop06-wav: "drop06.wav" by newagesoup, CC0, https://freesound.org/people/newagesoup/sounds/339364
+- tap/fs-369710-wood-knock: "Wood Knock" by Mrguff, CC0, https://freesound.org/people/Mrguff/sounds/369710
+- thump/fs-133282-thump-on-carpet-2: "thump (on carpet)" by animationIsaac, CC0, https://freesound.org/people/animationIsaac/sounds/133282
+- thump/fs-187136-body-fall-wav-1: "BodyFall.wav" by 000600, CC0, https://freesound.org/people/000600/sounds/187136
+- thump/fs-203086-two-thumps-1: "Two thumps" by Mafon2, CC0, https://freesound.org/people/Mafon2/sounds/203086
+- thump/fs-203086-two-thumps-2: "Two thumps" by Mafon2, CC0, https://freesound.org/people/Mafon2/sounds/203086
+- thump/fs-264879-three-dull-thumps-with-hamme-1: "Three dull thumps with hammer" by Mafon2, CC0, https://freesound.org/people/Mafon2/sounds/264879
+- thump/fs-264879-three-dull-thumps-with-hamme-2: "Three dull thumps with hammer" by Mafon2, CC0, https://freesound.org/people/Mafon2/sounds/264879
+- thump/fs-264879-three-dull-thumps-with-hamme-3: "Three dull thumps with hammer" by Mafon2, CC0, https://freesound.org/people/Mafon2/sounds/264879
+- thump/fs-330997-stick-hitting-a-dreadlock-sm-1: "Stick Hitting a Dreadlock (Small thud)" by Rudmer_Rotteveel, CC0, https://freesound.org/people/Rudmer_Rotteveel/sounds/330997
+- thump/fs-342535-medium-thud-1-1: "Medium Thud 1" by sgrowe, CC0, https://freesound.org/people/sgrowe/sounds/342535
+- thump/fs-342535-medium-thud-1-2: "Medium Thud 1" by sgrowe, CC0, https://freesound.org/people/sgrowe/sounds/342535
+- thump/fs-368606-thump-1: "Thump" by SamsterBirdies, CC0, https://freesound.org/people/SamsterBirdies/sounds/368606
+- thump/fs-380638-thump-4-wav-1: "Thump 4.wav" by jameswrowles, CC0, https://freesound.org/people/jameswrowles/sounds/380638
+- thump/fs-380643-thump-5-wav-1: "Thump 5.wav" by jameswrowles, CC0, https://freesound.org/people/jameswrowles/sounds/380643
+- thump/fs-389665-thump-close-wav-2: "Thump; close.wav" by TylerAM, CC0, https://freesound.org/people/TylerAM/sounds/389665
+- thump/fs-389999-thump-cloth-1: "thump- cloth" by morganveilleux, CC0, https://freesound.org/people/morganveilleux/sounds/389999
+- thump/fs-395325-body-falling-on-the-ground-2-3: "Body falling on the ground 2" by ihitokage, CC0, https://freesound.org/people/ihitokage/sounds/395325
+- thump/fs-395331-body-falling-on-the-ground-1-1: "Body falling on the ground 1" by ihitokage, CC0, https://freesound.org/people/ihitokage/sounds/395331
+- thump/fs-405535-thud-4-wav-1: "Thud 4.wav" by nebulasnails, CC0, https://freesound.org/people/nebulasnails/sounds/405535
+- thump/fs-405537-thud-2-wav-1: "Thud 2.wav" by nebulasnails, CC0, https://freesound.org/people/nebulasnails/sounds/405537
+- thump/fs-435504-body-falling-to-ground-1: "body falling to ground" by MelvinJaepel, CC0, https://freesound.org/people/MelvinJaepel/sounds/435504
+- thump/fs-451238-thumping-walking-from-upstai-2: "Thumping/walking from upstairs" by wlabarron, CC0, https://freesound.org/people/wlabarron/sounds/451238
+- thump/fs-454222-thud-pint-glass-beer-down-on-1: "thud pint glass beer down on table wood knock door Vows.flac" by kyles, CC0, https://freesound.org/people/kyles/sounds/454222
+- thump/fs-458877-thump-1: "Thump" by DigestContent, CC0, https://freesound.org/people/DigestContent/sounds/458877
+- thump/fs-496187-light-body-thud-on-clothing-1: "Light Body thud (on clothing)" by JonasTisell, CC0, https://freesound.org/people/JonasTisell/sounds/496187
+- thump/fs-585575-metal-thud-1: "Metal Thud" by BennettFilmTeacher, CC0, https://freesound.org/people/BennettFilmTeacher/sounds/585575
+- thump/fs-675927-s03-22-two-body-falls-on-woo-2: "S03-22 Two body falls on wood.wav" by craigsmith, CC0, https://freesound.org/people/craigsmith/sounds/675927
+- thump/fs-675930-s03-14-punch-body-fall-short-1: "S03-14 Punch & body fall; short.wav" by craigsmith, CC0, https://freesound.org/people/craigsmith/sounds/675930
+- thump/fs-732784-three-thuds-more-reverb: "Three Thuds more reverb" by AVstudent, CC0, https://freesound.org/people/AVstudent/sounds/732784
+- tick/fs-130388-clock-ticking-1: "Clock ticking" by olver, CC0, https://freesound.org/people/olver/sounds/130388
+- tick/fs-130388-clock-ticking-2: "Clock ticking" by olver, CC0, https://freesound.org/people/olver/sounds/130388
+- tick/fs-130388-clock-ticking-3: "Clock ticking" by olver, CC0, https://freesound.org/people/olver/sounds/130388
+- tick/fs-185611-metal-tick-1-1: "Metal tick 1" by kubawolanin, CC0, https://freesound.org/people/kubawolanin/sounds/185611
+- tick/fs-188033-ticking-clock-1: "Ticking Clock" by AntumDeluge, CC0, https://freesound.org/people/AntumDeluge/sounds/188033
+- tick/fs-188033-ticking-clock-2: "Ticking Clock" by AntumDeluge, CC0, https://freesound.org/people/AntumDeluge/sounds/188033
+- tick/fs-188033-ticking-clock-3: "Ticking Clock" by AntumDeluge, CC0, https://freesound.org/people/AntumDeluge/sounds/188033
+- tick/fs-199066-clock-tick-tock-1: "clock tick tock" by rustica, CC0, https://freesound.org/people/rustica/sounds/199066
+- tick/fs-199066-clock-tick-tock-2: "clock tick tock" by rustica, CC0, https://freesound.org/people/rustica/sounds/199066
+- tick/fs-199066-clock-tick-tock-3: "clock tick tock" by rustica, CC0, https://freesound.org/people/rustica/sounds/199066
+- tick/fs-212181-loopable-ticking-clock-1: "Loopable Ticking Clock" by OwlStorm, CC0, https://freesound.org/people/OwlStorm/sounds/212181
+- tick/fs-386202-ratchet-vlc-tighten-4-1: "Ratchet - Vlc - Tighten 4" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386202
+- tick/fs-386202-ratchet-vlc-tighten-4-2: "Ratchet - Vlc - Tighten 4" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386202
+- tick/fs-386202-ratchet-vlc-tighten-4-3: "Ratchet - Vlc - Tighten 4" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386202
+- tick/fs-386203-ratchet-vlc-tighten-1-2: "Ratchet - Vlc - Tighten 1" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386203
+- tick/fs-386205-ratchet-stahlwille-tighten-4-1: "Ratchet - Stahlwille - Tighten 4" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386205
+- tick/fs-386205-ratchet-stahlwille-tighten-4-2: "Ratchet - Stahlwille - Tighten 4" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386205
+- tick/fs-386206-ratchet-stahlwille-tighten-1-1: "Ratchet - Stahlwille - Tighten 1" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386206
+- tick/fs-386206-ratchet-stahlwille-tighten-1-3: "Ratchet - Stahlwille - Tighten 1" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386206
+- tick/fs-386208-ratchet-drill-unbranded-tigh-1: "Ratchet drill - Unbranded - Tighten" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386208
+- tick/fs-386208-ratchet-drill-unbranded-tigh-2: "Ratchet drill - Unbranded - Tighten" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386208
+- tick/fs-386208-ratchet-drill-unbranded-tigh-3: "Ratchet drill - Unbranded - Tighten" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386208
+- tick/fs-386209-ratchet-drill-unbranded-tigh-1: "Ratchet drill - Unbranded - Tighten fast and short" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386209
+- tick/fs-386209-ratchet-drill-unbranded-tigh-2: "Ratchet drill - Unbranded - Tighten fast and short" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386209
+- tick/fs-386209-ratchet-drill-unbranded-tigh-3: "Ratchet drill - Unbranded - Tighten fast and short" by ldezem, CC0, https://freesound.org/people/ldezem/sounds/386209
+- tick/fs-398275-clock-tick-1: "Clock Tick" by FlashTrauma, CC0, https://freesound.org/people/FlashTrauma/sounds/398275
+- tick/fs-398275-clock-tick-2: "Clock Tick" by FlashTrauma, CC0, https://freesound.org/people/FlashTrauma/sounds/398275
+- tick/fs-398275-clock-tick-3: "Clock Tick" by FlashTrauma, CC0, https://freesound.org/people/FlashTrauma/sounds/398275
+- tick/fs-403001-clock-tick-tik-tak-1: "Clock Tick (Tik Tak)" by KaosMakinesi, CC0, https://freesound.org/people/KaosMakinesi/sounds/403001
+- tick/fs-403001-clock-tick-tik-tak-2: "Clock Tick (Tik Tak)" by KaosMakinesi, CC0, https://freesound.org/people/KaosMakinesi/sounds/403001
+- tick/fs-416619-clock-ticking-fast-1: "clock ticking fast" by davidqr, CC0, https://freesound.org/people/davidqr/sounds/416619
+- tick/fs-416619-clock-ticking-fast-2: "clock ticking fast" by davidqr, CC0, https://freesound.org/people/davidqr/sounds/416619
+- tick/fs-416619-clock-ticking-fast-3: "clock ticking fast" by davidqr, CC0, https://freesound.org/people/davidqr/sounds/416619
+- tick/fs-422642-sfx-ambiance-clock-tick-1: "SFX Ambiance: Clock Tick" by trullilulli, CC0, https://freesound.org/people/trullilulli/sounds/422642
+- tick/fs-452648-plastic-gas-container-cap-sc-1: "plastic gas container cap screw back on ratchet twist1.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452648
+- tick/fs-452648-plastic-gas-container-cap-sc-2: "plastic gas container cap screw back on ratchet twist1.wav" by kyles, CC0, https://freesound.org/people/kyles/sounds/452648
+- tick/fs-454148-ratchet-pulley-winch-pull-me-3: "ratchet pulley winch pull metal plastic junk slide rattle.flac" by kyles, CC0, https://freesound.org/people/kyles/sounds/454148
+- tick/fs-487725-ticking-timer-05-sec-wav-1: "Ticking Timer 05 Sec.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/487725
+- tick/fs-487725-ticking-timer-05-sec-wav-2: "Ticking Timer 05 Sec.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/487725
+- tick/fs-487725-ticking-timer-05-sec-wav-3: "Ticking Timer 05 Sec.wav" by MATRIXXX_, CC0, https://freesound.org/people/MATRIXXX_/sounds/487725
+- tick/fs-534094-clock-tick-01-flac-1: "clock-tick-01.flac" by pbimal, CC0, https://freesound.org/people/pbimal/sounds/534094
+- tick/fs-538224-clock-ticking-1: "Clock ticking" by Zoey.holt, CC0, https://freesound.org/people/Zoey.holt/sounds/538224
+- tick/fs-538224-clock-ticking-2: "Clock ticking" by Zoey.holt, CC0, https://freesound.org/people/Zoey.holt/sounds/538224
+- tick/fs-538224-clock-ticking-3: "Clock ticking" by Zoey.holt, CC0, https://freesound.org/people/Zoey.holt/sounds/538224
+- tick/fs-54848-ticking-clock-wav-1: "Ticking Clock.wav" by Izkhanilov, CC0, https://freesound.org/people/Izkhanilov/sounds/54848
+- tick/fs-54848-ticking-clock-wav-2: "Ticking Clock.wav" by Izkhanilov, CC0, https://freesound.org/people/Izkhanilov/sounds/54848
+- tick/fs-54848-ticking-clock-wav-3: "Ticking Clock.wav" by Izkhanilov, CC0, https://freesound.org/people/Izkhanilov/sounds/54848
+- tick/fs-84911-ticking-timer-wav-1: "ticking timer.wav" by cognito perceptu, CC0, https://freesound.org/people/cognito%20perceptu/sounds/84911
+- tick/fs-84911-ticking-timer-wav-3: "ticking timer.wav" by cognito perceptu, CC0, https://freesound.org/people/cognito%20perceptu/sounds/84911
+- transition/fs-179779-wipe2-wav-1: "wipe2.wav" by Sclolex, CC0, https://freesound.org/people/Sclolex/sounds/179779
+- transition/fs-234533-wet-transition-1: "Wet Transition" by Electroviolence, CC0, https://freesound.org/people/Electroviolence/sounds/234533
+- transition/fs-332003-whoosh-wav-1: "whoosh.wav" by LloydEvans09, CC0, https://freesound.org/people/LloydEvans09/sounds/332003
+- transition/fs-432294-swoosh-2-wav-2: "Swoosh 2.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/432294
+- transition/fs-444623-swoosh-10-wav-1: "Swoosh 10.wav" by AudioPapkin, CC0, https://freesound.org/people/AudioPapkin/sounds/444623
+- transition/fs-447494-a-wide-variety-of-wooshes-ma-2: "a wide variety of wooshes made by a human" by florianreichelt, CC0, https://freesound.org/people/florianreichelt/sounds/447494
+- transition/fs-447494-a-wide-variety-of-wooshes-ma-3: "a wide variety of wooshes made by a human" by florianreichelt, CC0, https://freesound.org/people/florianreichelt/sounds/447494
+- transition/fs-521040-whoosh-large-verb-er-sfx-6-w-1: "Whoosh_LargeVerb_ER_SFX_6.wav" by Alex_hears_things, CC0, https://freesound.org/people/Alex_hears_things/sounds/521040
+- transition/fs-522693-arrow-ghost-pass-whoosh-1: "Arrow, ghost, pass, whoosh" by quedicemipez, CC0, https://freesound.org/people/quedicemipez/sounds/522693
+- transition/fs-582411-short-flashback-transition-1: "Short Flashback Transition" by SoshJam, CC0, https://freesound.org/people/SoshJam/sounds/582411
+- transition/fs-614151-swishes-13-fast-wav-1: "Swishes_13_fast.wav" by videofueralle, CC0, https://freesound.org/people/videofueralle/sounds/614151
+- transition/fs-614153-swishes-11-gentle-wav-1: "Swishes_11_gentle.wav" by videofueralle, CC0, https://freesound.org/people/videofueralle/sounds/614153
+- transition/fs-623014-whoosh-passby-spaceship-sci-1: "Whoosh_Passby_Spaceship_SciFi_Long_Stereo.wav" by Nox_Sound, CC0, https://freesound.org/people/Nox_Sound/sounds/623014
+- whoosh/fs-109747-hit-with-swooshed-material-a-2: "hit with swooshed material.aiff" by SoundCollectah, CC0, https://freesound.org/people/SoundCollectah/sounds/109747
+- whoosh/fs-147281-fh-paper-swipe-surface2-long-1: "fh_Paper_Swipe_Surface2_Long_01.wav" by Frank1100, CC0, https://freesound.org/people/Frank1100/sounds/147281
+- whoosh/fs-147285-fh-paper-swipe-surface2-shor-1: "fh_Paper_Swipe_Surface2_Short_01.wav" by Frank1100, CC0, https://freesound.org/people/Frank1100/sounds/147285
+- whoosh/fs-178886-red-whoosh-gladiator-04-wav-1: "red whoosh gladiator 04.wav" by martian, CC0, https://freesound.org/people/martian/sounds/178886
+- whoosh/fs-181283-whooshes-mouth-fast-3: "Whooshes (mouth) (fast)" by asbestos bill, CC0, https://freesound.org/people/asbestos%20bill/sounds/181283
+- whoosh/fs-272457-bangs-and-whooshes-1: "bangs and whooshes" by Rollo145, CC0, https://freesound.org/people/Rollo145/sounds/272457
+- whoosh/fs-30240-swoop1-flac-1: "swoop1.flac" by Streety, CC0, https://freesound.org/people/Streety/sounds/30240
+- whoosh/fs-30241-swoop2g-flac-1: "swoop2g.flac" by Streety, CC0, https://freesound.org/people/Streety/sounds/30241
+- whoosh/fs-322250-big-punch-with-whoosh-1: "Big Punch with whoosh" by Paul368, CC0, https://freesound.org/people/Paul368/sounds/322250
+- whoosh/fs-327990-processed-swish-swoosh-whoos-1: "processed swish, swoosh, whoosh" by MadMaxSFX, CC0, https://freesound.org/people/MadMaxSFX/sounds/327990
+- whoosh/fs-423798-little-whoosh-3-1: "Little Whoosh 3" by ch_ase, CC0, https://freesound.org/people/ch_ase/sounds/423798
+- whoosh/fs-449988-whoosh-med-high-1: "whoosh_med_high" by DJT4NN3R, CC0, https://freesound.org/people/DJT4NN3R/sounds/449988
+- whoosh/fs-449989-whoosh-long-mid-wav-1: "whoosh_long_mid.wav" by DJT4NN3R, CC0, https://freesound.org/people/DJT4NN3R/sounds/449989
+- whoosh/fs-449992-whoosh-short-low-wav-1: "whoosh_short_low.wav" by DJT4NN3R, CC0, https://freesound.org/people/DJT4NN3R/sounds/449992
+- whoosh/fs-449994-whoosh-med-mid-wav-1: "whoosh_med_mid.wav" by DJT4NN3R, CC0, https://freesound.org/people/DJT4NN3R/sounds/449994
+- whoosh/fs-449995-whoosh-med-low-wav-1: "whoosh_med_low.wav" by DJT4NN3R, CC0, https://freesound.org/people/DJT4NN3R/sounds/449995
+- whoosh/fs-451127-fx-swoosh-normal-for-swords-1: "FX - Swoosh - normal (for swords, sticks, punches, etc)" by bolkmar, CC0, https://freesound.org/people/bolkmar/sounds/451127
+- whoosh/fs-471097-knife-sword-swing-1: "Knife/sword swing" by spycrah, CC0, https://freesound.org/people/spycrah/sounds/471097
+- whoosh/fs-475132-fx-swoosh-light-1: "FX - Swoosh - Light" by bolkmar, CC0, https://freesound.org/people/bolkmar/sounds/475132
+- whoosh/fs-60002-swoosh-15-windy-1: "Swoosh 15 Windy" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60002
+- whoosh/fs-60004-fast-sword-swing-sound-1: "Fast Sword Swing Sound" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60004
+- whoosh/fs-60005-sharp-swosh-18-1: "Sharp Swosh 18" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60005
+- whoosh/fs-60010-multi-swing-bamboo-staff-wea-1: "Multi-Swing Bamboo Staff Weapon Attack" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60010
+- whoosh/fs-60010-multi-swing-bamboo-staff-wea-2: "Multi-Swing Bamboo Staff Weapon Attack" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60010
+- whoosh/fs-60011-whoosh-24-1: "whoosh 24" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60011
+- whoosh/fs-60011-whoosh-24-2: "whoosh 24" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60011
+- whoosh/fs-60011-whoosh-24-3: "whoosh 24" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60011
+- whoosh/fs-60022-swosh-35-flac-1: "swosh-35.flac" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60022
+- whoosh/fs-60025-double-whoosh-2-2: "Double Whoosh 2" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60025
+- whoosh/fs-60026-swosh-swoosh-whoosh-air-soun-1: "Swosh swoosh whoosh air sound, free, high quality" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60026
+- whoosh/fs-60027-slow-swosh-40-1: "Slow Swosh 40" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60027
+- whoosh/fs-60029-swosh-42-flac-1: "swosh-42.flac" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/60029

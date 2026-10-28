@@ -1,0 +1,299 @@
+{
+  "fps": 30,
+  "duration_s": 54.0,
+  "energy": "punchy",
+  "lufs": -14,
+  "kit": "audio/kit",
+  "room": {
+    "decay_s": 0.5,
+    "wet_db": -18
+  },
+  "music": {
+    "file": "audio/music.wav",
+    "start_s": 0
+  },
+  "duck_db": 9,
+  "cues": [
+    {
+      "id": "intro-riser",
+      "t": 0.0,
+      "sound": "audio/earshot/riser_2.wav",
+      "align": "start",
+      "weight": "support"
+    },
+    {
+      "id": "intro-hit",
+      "t": 0.667,
+      "sound": "audio/earshot/hit_1.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "land",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "intro-boom",
+      "t": 0.667,
+      "sound": "boom/fs-636624-deep-hit-2",
+      "align": "peak",
+      "weight": "hero",
+      "visual": "land",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "cut-1",
+      "t": 3.2,
+      "sound": "audio/earshot/whoosh-short_1.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "key-1",
+      "t": 4.8,
+      "sound": "audio/earshot/key-return_1.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "key-2",
+      "t": 6.2,
+      "sound": "audio/earshot/key-return_2.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "key-3",
+      "t": 7.1,
+      "sound": "audio/earshot/key-return_1.wav",
+      "align": "peak",
+      "visual": "land",
+      "stop_before": true
+    },
+    {
+      "id": "key-4",
+      "t": 8.0,
+      "sound": "audio/earshot/key-return_2.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "key-5",
+      "t": 8.233,
+      "sound": "audio/earshot/key-return_1.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "key-6",
+      "t": 9.6,
+      "sound": "audio/earshot/key-return_2.wav",
+      "align": "peak",
+      "visual": "land",
+      "stop_before": true
+    },
+    {
+      "id": "cut-2",
+      "t": 12.667,
+      "sound": "audio/earshot/whoosh-short_2.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "db-click",
+      "t": 15.8,
+      "sound": "click/fs-399443-mouse-clicks",
+      "align": "peak",
+      "visual": "move"
+    },
+    {
+      "id": "cut-3",
+      "t": 19.0,
+      "sound": "audio/earshot/tock_1.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "theme-light",
+      "t": 20.0,
+      "sound": "click/fs-146877-mouse-clicks-and-scroll-whee",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "theme-dark",
+      "t": 21.333,
+      "sound": "click/fs-534104-mouse-click-double-00-flac",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "cut-4",
+      "t": 22.667,
+      "sound": "audio/earshot/whoosh-short_3.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "comment-open",
+      "t": 24.3,
+      "sound": "audio/earshot/click_1.wav",
+      "align": "peak",
+      "visual": "move"
+    },
+    {
+      "id": "comment-sent",
+      "t": 28.533,
+      "sound": "audio/earshot/click-confirm_1.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "cut-5",
+      "t": 30.333,
+      "sound": "audio/earshot/whoosh-long_1.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "share-click",
+      "t": 32.0,
+      "sound": "audio/earshot/click_2.wav",
+      "align": "peak",
+      "visual": "move"
+    },
+    {
+      "id": "cut-6",
+      "t": 35.333,
+      "sound": "audio/earshot/whoosh-long_2.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "phone-menu",
+      "t": 40.8,
+      "sound": "audio/earshot/click_1.wav",
+      "align": "peak",
+      "visual": "move"
+    },
+    {
+      "id": "phone-dismiss",
+      "t": 43.167,
+      "sound": "audio/earshot/tock_2.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "phone-comment",
+      "t": 44.133,
+      "sound": "audio/earshot/click_2.wav",
+      "align": "peak",
+      "visual": "move"
+    },
+    {
+      "id": "cut-7",
+      "t": 46.333,
+      "sound": "audio/earshot/whoosh-short_1.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "private-land",
+      "t": 46.91,
+      "sound": "audio/earshot/land_1.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "land"
+    },
+    {
+      "id": "pill-1",
+      "t": 46.683,
+      "sound": "audio/earshot/pop_1.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "pill-1b",
+      "t": 46.683,
+      "sound": "audio/earshot/bell_C5.wav",
+      "align": "peak",
+      "pan": -0.3,
+      "visual": "land"
+    },
+    {
+      "id": "pill-2",
+      "t": 46.883,
+      "sound": "audio/earshot/pop_2.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "pill-2b",
+      "t": 46.883,
+      "sound": "audio/earshot/bell_D5.wav",
+      "align": "peak",
+      "pan": 0.3,
+      "visual": "land"
+    },
+    {
+      "id": "pill-3",
+      "t": 47.083,
+      "sound": "audio/earshot/pop_3.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "pill-3b",
+      "t": 47.083,
+      "sound": "audio/earshot/bell_E5.wav",
+      "align": "peak",
+      "pan": -0.3,
+      "visual": "land"
+    },
+    {
+      "id": "pill-4",
+      "t": 47.283,
+      "sound": "audio/earshot/pop_4.wav",
+      "align": "peak",
+      "visual": "land"
+    },
+    {
+      "id": "pill-4b",
+      "t": 47.283,
+      "sound": "audio/earshot/bell_G5.wav",
+      "align": "peak",
+      "pan": 0.3,
+      "visual": "land"
+    },
+    {
+      "id": "cut-8",
+      "t": 49.667,
+      "sound": "audio/earshot/whoosh-short_2.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "cut"
+    },
+    {
+      "id": "end-swell",
+      "t": 50.247,
+      "sound": "audio/earshot/swell_1.wav",
+      "align": "peak",
+      "weight": "support",
+      "visual": "land"
+    },
+    {
+      "id": "end-badge",
+      "t": 50.567,
+      "sound": "audio/earshot/bell_A5.wav",
+      "align": "peak",
+      "visual": "land"
+    }
+  ]
+}
