@@ -21,10 +21,11 @@ const code = (name) => `new Promise(async (res) => {
     if (ev.type === 'msg') got.push(ev.data);
   });
   await R.join('s1', '${topic}');
-  const iv = setInterval(() => {
+  const iv = setInterval(async () => {
     if (got.length >= 2 || Date.now() - t0 > 70000) {
       clearInterval(iv);
-      res({ name: '${name}', ms: Date.now() - t0, got, keys: opened[0] && [opened[0].localKey, opened[0].remoteKey], relayInIce: seen.some((x) => x.includes('127.0.0.1:3478')) });
+      const diag = (await R.diagnose()).filter((l) => /attempts|path|relay|IPv6|STUN/.test(l));
+      res({ name: '${name}', ms: Date.now() - t0, got, diag, keys: opened[0] && [opened[0].localKey, opened[0].remoteKey], relayInIce: seen.some((x) => x.includes('127.0.0.1:3478')) });
     }
   }, 300);
 })`;

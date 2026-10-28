@@ -34,6 +34,30 @@
   const turnServers = () => { const st = BP.state && BP.state.settings && BP.state.settings.turn; const mine = st && turnOf(st); return mine ? shipped.concat(mine) : shipped; };
   RTC.relayCount = () => turnServers().length;
 
+
+  /* record every connection attempt (found a peer -> tried to connect -> result) so "Test connection" can say where it fails */
+  const attempts = [];
+  if (typeof RTCPeerConnection !== 'undefined' && !window.__bpRtcSpy) {
+    const Orig = window.RTCPeerConnection;
+    const Spy = function (...a) {
+      const pc = new Orig(...a);
+      const rec = { ice: pc.iceConnectionState, pair: '' };
+      attempts.push(rec); if (attempts.length > 30) attempts.shift();
+      pc.addEventListener('iceconnectionstatechange', () => {
+        rec.ice = pc.iceConnectionState;
+        if (rec.ice === 'connected' || rec.ice === 'completed') {
+          pc.getStats().then((st) => st.forEach((x) => {
+            if (x.type === 'candidate-pair' && x.nominated && x.state === 'succeeded') { const l = st.get(x.localCandidateId), r = st.get(x.remoteCandidateId); rec.pair = (l ? l.candidateType : '?') + '-' + (r ? r.candidateType : '?'); }
+          })).catch(() => {});
+        }
+      });
+      return pc;
+    };
+    Spy.prototype = Orig.prototype;
+    window.RTCPeerConnection = Spy; window.__bpRtcSpy = true;
+  }
+  RTC.attempts = () => attempts.slice();
+
   RTC.join = async (id, topicHex) => {
     if (!RTC.available()) return { error: 'WebRTC is not available' };
     if (rooms.has(id)) return { ok: true };
@@ -96,12 +120,15 @@
       const set = new Set(); let pc;
       try { pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.cloudflare.com:3478' }] }); } catch (_) { return res([]); }
       pc.createDataChannel('d');
-      pc.onicecandidate = (e) => { if (e.candidate) { const m = / typ (\w+)/.exec(e.candidate.candidate); if (m) set.add(m[1]); } else res([...set]); };
+      pc.onicecandidate = (e) => { if (e.candidate) { const m = / typ (\w+)/.exec(e.candidate.candidate); if (m) set.add(m[1]); if (e.candidate.address && e.candidate.address.includes(':') && !/^fe80/i.test(e.candidate.address)) set.add('ipv6'); } else res([...set]); };
       pc.createOffer().then((o) => pc.setLocalDescription(o)).catch(() => res([]));
       setTimeout(() => res([...set]), 6000);
     });
-    out.push((types.includes('srflx') ? 'OK   ' : 'FAIL ') + 'public address via STUN (candidates: ' + (types.join(', ') || 'none') + ')');
+    out.push((types.includes('srflx') ? 'OK   ' : 'FAIL ') + 'public address via STUN (candidates: ' + (types.join(', ') || 'none') + ')' + (types.includes('ipv6') ? ' + IPv6' : ''));
     const st = await RTC.status();
+    const at = attempts, count = (st) => at.filter((x) => x.ice === st).length;
+    out.push((at.length ? (count('failed') + count('disconnected') === at.length ? 'FAIL ' : 'OK   ') : 'none ') + 'connection attempts: ' + at.length + (at.length ? ' (connected ' + (count('connected') + count('completed')) + ', failed ' + count('failed') + ', still trying ' + (count('checking') + count('new')) + ', dropped ' + count('disconnected') + ')' : '  (no other device was found yet: it can mean nobody is online, or the devices cannot find each other through the signalling servers)'));
+    const pairs = at.map((x) => x.pair).filter(Boolean); if (pairs.length) out.push('OK   connection path: ' + pairs.join(', ') + '  (host = same network, srflx = through the internet, relay = through a relay server)');
     out.push((RTC.relayCount() ? 'OK   ' : 'none ') + 'relay servers configured: ' + RTC.relayCount() + (RTC.relayCount() ? '' : '  (only direct connections are possible)'));
     out.push('rooms joined: ' + st.topics + ', peers: ' + st.peers);
     return out;
