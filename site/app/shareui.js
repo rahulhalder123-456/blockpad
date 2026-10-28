@@ -91,7 +91,7 @@
           BP.toast('Joined “' + sp.name + '”. Syncing with whoever is online…', 5000);
         } catch (e) { go.disabled = false; go.textContent = 'Join'; info.innerHTML = ''; info.append(h('div', { class: 'join-err' }, e.message)); }
       };
-      body.append(h('p', { class: 'muted' }, 'Anyone with a Blockpad share link can join. Links only open in the Blockpad app.'), inp, info, h('div', { class: 'row-end' }, h('button', { class: 'btn', onclick: close }, 'Cancel'), go));
+      body.append(h('p', { class: 'muted' }, 'Anyone with a Blockpad share link can join. Paste the link below.'), inp, info, h('div', { class: 'row-end' }, h('button', { class: 'btn', onclick: close }, 'Cancel'), go));
       parse();
       setTimeout(() => !url && inp.focus(), 30);
     }, { class: 'join' });

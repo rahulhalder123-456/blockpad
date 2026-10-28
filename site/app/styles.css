@@ -393,3 +393,18 @@ button, .icon-btn, .sb-item, .menu-item { touch-action: manipulation; }
 }
 @media (min-width: 761px) and (max-width: 1100px) { .comments { width: 280px; } }
 @media (min-width: 1800px) { .page { font-size: 17px; } }
+
+/* ---- v1.8.1: nothing may be wider than the screen (iOS WebView showed clipped dialogs and loading text) ---- */
+#app { grid-template-columns: var(--sbw, 264px) minmax(0, 1fr); }
+#app.sb-hidden { grid-template-columns: 0 minmax(0, 1fr); }
+.area, .scroller, .page, .pagewrap { min-width: 0; }
+.modal-body { grid-template-columns: minmax(0, 1fr); }
+.modal, .modal-body, .modal-body > * { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.modal-body input, .modal-body textarea, .modal-body select { max-width: 100%; box-sizing: border-box; }
+.modal-body p { overflow-wrap: anywhere; }
+.row-end { flex-wrap: wrap; }
+.sh-msg { min-width: 0; } .sh-msg > :not(.sh-spin) { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  #app { grid-template-columns: minmax(0, 1fr) !important; }
+  .modal-back { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+}
