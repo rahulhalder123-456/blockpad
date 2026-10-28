@@ -68,11 +68,13 @@
       if (turn.length) cfg.turnConfig = turn;
       const room = T.joinRoom(cfg, topicHex);
       const act = room.makeAction('bp');
-      const rec = { room, act, peers: new Set() };
+      const rec = { room, act, peers: new Set(), opened: new Set() };
       const pid = (p) => 'w:' + id + ':' + p;
-      room.onPeerJoin = (p) => { rec.peers.add(p); emit({ type: 'open', peer: pid(p), remoteKey: p, localKey: T.selfId }); };
-      room.onPeerLeave = (p) => { if (rec.peers.delete(p)) emit({ type: 'close', peer: pid(p) }); };
-      act.onMessage = (data, meta) => { const p = meta && meta.peerId !== undefined ? meta.peerId : meta; if (typeof data === 'string') emit({ type: 'msg', peer: pid(p), data }); };
+      /* a peer is announced once; a message from a peer we have not announced yet announces it first (the join event and the first message can arrive in either order) */
+      const open = (p) => { if (rec.opened.has(p)) return; rec.opened.add(p); emit({ type: 'open', peer: pid(p), remoteKey: p, localKey: T.selfId }); };
+      room.onPeerJoin = (p) => { rec.peers.add(p); RTC.__delayOpenMs ? setTimeout(() => open(p), RTC.__delayOpenMs) : open(p); };      // __delayOpenMs: test hook (simulates a slow join event)
+      room.onPeerLeave = (p) => { rec.opened.delete(p); if (rec.peers.delete(p)) emit({ type: 'close', peer: pid(p) }); };
+      act.onMessage = (data, meta) => { const p = meta && meta.peerId !== undefined ? meta.peerId : meta; if (typeof data !== 'string') return; rec.peers.add(p); open(p); emit({ type: 'msg', peer: pid(p), data }); };
       rooms.set(id, rec);
     } catch (e) { lastError = String((e && e.message) || e); return { error: lastError }; }
     return { ok: true };

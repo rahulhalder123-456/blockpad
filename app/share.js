@@ -236,11 +236,11 @@
   const proof = (readKey, a, b) => hex(sha(readKey + '|' + a + '|' + b)).slice(0, 32);
   const verifiedPeers = (sp, except) => [...SH.peers.values()].filter((p) => p.ok.has(sp.id) && p.id !== except);
 
-  function sendHi(peerId) {
+  function sendHi(peerId, retry) {
     const peer = SH.peers.get(peerId);
     if (!peer) return;
     const spaces = SH.spaces().map((sp) => ({ id: sp.id, proof: proof(sp.readKey, peer.localKey, peer.remoteKey) }));
-    send(peerId, { t: 'hi', v: 1, who: { id: store().me.id, name: BP.me(), color: store().me.color }, spaces });
+    send(peerId, { t: 'hi', v: 1, r: retry ? 1 : 0, who: { id: store().me.id, name: BP.me(), color: store().me.color }, spaces });
   }
   function sendHave(sp, peerId) {
     const units = {};
@@ -260,6 +260,7 @@
     if (!peer || !m || typeof m !== 'object') return;
     if (m.t === 'hi') {
       peer.who = m.who || {};
+      if (m.r) sendHi(peerId);          // the other side is still waiting for our hello: answer again (a hello can get lost)
       (m.spaces || []).forEach((x) => {
         const sp = SH.space(x.id);
         if (!sp || x.proof !== proof(sp.readKey, peer.remoteKey, peer.localKey)) return;
@@ -433,6 +434,11 @@
     document.addEventListener('focusin', track);
     setInterval(() => { presenceNow(); Object.keys(SH.pres).forEach((s) => Object.keys(SH.pres[s]).forEach((id) => { if (Date.now() - SH.pres[s][id].seen > 30000) delete SH.pres[s][id]; })); changed(); }, 10000);
     SH.spaces().forEach(connect);
+    /* flaky links: keep re-introducing ourselves to peers that have not accepted us yet, and every 20 s compare what each side has so a lost message heals */
+    setInterval(() => {
+      SH.peers.forEach((peer) => { if (SH.spaces().some((sp) => !peer.ok.has(sp.id)) && (peer.hiTries = (peer.hiTries || 0) + 1) <= 20) sendHi(peer.id, true); });
+    }, 3000);
+    setInterval(() => { SH.spaces().forEach((sp) => verifiedPeers(sp).forEach((p) => sendHave(sp, p.id))); }, 20000);
     const hm = /^#d=([A-Za-z0-9_-]+)$/.exec(location.hash);     // the web app opened from a share link (…/app/#d=…)
     if (hm) { history.replaceState(null, '', location.pathname + location.search); setTimeout(() => BP.joinDialog && BP.joinDialog('https://blockpad.invalid/join#d=' + hm[1]), 600); }
     window.bp && window.bp.ready && window.bp.ready();

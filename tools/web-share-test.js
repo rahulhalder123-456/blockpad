@@ -16,6 +16,7 @@ app.whenReady().then(async () => {
   const fail = (m) => { console.log('FAIL ' + m); console.log('WEB SHARE TEST FAILED'); app.exit(1); };
   const A = await open('A'); const B = await open('B');
   await ev(A, 'window.__rep = ' + (+process.env.REP || 0));
+  await ev(B, 'BP.rtc.__delayOpenMs = ' + (+process.env.DELAY || 0));
   const avail = await Promise.all([A, B].map((w) => ev(w, 'BP.share.available()')));
   console.log('sharing available (A, B):', avail.join(', '));
   if (!avail.every(Boolean)) return fail('sharing not available in the web app');
