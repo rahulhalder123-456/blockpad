@@ -10,20 +10,20 @@ One code base, five kinds of device. What was actually tested:
 
 | Platform | What you get | Tested how |
 |---|---|---|
-| **Windows** 10/11 | Everything: editor, databases, offline AI, peer-to-peer sharing. One-click installer (`installer/Blockpad-Setup.exe`) or `build/v1.7.3/Blockpad-win32-x64/Blockpad.exe` | Full suite on the packaged app and on the installed copy |
+| **Windows** 10/11 | Everything: editor, databases, offline AI, peer-to-peer sharing. One-click installer (`installer/Blockpad-Setup.exe`) or `build/v1.8.0/Blockpad-win32-x64/Blockpad.exe` | Full suite on the packaged app and on the installed copy |
 | **Linux** x86-64 | Everything | Full suite incl. 3 real processes sharing, on Ubuntu 24.04 (WSL2, virtual display) |
 | **macOS** Apple silicon + Intel | Everything | Built; structure verified (right CPU architecture for the app, the AI engine and the native modules; `blockpad://` links registered). **Not run on a Mac.** The GitHub Actions workflow runs the tests on real Mac machines |
 | **Android** 7+ | Editor and databases, offline, touch-friendly (no AI, no sharing yet) | Real APK on an Android 16 emulator (Pixel 6): real touches and keyboard, restart, airplane mode, rotation |
 | **iPhone / iPad / any browser** | The same web app, installable (Add to Home Screen), works offline (no AI, no sharing yet) | Chromium and WebKit (Safari's engine) with an iPhone profile. A native iOS shell for xtool is in `ios-xtool/` (**not compiled**: needs your Apple ID and Xcode) |
 
-Build commands: `npm run package` (Windows), `npm run package:linux`, `npm run package:mac-arm64`, `npm run package:mac-x64` (run the Linux/macOS ones on Linux, macOS or WSL), `npm run web` (browser/phone app into `site/app`), `npm run android` then build in `android/` with Gradle. `.github/workflows/build.yml` builds and tests all of them on GitHub and attaches the downloads to a release when you push a tag like `v1.7.3`.
+Build commands: `npm run package` (Windows), `npm run package:linux`, `npm run package:mac-arm64`, `npm run package:mac-x64` (run the Linux/macOS ones on Linux, macOS or WSL), `npm run web` (browser/phone app into `site/app`), `npm run android` then build in `android/` with Gradle. `.github/workflows/build.yml` builds and tests all of them on GitHub and attaches the downloads to a release when you push a tag like `v1.8.0`.
 
 ### Phones and the browser
 The phone/web build keeps your workspace in the browser's IndexedDB on that device (nothing is uploaded) and works with no network. Built-in AI and peer-to-peer sharing need the desktop apps for now: they rely on a native AI engine and on UDP networking that browsers and phone web views do not provide. A browser-compatible sharing transport (WebRTC) is the planned way to add it.
 
 ## Run it
 
-- **Windows:** `build/v1.7.3/Blockpad-win32-x64/Blockpad.exe` (a shortcut named *Blockpad* is on the Desktop), or install with `installer/Blockpad-Setup.exe`.
+- **Windows:** `build/v1.8.0/Blockpad-win32-x64/Blockpad.exe` (a shortcut named *Blockpad* is on the Desktop), or install with `installer/Blockpad-Setup.exe`.
 - **From source:** `npm install` then `npm start`.
 - **Regenerate icons:** `npm run icons` (all sizes, `.ico`, `.icns`, Android launcher icons).
 
