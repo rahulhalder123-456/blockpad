@@ -1,7 +1,8 @@
 """Synthesizes the soundtrack for the Blockpad launch cut (brag-output/work/music.wav).
 Everything is generated on one 120 BPM grid counted from the first sample, so drums, bass, arpeggio and the sound effects on the cuts never drift:
     python tools/make-brag-music.py <out.wav>
-Structure (24 s = 48 beats): 0-2 s riser into the reveal, 2-24 s four-on-the-floor groove in A minor (Am F C G), cuts at 2 / 5.5 / 9.5 / 13.5 / 17.5 / 20 s, a click at 11.3 s (the Board tab click)."""
+Structure (24 s = 48 beats): 0-2 s riser + a 4-note hook melody into the reveal, 2-24 s four-on-the-floor groove in A minor (Am F C G) with the
+pads/arpeggio/melody side-chained to the kick for a pumping, "produced" feel, cuts at 2 / 5.5 / 9.5 / 13.5 / 17.5 / 20 s, a click at 11.3 s (the Board tab click)."""
 import sys
 import numpy as np
 from scipy.signal import lfilter, butter, sosfilt
@@ -15,14 +16,17 @@ N = int(SR * DUR)
 t_all = np.arange(N) / SR
 rng = np.random.default_rng(7)
 
-L = np.zeros(N); R = np.zeros(N)
+# two buses: BED (pads, arpeggio, melody) gets side-chain-ducked under every kick; PUNCH (drums, bass, fx) does not
+bedL = np.zeros(N); bedR = np.zeros(N)
+pL = np.zeros(N); pR = np.zeros(N)
 
-def add(sig, start, gain=1.0, pan=0.0):
-    """mix a mono signal in at `start` seconds; pan -1..1"""
+def add(sig, start, gain=1.0, pan=0.0, bus='punch'):
+    """mix a mono signal in at `start` seconds; pan -1..1; bus 'bed' (ducked) or 'punch' (not ducked)"""
     i = int(round(start * SR))
     if i >= N: return
     seg = sig[: N - i]
     gl = gain * np.cos((pan + 1) * np.pi / 4); gr = gain * np.sin((pan + 1) * np.pi / 4)
+    L, R = (bedL, bedR) if bus == 'bed' else (pL, pR)
     L[i:i + len(seg)] += seg * gl; R[i:i + len(seg)] += seg * gr
 
 def lowpass(x, fc, order=2): return sosfilt(butter(order, fc, 'low', fs=SR, output='sos'), x)
@@ -103,6 +107,18 @@ def tick():
     t = np.arange(int(SR * 0.09)) / SR
     return (np.sin(2 * np.pi * 2300 * t) * np.exp(-t * 90) + 0.4 * np.sin(2 * np.pi * 3400 * t) * np.exp(-t * 130))
 
+def shaker(length=0.07):
+    t = np.arange(int(SR * length)) / SR
+    return bandpass(rng.standard_normal(len(t)), 4500, 11000) * np.exp(-t * 55)
+
+def lead(f, length=0.85):
+    """the hook melody voice: warmer and rounder than the arpeggio's pluck, with a slow vibrato so it sits as a tune, not a blip"""
+    t = np.arange(int(SR * length)) / SR
+    vib = 1 + 0.006 * np.sin(2 * np.pi * 5.5 * t)
+    x = 0.6 * np.sin(2 * np.pi * f * vib * t) + 0.3 * np.sin(2 * np.pi * 2 * f * vib * t) * np.exp(-t * 3) + 0.15 * np.sin(2 * np.pi * 3 * f * t) * np.exp(-t * 6)
+    env = np.minimum(1, t / 0.02) * np.exp(-t * 2.1)
+    return x * env
+
 # ---- the groove ----
 CHORDS = [  # (root midi for bass, chord notes for pad, arpeggio notes)  Am F C G, 4 beats each bar, two bars per chord
     (45, [57, 60, 64], [69, 72, 76, 81]),
@@ -113,34 +129,39 @@ CHORDS = [  # (root midi for bass, chord notes for pad, arpeggio notes)  Am F C 
 total_beats = int(DUR / BEAT)           # 48
 GROOVE_START = 2.0                       # the reveal: drums and bass come in
 kk = kick(); hh = hat(); ho = hat(open_=True); cl = clap()
+kick_times = []
 
 for b in range(total_beats):
     tb = b * BEAT
     chord = CHORDS[(b // 8) % 4]          # 8 beats (2 bars) per chord
-    # pad: one chord per 8 beats, wide stereo, present from the first second
+    # pad: one chord per 8 beats, wide stereo, present from the first second (ducked bus: breathes under every kick)
     if b % 8 == 0:
         pl, pr = pad_chord(chord[1], 8 * BEAT + 0.3)
-        add(pl, tb, 0.055, -1); add(pr, tb, 0.055, 1)
+        add(pl, tb, 0.062, -1, bus='bed'); add(pr, tb, 0.062, 1, bus='bed')
     # arpeggio: 8th notes, quiet in the hook, full after the reveal
     for e in range(2):
         te = tb + e * BEAT / 2
         step = (b * 2 + e)
         note = chord[2][[0, 1, 2, 3, 2, 1, 3, 2][step % 8]]
         g = 0.05 if te < GROOVE_START else 0.085
-        add(pluck(hz(note)), te, g, pan=-0.35 if step % 2 == 0 else 0.35)
+        add(pluck(hz(note)), te, g, pan=-0.35 if step % 2 == 0 else 0.35, bus='bed')
     if tb >= GROOVE_START and tb < DUR - 2 * BEAT:
-        add(kk, tb, 0.62)
+        add(kk, tb, 0.62); kick_times.append(tb)
         add(hat(), tb + BEAT / 2, 0.11 if b % 2 == 0 else 0.09, pan=0.2)
         if b % 2 == 1: add(cl, tb, 0.2, pan=-0.05)                  # clap on 2 and 4
         if b % 4 == 3: add(ho, tb + BEAT / 2, 0.1, pan=0.2)
-        # bass: root on the beat and the "and" of 3, an octave up on the "and" of 4
+        for qi, off in enumerate((0.25, 0.75)):                     # a light shaker on the off-16ths for groove texture
+            add(shaker(), tb + off * BEAT, 0.035, pan=0.3 if qi == 0 else -0.3)
+        # bass: root on the beat and the "and" of 3, an octave up on the "and" of 4 (locked to the kick: not ducked)
         root = hz(chord[0])
         add(bass_note(root, BEAT * 0.9), tb, 0.34)
         if b % 4 == 2: add(bass_note(root * 2, BEAT * 0.45), tb + BEAT / 2, 0.2)
         if b % 4 == 3: add(bass_note(root, BEAT * 0.45), tb + BEAT / 2, 0.24)
 
-# ---- the hook: a riser that lands exactly on the reveal ----
-add(riser(GROOVE_START), 0, 0.22)
+# ---- the hook: a riser plus a plain 4-note motif (A C E A, one per beat) so the opening has a tune, not just noise ----
+add(riser(GROOVE_START), 0, 0.2)
+for i, note in enumerate([69, 72, 76, 69]):
+    add(lead(hz(note), BEAT * 1.6), i * BEAT, 0.16, pan=0.0, bus='bed')
 # ---- sound effects on the cuts (all on the beat grid) ----
 cuts = [2.0, 5.5, 9.5, 13.5, 17.5, 20.0]
 for c in cuts:
@@ -149,7 +170,16 @@ for c in cuts:
 add(tick(), 11.3, 0.22)                                              # the Board tab click
 # ---- ending: a final chord ring-out on the last bar, fade ----
 fl, fr = pad_chord([57, 60, 64, 69], 3.0)
-add(fl, 21.0, 0.09, -1); add(fr, 21.0, 0.09, 1)
+add(fl, 21.0, 0.09, -1, bus='bed'); add(fr, 21.0, 0.09, 1, bus='bed')
+
+# ---- side-chain: duck the bed (pads/arpeggio/melody) under every kick, classic pumping compression, so the drop breathes ----
+duck = np.ones(N)
+for kt in kick_times:
+    i0 = int(round(kt * SR)); length = min(int(0.16 * SR), N - i0)
+    if length <= 0: continue
+    tt = np.arange(length) / SR
+    duck[i0:i0 + length] = np.minimum(duck[i0:i0 + length], 1 - 0.38 * np.exp(-tt / 0.05))
+L = bedL * duck + pL; R = bedR * duck + pR
 
 # ---- a little space: dotted-8th stereo echo on the arpeggio band, then a soft limiter and the final fade ----
 def echo(x, delay, fb, mix):
