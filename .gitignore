@@ -19,3 +19,8 @@ ios-xtool/.build/
 ios-xtool/.swiftpm/
 dist/
 release/
+
+# Android signing secrets (the key itself lives outside the repo)
+android/keystore.properties
+*.jks
+*.keystore
