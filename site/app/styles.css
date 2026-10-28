@@ -359,5 +359,13 @@ button, .icon-btn, .sb-item, .menu-item { touch-action: manipulation; }
   .tbl-wrap, .table-wrap { overflow-x: auto; }
   .pagewrap { padding-bottom: 40vh; }
   input, textarea, select, .txt, .ta { font-size: 16px; }          /* stops iOS zooming into focused fields */
+  /* comments become a bottom sheet instead of a 320px column that squeezes the page */
+  .comments { position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; width: 100%; height: 60dvh; border-left: 0; border-top: 1px solid var(--border); border-radius: 16px 16px 0 0; box-shadow: 0 -8px 28px rgba(0,0,0,.28); padding-bottom: env(safe-area-inset-bottom); }
+  .comments .cm-head { padding-left: 16px; }
+  .comments textarea { min-height: 64px; }
+  .page, .pagewrap.full .page { max-width: 100%; overflow-wrap: anywhere; }
+  .page img, .page video, .page iframe, .page .media { max-width: 100%; height: auto; }
+  .scroller { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 }
+@media (max-width: 400px) { .topbar .crumbs .crumb:not(.last) { display: none; } .title-in { font-size: 26px; } }
 @supports (padding: max(0px)) { .topbar { padding-left: max(6px, env(safe-area-inset-left)); } }
