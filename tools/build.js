@@ -7,13 +7,15 @@ const root = path.join(__dirname, '..');
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
 const target = process.argv[2];
 if (!/^(win32-x64|linux-x64|darwin-arm64|darwin-x64)$/.test(target || '')) { console.error('usage: node tools/build.js <win32-x64|linux-x64|darwin-arm64|darwin-x64> [--out dir]'); process.exit(2); }
+require('./stamp-version');          // app/version.js = package.json version
 const [platform, arch] = target.split('-');
 const oi = process.argv.indexOf('--out');
 const out = path.resolve(root, oi > 0 ? process.argv[oi + 1] : 'build/v' + pkg.version);
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const ignore = [
-  /^\/(replica|tools|dist|release|build|installer|site|android|ios|ios-xtool|web|capacitor.config.json|.gitignore|\.github|\.claude|README\.md|smoke.*)(\/|$)/,
+  /^\/(replica|tools|dist|release|build|installer|site|android|ios|ios-xtool|web|capacitor.config.json|.gitignore|\.github|\.claude|README\.md|codemagic\.yaml|smoke.*)(\/|$)/,
+  /\.tar\.gz$/,
   new RegExp('^/node_modules/[^/]+/prebuilds/(?!' + esc(target) + ')'),     // other platforms' native modules
   new RegExp('^/engine/(?!' + esc(target) + '(/|$))'),                       // other platforms' AI engines
   /^\/node_modules\/(electron|electron-builder|@electron\/packager|app-builder-bin|app-builder-lib)(\/|$)/,

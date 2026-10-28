@@ -19,6 +19,9 @@ contextBridge.exposeInMainWorld('bp', {
   aiChat: (req) => ipcRenderer.invoke('ai:chat', req),
   apiConfigure: (cfg) => ipcRenderer.invoke('api:configure', cfg),
   ready: () => ipcRenderer.invoke('app:ready'),
+  platform: process.platform,
+  arch: process.arch,
+  updateInfo: () => ipcRenderer.invoke('update:info'),
   onLink: (cb) => ipcRenderer.on('app:link', (_e, url) => cb(url)),
   zipApp: () => ipcRenderer.invoke('app:zip'),
   p2p: {

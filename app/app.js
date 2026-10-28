@@ -801,9 +801,10 @@
       if (a.enabled && window.bp) apply();
     }
     function about(p) {
-      p.append(h('div', { class: 'about' }, h('img', { src: '../assets/logo.svg', alt: '', width: 72, height: 72 }), h('div', null, h('h2', null, 'Blockpad'), h('p', { class: 'muted' }, 'Version 1.6.0 · local-first notes, wiki and databases'))),
+      p.append(h('div', { class: 'about' }, h('img', { src: '../assets/logo.svg', alt: '', width: 72, height: 72 }), h('div', null, h('h2', null, 'Blockpad'), h('p', { class: 'muted' }, 'Version ' + (BP.appVersion || '') + ' · local-first notes, wiki and databases'))),
         h('p', null, 'Blockpad is an independent app inspired by block-based workspaces. It is not affiliated with, endorsed by, or built from any other product’s code, logos or content.'),
-        h('p', { class: 'muted' }, 'No account, no server, no telemetry. Works fully offline.'));
+        h('p', { class: 'muted' }, 'No account, no server, no telemetry. Works fully offline. The installed apps only contact the Blockpad site to check whether a newer version exists.'),
+        BP.isInstalledApp ? h('button', { class: 'btn', onclick: () => BP.checkUpdate(true) }, 'Check for updates') : '');
     }
   }
   function pickText(accept, cb) {

@@ -214,6 +214,13 @@ ipcMain.handle('devtools', () => win && win.webContents.toggleDevTools());
 
 /* ---- link previews (only runs when you add a bookmark; needs internet) ---- */
 const unent = (s) => String(s || '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0*39;|&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#x27;/g, "'").trim();
+ipcMain.handle('update:info', async () => {          // the release manifest the site publishes; fetched here because the page's CSP only allows its own files
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 8000);
+    const r = await fetch('https://blockpad-umber.vercel.app/version.json', { cache: 'no-store', signal: ctl.signal }); clearTimeout(t);
+    return r.ok ? await r.json() : null;
+  } catch (_) { return null; }
+});
 ipcMain.handle('meta:fetch', async (_e, url) => {
   try {
     if (!/^https?:\/\//i.test(url)) return { error: 'bad url' };
