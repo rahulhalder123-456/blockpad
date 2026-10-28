@@ -1,7 +1,7 @@
 /* Renders the official Blockpad mark (the "B-Blocks" logo) into every icon the project uses:
      node_modules\electron\dist\electron.exe tools\make-brand.js
    writes assets/logo.svg, icon.png, icon-512.png, icon.ico, icon.icns and assets/icons/* (PWA, Apple touch, App Store). */
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, nativeImage } = require('electron');
 const fs = require('fs'); const path = require('path');
 const A = path.join(__dirname, '..', 'assets');
 const DEFS = '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a6bff"/><stop offset="1" stop-color="#2b2889"/></linearGradient></defs>';
@@ -15,9 +15,13 @@ const svg = (kind, extra = '') => `<svg xmlns="http://www.w3.org/2000/svg" viewB
 fs.writeFileSync(path.join(A, 'logo.svg'), svg('tile', ' width="256" height="256"'));
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 let win; const masters = {};
-const master = async (kind) => {      // one window, three 1024px masters; every other size is a high-quality downscale
-  if (!win) { win = new BrowserWindow({ show: false, width: 1024, height: 1024, useContentSize: true, transparent: true, frame: false }); await win.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent('<style>html,body{margin:0;background:transparent;overflow:hidden}svg{display:block;width:1024px;height:1024px}</style><div id="x"></div>')); }
-  if (!masters[kind]) { await win.webContents.executeJavaScript('document.getElementById("x").innerHTML=' + JSON.stringify(svg(kind)) + ';0'); await wait(300); masters[kind] = await win.webContents.capturePage(); }
+const master = async (kind) => {      // three 1024px masters drawn on a canvas (independent of the screen size); every other size is a downscale of those
+  if (!masters[kind]) {
+    if (!win) { win = new BrowserWindow({ show: false, width: 300, height: 300 }); await win.loadURL('data:text/html;charset=utf-8,<body></body>'); }
+    const url = await win.webContents.executeJavaScript(`new Promise((res, rej) => { const i = new Image(); i.onload = () => { const c = document.createElement('canvas'); c.width = c.height = 1024; c.getContext('2d').drawImage(i, 0, 0, 1024, 1024); res(c.toDataURL('image/png')); }; i.onerror = () => rej(new Error('svg failed to load')); i.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(${JSON.stringify(svg(kind, ' width="1024" height="1024"'))}); })`);
+    masters[kind] = nativeImage.createFromDataURL(url);
+    const sz = masters[kind].getSize(); if (sz.width !== 1024 || sz.height !== 1024) throw new Error('master render is ' + sz.width + 'x' + sz.height);
+  }
   return masters[kind];
 };
 const render = async (kind, size) => { const m = await master(kind); return (size === 1024 ? m : m.resize({ width: size, height: size, quality: 'best' })).toPNG(); };
@@ -53,4 +57,4 @@ app.whenReady().then(async () => {
   }
   console.log('brand assets written');
   app.exit(0);
-});
+}).catch((e) => { console.error('make-brand FAILED:', e && e.message); app.exit(1); });

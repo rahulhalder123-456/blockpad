@@ -1,17 +1,17 @@
 {
-  "version": "1.8.2",
+  "version": "1.8.3",
   "released": "2026-10-28",
   "notes": [
-    "Update notifications: apps now tell you when a new version is out",
-    "New B-Blocks logo",
-    "Phone layout and dialog fixes"
+    "New startup animation with the Blockpad logo",
+    "Corrected app icons and launch screens",
+    "Update notifications, new logo and phone fixes from earlier releases"
   ],
   "page": "https://blockpad-umber.vercel.app/#download",
   "downloads": {
-    "windows": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.2/Blockpad-Setup.exe",
+    "windows": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.3/Blockpad-Setup.exe",
     "macosArm": "",
     "macosIntel": "",
-    "linux": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.2/Blockpad-linux-x64.tar.gz",
+    "linux": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.3/Blockpad-linux-x64.tar.gz",
     "android": "https://blockpad-umber.vercel.app/download/Blockpad.apk"
   }
 }

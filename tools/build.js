@@ -14,7 +14,7 @@ const out = path.resolve(root, oi > 0 ? process.argv[oi + 1] : 'build/v' + pkg.v
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const ignore = [
-  /^\/(replica|tools|dist|release|build|installer|site|android|ios|ios-xtool|web|capacitor.config.json|.gitignore|\.github|\.claude|README\.md|codemagic\.yaml|smoke.*)(\/|$)/,
+  /^\/(replica|tools|dist|release|build|installer|site|android|ios|ios-xtool|web|capacitor.config.json|.gitignore|\.github|\.claude|README\.md|codemagic\.yaml|promo|smoke.*)(\/|$)/,
   /\.tar\.gz$/,
   new RegExp('^/node_modules/[^/]+/prebuilds/(?!' + esc(target) + ')'),     // other platforms' native modules
   new RegExp('^/engine/(?!' + esc(target) + '(/|$))'),                       // other platforms' AI engines

@@ -4,5 +4,5 @@
   "webDir": "site/app",
   "server": { "androidScheme": "https" },
   "android": { "allowMixedContent": false, "webContentsDebuggingEnabled": true },
-  "backgroundColor": "#ffffff"
+  "backgroundColor": "#17143f"
 }

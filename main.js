@@ -25,7 +25,7 @@ function createWindow() {
     height: 820,
     minWidth: 760,
     minHeight: 520,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#17143f',
     title: 'Blockpad',
     icon: path.join(__dirname, 'assets', process.platform === 'win32' ? 'icon.ico' : 'icon.png'),
     webPreferences: {
