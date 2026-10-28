@@ -20,7 +20,7 @@ app.whenReady().then(async () => {
   console.log('sharing available (A, B):', avail.join(', '));
   if (!avail.every(Boolean)) return fail('sharing not available in the web app');
 
-  const link = await ev(A, `(async () => { const p = BP.allPages().find((x) => /welcome/i.test(x.title)) || BP.allPages()[0]; const base = p.blocks.slice(); const rep = +(window.__rep || 0); for (let k = 0; k < rep; k++) base.forEach((b, i) => { const c = JSON.parse(JSON.stringify(b)); c.id = 'x' + k + '_' + i + '_' + Math.random().toString(36).slice(2, 7); p.blocks.push(c); }); window.__n = p.blocks.length; const sp = await BP.share.start(p.id); window.__pid = p.id; return BP.share.link(sp, true, true); })()`);
+  const link = await ev(A, `(async () => { const p = BP.allPages().find((x) => /welcome/i.test(x.title)) || BP.allPages()[0]; const base = p.blocks.slice(); const rep = +(window.__rep || 0); for (let k = 0; k < rep; k++) base.forEach((b, i) => { const c = JSON.parse(JSON.stringify(b)); c.id = 'x' + k + '_' + i + '_' + Math.random().toString(36).slice(2, 7); p.blocks.push(c); }); window.__n = p.blocks.length; const sp = await BP.share.start(p.id); window.__pid = p.id; return BP.share.link(sp, ${process.env.VIEW ? 'false' : 'true'}, true); })()`);
   console.log('link created:', link.slice(0, 40) + '…');
   await ev(B, `(async () => { const info = BP.share.parseLink(${JSON.stringify(link)}); window.__root = info.root; await BP.share.join(info); })()`);
 

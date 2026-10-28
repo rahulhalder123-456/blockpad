@@ -37,6 +37,19 @@
     });
   };
 
+
+  /* connection test: shows what this device can reach (signalling servers, public address) and who is connected */
+  BP.netTest = function (host) {
+    const out = h('pre', { class: 'muted small', style: 'white-space:pre-wrap;margin:6px 0 0' });
+    const btn = h('button', { class: 'btn small', onclick: async () => {
+      btn.disabled = true; out.textContent = 'Testing… (about 8 seconds)';
+      try { const lines = BP.rtc && BP.rtc.diagnose ? await BP.rtc.diagnose() : ['WebRTC transport not available']; const st = await SH.net.status(); out.textContent = lines.concat('connected people: ' + st.peers + (st.error ? '  error: ' + st.error : '')).join(String.fromCharCode(10)); }
+      catch (e) { out.textContent = 'Test failed: ' + e.message; }
+      btn.disabled = false;
+    } }, 'Test connection');
+    host.append(btn, out);
+  };
+
   /* ---------- join ---------- */
   BP.joinDialog = function (url) {
     if (!SH.available()) return BP.toast('Sharing is not available here (no network transport)', 4000);
@@ -143,6 +156,7 @@
         if (seen.size) { el.append(h('h3', null, 'Also edited here')); seen.forEach((n) => el.append(item('#9a9890', n, 'Offline', ''))); }
         const net = h('div', { class: 'muted small' }, 'Network: checking…');
         el.append(net);
+        BP.netTest(el);
         SH.net.status().then((s) => { net.textContent = 'Network: ' + (s.running ? 'connected to the peer network' : 'idle') + ' · ' + SH.peerCount(sp) + ' direct connection' + (SH.peerCount(sp) === 1 ? '' : 's') + (s.error ? ' · ' + s.error : ''); }).catch(() => {});
       }
       function exp(el) { BP.exportRows(el, p, close); }
@@ -180,7 +194,8 @@
     };
     draw();
     pane.append(list, h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => BP.joinDialog() }, 'Join with a link…'),
-      window.bp.zipApp ? h('button', { class: 'btn', onclick: async (e) => { e.target.disabled = true; BP.toast('Preparing a copy of Blockpad… this can take a minute', 6000); try { const r = await window.bp.zipApp(); if (r && r.error) BP.toast(r.error, 7000); else if (r && r.path) BP.toast('Saved ' + r.path, 7000); } finally { e.target.disabled = false; } } }, 'Send Blockpad to a friend (zip)') : null));
+      window.bp && window.bp.zipApp ? h('button', { class: 'btn', onclick: async (e) => { e.target.disabled = true; BP.toast('Preparing a copy of Blockpad… this can take a minute', 6000); try { const r = await window.bp.zipApp(); if (r && r.error) BP.toast(r.error, 7000); else if (r && r.path) BP.toast('Saved ' + r.path, 7000); } finally { e.target.disabled = false; } } }, 'Send Blockpad to a friend (zip)') : null));
+    BP.netTest(pane);
     pane.append(h('h3', null, 'How sharing works'), h('p', { class: 'muted small' }, 'Blockpad uses peer-to-peer networking (the same idea as BitTorrent). A share link holds a secret that lets Blockpads on different computers find each other and connect directly, encrypted. No Blockpad server and no account are involved, and nothing is contacted until you share or join something. People with a view-only link cannot change your page, because every edit is signed with a key that link does not contain. Only the newest change to the same block wins, so two people typing in the very same block at once can overwrite each other.'));
     const off = SH.on(() => { if (pane.isConnected) draw(); else off(); });
   };

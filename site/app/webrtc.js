@@ -60,5 +60,30 @@
     return { running: rooms.size > 0, topics: rooms.size, peers, error: lastError };
   };
 
+  /* what can this device reach? (used by the "Test connection" button) */
+  RTC.diagnose = async () => {
+    const out = [];
+    const trackers = ['open.ftorrent.com', 'tracker.webtorrent.dev', 'tracker.openwebtorrent.com', 'tracker.btorrent.xyz', 'tracker.files.fm:7073/announce'];
+    await Promise.all(trackers.map((t) => new Promise((res) => {
+      let done = false;
+      const fin = (ok) => { if (done) return; done = true; out.push((ok ? 'OK   ' : 'FAIL ') + 'signalling server ' + t.split('/')[0]); res(); };
+      try { const ws = new WebSocket('wss://' + t); ws.onopen = () => { fin(true); try { ws.close(); } catch (_) {} }; ws.onerror = () => fin(false); setTimeout(() => { fin(false); try { ws.close(); } catch (_) {} }, 6000); } catch (_) { fin(false); }
+    })));
+    out.sort();
+    const types = await new Promise((res) => {
+      if (typeof RTCPeerConnection === 'undefined') return res([]);
+      const set = new Set(); let pc;
+      try { pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.cloudflare.com:3478' }] }); } catch (_) { return res([]); }
+      pc.createDataChannel('d');
+      pc.onicecandidate = (e) => { if (e.candidate) { const m = / typ (\w+)/.exec(e.candidate.candidate); if (m) set.add(m[1]); } else res([...set]); };
+      pc.createOffer().then((o) => pc.setLocalDescription(o)).catch(() => res([]));
+      setTimeout(() => res([...set]), 6000);
+    });
+    out.push((types.includes('srflx') ? 'OK   ' : 'FAIL ') + 'public address via STUN (candidates: ' + (types.join(', ') || 'none') + ')');
+    const st = await RTC.status();
+    out.push('rooms joined: ' + st.topics + ', peers: ' + st.peers);
+    return out;
+  };
+
   RTC.stop = async () => { await Promise.all([...rooms.keys()].map(RTC.leave)); };
 })();
