@@ -89,3 +89,9 @@ assets/               logo.svg, icon.png, icon.ico
 tools/                icon generator and smoke tests (npm start with --smoke=tools/smokeN.js)
 replica/              recon map and feature matrix from the replica-recon step
 ```
+
+## Releasing an update (users of the installed apps get a popup)
+1. Bump `version` in `package.json` (and `versionName`/`versionCode` in `android/app/build.gradle`).
+2. Build and upload the downloads (Windows installer, Linux, macOS, Android APK) to a GitHub release.
+3. Run `node tools/make-site-config.js --windows URL --linux URL --android URL --notes "what is new|another point"` (macOS links you do not pass keep their old value).
+4. Commit and push: Vercel publishes `site/version.json`. Every installed app older than that version shows "Update available" at its next launch (Windows, Linux, macOS, Android, iOS; the web app updates itself).
