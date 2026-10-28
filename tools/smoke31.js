@@ -3,9 +3,9 @@
 module.exports = async (t) => {
   let fails = 0;
   const check = (label, cond, extra) => { console.log((cond ? 'PASS ' : 'FAIL ') + label + (extra ? '  ' + extra : '')); if (!cond) fails++; };
-  await t.wait(1500);
+  await t.wait(7000);      // let the automatic launch check (4 s after load) run first
   check('installed app is detected (not the web app)', await t.eval('BP.isInstalledApp === true'));
-  check('app knows its version', await t.eval('/^\d+\.\d+\.\d+/.test(BP.appVersion)'), await t.eval('BP.appVersion'));
+  check('app knows its version', await t.eval('BP.appVersion.split(".").length === 3 && BP.appVersion.split(".").every((x) => x !== "" && !isNaN(x))'), await t.eval('BP.appVersion'));
   await t.eval('BP.checkUpdate(false)'); await t.wait(1500);
   check('up to date: no popup', await t.eval(`![...document.querySelectorAll('.modal')].some(m => /Update available/.test(m.textContent))`));
   await t.eval(`BP.appVersion = '1.0.0'; BP.checkUpdate(false)`); await t.wait(3000);
