@@ -8,14 +8,14 @@
   Object.keys(names).forEach((k) => {
     const a = document.getElementById('p-' + k);
     if (!a) return;
-    if (d[k]) a.href = d[k]; else { a.removeAttribute('href'); a.style.opacity = '.55'; a.title = 'Download link not set up yet'; }
+    if (d[k]) { a.href = d[k]; if (/.(apk|exe)$/i.test(d[k])) a.setAttribute('download', ''); } else { a.removeAttribute('href'); a.style.opacity = '.55'; a.title = 'Download link not set up yet'; }
     if (k === os) a.style.outline = '2px solid var(--accent)';
   });
   const dl = document.getElementById('dl');
   if (os === 'ios') { dl.textContent = 'Open the web app'; dl.href = 'app/'; document.getElementById('dl-note').textContent = 'On iPhone and iPad: open it in Safari, then Share → Add to Home Screen.'; document.getElementById('webapp').hidden = true; }
   else {
     dl.textContent = 'Download for ' + names[os];
-    if (d[os]) dl.href = d[os]; else { dl.removeAttribute('href'); dl.textContent = 'Download link not set up yet'; dl.style.opacity = '.6'; }
+    if (d[os]) { dl.href = d[os]; if (/.(apk|exe)$/i.test(d[os])) dl.setAttribute('download', ''); } else { dl.removeAttribute('href'); dl.textContent = 'Download link not set up yet'; dl.style.opacity = '.6'; }
     if (os === 'windows' && cfg.sizeMB) document.getElementById('dl-note').textContent = 'Version ' + (cfg.version || '') + ' · about ' + cfg.sizeMB + ' MB · Windows 10 or 11, 64-bit.';
     else document.getElementById('dl-note').textContent = 'Version ' + (cfg.version || '');
   }

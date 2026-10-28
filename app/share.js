@@ -56,7 +56,20 @@
   SH.me = () => store().me;
   SH.spaces = () => Object.values(store().spaces);
   SH.space = (id) => store().spaces[id] || null;
-  SH.available = () => !!(window.bp && window.bp.p2p && nacl);
+  /* transports: Hyperswarm in the desktop app, WebRTC (webrtc.js) everywhere, so a phone and a computer can share with each other */
+  const nets = () => [window.bp && window.bp.p2p, BP.rtc && BP.rtc.available() ? BP.rtc : null].filter(Boolean);
+  const netOf = (peer) => (BP.rtc && BP.rtc.owns(peer) ? BP.rtc : window.bp && window.bp.p2p);
+  SH.net = {
+    join: (id, topic) => Promise.all(nets().map((n) => Promise.resolve(n.join(id, topic)).catch((e) => console.error(e)))),
+    leave: (id) => Promise.all(nets().map((n) => Promise.resolve(n.leave(id)).catch(() => {}))),
+    send: (peer, data) => { const n = netOf(peer); return n && n.send(peer, data); },
+    onEvent: (fn) => nets().forEach((n) => n.onEvent(fn)),
+    status: async () => {
+      const all = await Promise.all(nets().map((n) => Promise.resolve(n.status()).catch(() => ({}))));
+      return { running: all.some((x) => x.running), peers: all.reduce((a, x) => a + (x.peers || 0), 0), error: all.map((x) => x.error).filter(Boolean)[0] || '' };
+    },
+  };
+  SH.available = () => !!(nacl && nets().length);
 
   SH.spaceOf = (p) => {
     const spaces = store().spaces;
@@ -219,7 +232,7 @@
   }
 
   /* ---------- transport ---------- */
-  const send = (peer, msg) => { try { window.bp.p2p.send(peer, JSON.stringify(msg)); } catch (_) {} };
+  const send = (peer, msg) => { try { SH.net.send(peer, JSON.stringify(msg)); } catch (_) {} };
   const proof = (readKey, a, b) => hex(sha(readKey + '|' + a + '|' + b)).slice(0, 32);
   const verifiedPeers = (sp, except) => [...SH.peers.values()].filter((p) => p.ok.has(sp.id) && p.id !== except);
 
@@ -332,11 +345,11 @@
   const topicOf = (readKey) => hex(sha('blockpad-topic|' + readKey).slice(0, 32));
   async function connect(sp) {
     if (!SH.available()) return;
-    try { await window.bp.p2p.join(sp.id, topicOf(sp.readKey)); } catch (e) { console.error(e); }
+    try { await SH.net.join(sp.id, topicOf(sp.readKey)); } catch (e) { console.error(e); }
     [...SH.peers.keys()].forEach(sendHi);
   }
   SH.start = async function (pageId) {
-    if (!SH.available()) throw new Error('Sharing needs the desktop app');
+    if (!SH.available()) throw new Error('Sharing is not available here (no network transport)');
     const p = BP.page(pageId);
     if (!p) throw new Error('Page not found');
     const existing = SH.spaceOf(p);
@@ -373,7 +386,7 @@
     return { id: String(d.s), name: String(d.n || 'Shared page').slice(0, 120), root: String(d.g), readKey: String(d.r), writePub: String(d.p), writeSec: d.k ? String(d.k) : null };
   };
   SH.join = async function (info) {
-    if (!SH.available()) throw new Error('Sharing needs the desktop app');
+    if (!SH.available()) throw new Error('Sharing is not available here (no network transport)');
     const have = SH.space(info.id);
     if (have) {
       if (info.writeSec && have.role === 'viewer') { have.writeSec = info.writeSec; have.role = 'editor'; (BP.__origSave || BP.save)(); changed(); }
@@ -398,7 +411,7 @@
     const root = BP.page(sp.root);
     if (root) delete root.sharedRoot;          // the pages stay on this computer as a normal copy
     SH.peers.forEach((p) => p.ok.delete(spId));
-    try { await window.bp.p2p.leave(spId); } catch (_) {}
+    try { await SH.net.leave(spId); } catch (_) {}
     (BP.__origSave || BP.save)();
     changed();
   };
@@ -410,13 +423,15 @@
     BP.__origSave = BP.save;
     BP.save = function () { BP.__origSave.apply(this, arguments); SH.schedule(); };
     if (!SH.available()) return;
-    window.bp.p2p.onEvent(onEvent);
-    window.bp.onLink && window.bp.onLink((url) => BP.joinDialog && BP.joinDialog(url));
+    SH.net.onEvent(onEvent);
+    window.bp && window.bp.onLink && window.bp.onLink((url) => BP.joinDialog && BP.joinDialog(url));
     const track = () => { const a = document.activeElement; const b = a && a.closest ? a.closest('.block') : null; focusBlock = b ? b.dataset.id : null; SH.presenceSoon(); };
     document.addEventListener('focusin', track);
     setInterval(() => { presenceNow(); Object.keys(SH.pres).forEach((s) => Object.keys(SH.pres[s]).forEach((id) => { if (Date.now() - SH.pres[s][id].seen > 30000) delete SH.pres[s][id]; })); changed(); }, 10000);
     SH.spaces().forEach(connect);
-    window.bp.ready && window.bp.ready();
+    const hm = /^#d=([A-Za-z0-9_-]+)$/.exec(location.hash);     // the web app opened from a share link (…/app/#d=…)
+    if (hm) { history.replaceState(null, '', location.pathname + location.search); setTimeout(() => BP.joinDialog && BP.joinDialog('https://blockpad.invalid/join#d=' + hm[1]), 600); }
+    window.bp && window.bp.ready && window.bp.ready();
   };
   SH.newPage = () => SH.presenceSoon();
   SH.reconnect = () => { SH.spaces().forEach(connect); };

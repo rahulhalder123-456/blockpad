@@ -21,6 +21,8 @@
   $('open').href = appLink;
   $('applink').value = appLink;
   $('applink2').value = appLink;
+  const webLink = '/app/#d=' + m[1];
+  $('webopen').href = webLink; $('webopen2').href = webLink;
   const ua = navigator.userAgent;
   const os = /Windows/i.test(ua) ? 'windows' : /Mac/i.test(ua) && !/iPhone|iPad/i.test(ua) ? 'macosArm' : /Linux|X11/i.test(ua) && !/Android/i.test(ua) ? 'linux' : '';
   const dls = cfg.downloads || { windows: cfg.downloadUrl };

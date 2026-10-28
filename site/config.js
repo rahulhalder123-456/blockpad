@@ -6,7 +6,7 @@ window.BLOCKPAD = {
     "macosArm": "",
     "macosIntel": "",
     "linux": "",
-    "android": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.6.0/Blockpad.apk"
+    "android": "https://blockpad-umber.vercel.app/download/Blockpad.apk"
   },
   "downloadUrl": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.6.0/Blockpad-Setup.exe",
   "sizeMB": 131,

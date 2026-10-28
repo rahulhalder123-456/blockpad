@@ -39,7 +39,7 @@
 
   /* ---------- join ---------- */
   BP.joinDialog = function (url) {
-    if (!SH.available()) return BP.toast('Sharing needs the desktop app', 4000);
+    if (!SH.available()) return BP.toast('Sharing is not available here (no network transport)', 4000);
     BP.modal('Join a shared page', (body, close) => {
       const inp = h('input', { class: 'input', placeholder: 'Paste the share link', value: url || '' });
       const info = h('div', { class: 'join-info' });
@@ -95,7 +95,7 @@
       obs.observe(document.body, { childList: true });
 
       function invite(el) {
-        if (!SH.available()) return el.append(h('p', { class: 'muted' }, 'Sharing needs the desktop app.'));
+        if (!SH.available()) return el.append(h('p', { class: 'muted' }, 'Sharing is not available here (no network transport).'));
         const sp = SH.spaceOf(p);
         if (!sp) {
           el.append(h('h3', null, 'Share “' + (p.title || 'Untitled') + '” with other people'),
@@ -143,7 +143,7 @@
         if (seen.size) { el.append(h('h3', null, 'Also edited here')); seen.forEach((n) => el.append(item('#9a9890', n, 'Offline', ''))); }
         const net = h('div', { class: 'muted small' }, 'Network: checking…');
         el.append(net);
-        window.bp.p2p.status().then((s) => { net.textContent = 'Network: ' + (s.running ? 'connected to the peer network' : 'idle') + ' · ' + SH.peerCount(sp) + ' direct connection' + (SH.peerCount(sp) === 1 ? '' : 's') + (s.error ? ' · ' + s.error : ''); }).catch(() => {});
+        SH.net.status().then((s) => { net.textContent = 'Network: ' + (s.running ? 'connected to the peer network' : 'idle') + ' · ' + SH.peerCount(sp) + ' direct connection' + (SH.peerCount(sp) === 1 ? '' : 's') + (s.error ? ' · ' + s.error : ''); }).catch(() => {});
       }
       function exp(el) { BP.exportRows(el, p, close); }
       show(tab || (SH.spaceOf(p) ? 'invite' : 'invite'));
@@ -168,7 +168,7 @@
     paintSite();
     pane.append(h('label', { class: 'muted' }, 'Your Blockpad website (optional)'), site, siteMsg);
     pane.append(h('h3', null, 'Shared pages'));
-    if (!SH.available()) return pane.append(h('p', { class: 'muted' }, 'Sharing needs the desktop app.'));
+    if (!SH.available()) return pane.append(h('p', { class: 'muted' }, 'Sharing is not available here (no network transport).'));
     const list = h('div', { class: 'sh-list' });
     const draw = () => {
       list.innerHTML = '';

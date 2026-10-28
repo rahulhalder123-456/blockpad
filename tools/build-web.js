@@ -26,7 +26,7 @@ fs.copyFileSync(path.join(root, 'assets', 'logo.svg'), path.join(out, 'assets', 
 
 // index.html for the web
 let html = fs.readFileSync(path.join(out, 'index.html'), 'utf8');
-const csp = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: http:; media-src 'self' data: blob: https: http:; frame-src 'self' blob: data: https: http:; object-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' blob: data: https: http:; manifest-src 'self'; worker-src 'self'";
+const csp = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: http:; media-src 'self' data: blob: https: http:; frame-src 'self' blob: data: https: http:; object-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' blob: data: https: http: wss:; manifest-src 'self'; worker-src 'self'";
 html = html.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>/, `<meta http-equiv="Content-Security-Policy" content="${csp}">`)
   .replace('<meta name="viewport" content="width=device-width, initial-scale=1">', '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n  <meta name="theme-color" content="#5b5bd6">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-status-bar-style" content="default">\n  <meta name="apple-mobile-web-app-title" content="Blockpad">\n  <link rel="manifest" href="manifest.webmanifest">\n  <link rel="apple-touch-icon" href="assets/apple-touch-180.png">')
   .replace('</body>', '  <script src="pwa.js"></script>\n</body>');
