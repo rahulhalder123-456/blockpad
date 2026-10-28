@@ -1,0 +1,51 @@
+# Codemagic builds Blockpad for macOS and the iOS simulator on a cloud Mac (free tier: 500 macOS minutes a month).
+# Use it when GitHub Actions is not available: sign in at https://codemagic.io with GitHub, add this repository,
+# pick "codemagic.yaml" as the configuration, then start the workflow you want. Download the files from the build page.
+workflows:
+  macos-desktop:
+    name: Blockpad for macOS (Apple silicon + Intel)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      node: 22
+    scripts:
+      - name: Install
+        script: npm ci
+      - name: AI engines for macOS
+        script: bash tools/fetch-engines.sh darwin-arm64 && bash tools/fetch-engines.sh darwin-x64
+      - name: Build both Macs
+        script: |
+          node tools/build.js darwin-arm64 --out build
+          node tools/build.js darwin-x64 --out build
+      - name: Zip
+        script: |
+          cd build
+          ditto -c -k --keepParent Blockpad-darwin-arm64/Blockpad.app "$CM_BUILD_DIR/Blockpad-macos-arm64.zip"
+          ditto -c -k --keepParent Blockpad-darwin-x64/Blockpad.app "$CM_BUILD_DIR/Blockpad-macos-x64.zip"
+    artifacts:
+      - Blockpad-macos-*.zip
+
+  ios-simulator:
+    name: Blockpad iOS (simulator build for Appetize.io)
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    environment:
+      node: 22
+    scripts:
+      - name: Web app + iOS project
+        script: |
+          npm ci
+          node tools/build-web.js
+          npm i --no-save @capacitor/ios@^7
+          npx cap add ios
+          npx cap sync ios
+      - name: Build for the simulator (no signing needed)
+        script: |
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -sdk iphonesimulator -configuration Debug \
+            -derivedDataPath build/ios CODE_SIGNING_ALLOWED=NO build
+      - name: Zip the app
+        script: |
+          cd build/ios/Build/Products/Debug-iphonesimulator
+          zip -r "$CM_BUILD_DIR/Blockpad-ios-simulator.zip" App.app
+    artifacts:
+      - Blockpad-ios-simulator.zip
