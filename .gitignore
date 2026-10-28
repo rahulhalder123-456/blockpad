@@ -13,7 +13,6 @@ android/app/src/main/assets/capacitor.config.json
 ios/
 engine/linux-*/
 engine/darwin-*/
-site/app/
 
 ios-xtool/Resources/web/
 ios-xtool/.build/
