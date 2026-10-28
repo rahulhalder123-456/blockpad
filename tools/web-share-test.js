@@ -15,11 +15,12 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 app.whenReady().then(async () => {
   const fail = (m) => { console.log('FAIL ' + m); console.log('WEB SHARE TEST FAILED'); app.exit(1); };
   const A = await open('A'); const B = await open('B');
+  await ev(A, 'window.__rep = ' + (+process.env.REP || 0));
   const avail = await Promise.all([A, B].map((w) => ev(w, 'BP.share.available()')));
   console.log('sharing available (A, B):', avail.join(', '));
   if (!avail.every(Boolean)) return fail('sharing not available in the web app');
 
-  const link = await ev(A, `(async () => { const p = BP.allPages().find((x) => /welcome/i.test(x.title)) || BP.allPages()[0]; const sp = await BP.share.start(p.id); window.__pid = p.id; return BP.share.link(sp, true, true); })()`);
+  const link = await ev(A, `(async () => { const p = BP.allPages().find((x) => /welcome/i.test(x.title)) || BP.allPages()[0]; const base = p.blocks.slice(); const rep = +(window.__rep || 0); for (let k = 0; k < rep; k++) base.forEach((b, i) => { const c = JSON.parse(JSON.stringify(b)); c.id = 'x' + k + '_' + i + '_' + Math.random().toString(36).slice(2, 7); p.blocks.push(c); }); window.__n = p.blocks.length; const sp = await BP.share.start(p.id); window.__pid = p.id; return BP.share.link(sp, true, true); })()`);
   console.log('link created:', link.slice(0, 40) + '…');
   await ev(B, `(async () => { const info = BP.share.parseLink(${JSON.stringify(link)}); window.__root = info.root; await BP.share.join(info); })()`);
 
@@ -28,6 +29,11 @@ app.whenReady().then(async () => {
   console.log('B received page title:', got);
   if (!got) return fail('B never received the shared page');
 
+  let nb = 0; for (let i = 0; i < 90 && !nb; i++) { await wait(1000); nb = await ev(B, `(BP.page(window.__root).blocks || []).length`); }
+  await wait(5000); nb = await ev(B, `(BP.page(window.__root).blocks || []).length`);
+  const na = await ev(A, 'window.__n');
+  console.log('blocks A/B:', na, nb);
+  if (nb < na) return fail('blocks missing on B');
   const marker = 'Edited by A ' + Date.now();
   await ev(A, `(() => { BP.page(window.__pid).title = ${JSON.stringify(marker)}; BP.save(); BP.share.pushNow(); })()`);
   let seen = false;

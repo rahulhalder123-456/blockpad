@@ -27,7 +27,7 @@ function createWindow() {
     minHeight: 520,
     backgroundColor: '#ffffff',
     title: 'Blockpad',
-    icon: path.join(__dirname, 'assets', 'icon.png'),
+    icon: path.join(__dirname, 'assets', process.platform === 'win32' ? 'icon.ico' : 'icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -48,6 +48,7 @@ function createWindow() {
   });
 }
 
+if (process.platform === 'win32') app.setAppUserModelId('app.blockpad.desktop');      // stable taskbar identity (icon, pinning, grouping)
 app.whenReady().then(() => {
   // macOS needs a real menu for Cmd+C/V/X/Z/Q to work in text fields; the other platforms run without one
   if (process.platform === 'darwin') {
