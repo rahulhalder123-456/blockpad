@@ -12,6 +12,10 @@ const topic = require('crypto').randomBytes(32).toString('hex');
 const code = (name) => `new Promise(async (res) => {
   const R = window.BP.rtc, got = [], opened = [], t0 = Date.now();
   if (!R.available()) return res({ name: '${name}', fail: 'rtc not available' });
+  const seen = []; const Orig = window.RTCPeerConnection;
+  window.RTCPeerConnection = function (cfg, ...r) { seen.push(JSON.stringify((cfg && cfg.iceServers) || [])); return new Orig(cfg, ...r); };
+  window.RTCPeerConnection.prototype = Orig.prototype;
+  window.BP.state = { settings: { turn: { urls: 'turn:127.0.0.1:3478', username: 'u', credential: 'p' } } };
   R.onEvent((ev) => {
     if (ev.type === 'open') { opened.push(ev); R.send(ev.peer, 'hello from ${name}'); setTimeout(() => R.send(ev.peer, 'again from ${name}'), 1500); }
     if (ev.type === 'msg') got.push(ev.data);
@@ -20,7 +24,7 @@ const code = (name) => `new Promise(async (res) => {
   const iv = setInterval(() => {
     if (got.length >= 2 || Date.now() - t0 > 70000) {
       clearInterval(iv);
-      res({ name: '${name}', ms: Date.now() - t0, got, keys: opened[0] && [opened[0].localKey, opened[0].remoteKey] });
+      res({ name: '${name}', ms: Date.now() - t0, got, keys: opened[0] && [opened[0].localKey, opened[0].remoteKey], relayInIce: seen.some((x) => x.includes('127.0.0.1:3478')) });
     }
   }, 300);
 })`;
@@ -33,7 +37,7 @@ const run = (name) => new Promise((resolve) => {
 app.whenReady().then(async () => {
   const [a, b] = await Promise.all([run('A'), run('B')]);
   console.log(JSON.stringify(a)); console.log(JSON.stringify(b));
-  const ok = a.got && b.got && a.got.includes('hello from B') && b.got.includes('hello from A') && a.keys[0] === b.keys[1] && a.keys[1] === b.keys[0];
+  const ok = a.got && b.got && a.got.includes('hello from B') && b.got.includes('hello from A') && a.keys[0] === b.keys[1] && a.keys[1] === b.keys[0] && a.relayInIce && b.relayInIce;
   console.log(ok ? 'RTC TEST PASSED' : 'RTC TEST FAILED');
   app.exit(ok ? 0 : 1);
 });

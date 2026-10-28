@@ -50,6 +50,15 @@
     host.append(btn, out);
   };
 
+  /* optional relay (TURN) server, for networks where two devices cannot connect directly */
+  BP.relaySettings = function (host) {
+    const cur = (BP.state.settings.turn = BP.state.settings.turn || {});
+    const field = (key, label, ph, type) => h('label', { class: 'muted small', style: 'display:block;margin-top:6px' }, label, h('input', { class: 'input', type: type || 'text', placeholder: ph, value: cur[key] || '', oninput: (e) => { cur[key] = e.target.value.trim(); BP.save(); } }));
+    host.append(h('h3', null, 'Relay server (optional)'),
+      h('p', { class: 'muted small' }, 'If a phone and a computer cannot connect (some mobile networks block direct connections), a TURN relay can forward the already-encrypted traffic. Free accounts: Metered.ca or Cloudflare Realtime. Reopen Blockpad after changing this.'),
+      field('urls', 'Server URL(s)', 'turn:host:80, turns:host:443'), field('username', 'Username', ''), field('credential', 'Password', '', 'password'));
+  };
+
   /* ---------- join ---------- */
   BP.joinDialog = function (url) {
     if (!SH.available()) return BP.toast('Sharing is not available here (no network transport)', 4000);
@@ -196,6 +205,7 @@
     pane.append(list, h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => BP.joinDialog() }, 'Join with a link…'),
       window.bp && window.bp.zipApp ? h('button', { class: 'btn', onclick: async (e) => { e.target.disabled = true; BP.toast('Preparing a copy of Blockpad… this can take a minute', 6000); try { const r = await window.bp.zipApp(); if (r && r.error) BP.toast(r.error, 7000); else if (r && r.path) BP.toast('Saved ' + r.path, 7000); } finally { e.target.disabled = false; } } }, 'Send Blockpad to a friend (zip)') : null));
     BP.netTest(pane);
+    BP.relaySettings(pane);
     pane.append(h('h3', null, 'How sharing works'), h('p', { class: 'muted small' }, 'Blockpad uses peer-to-peer networking (the same idea as BitTorrent). A share link holds a secret that lets Blockpads on different computers find each other and connect directly, encrypted. No Blockpad server and no account are involved, and nothing is contacted until you share or join something. People with a view-only link cannot change your page, because every edit is signed with a key that link does not contain. Only the newest change to the same block wins, so two people typing in the very same block at once can overwrite each other.'));
     const off = SH.on(() => { if (pane.isConnected) draw(); else off(); });
   };

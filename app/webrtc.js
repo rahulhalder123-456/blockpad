@@ -17,11 +17,32 @@
     onEvent: (fn) => { subs.push(fn); },
   });
 
+  /* Optional relay (TURN) servers, used only when two devices cannot connect directly (strict NAT, many mobile networks); the data stays end-to-end
+     encrypted, a relay only forwards it. Sources: turn.json shipped next to the app (see README), or Settings -> Sharing -> Relay server. */
+  const turnOf = (c) => {
+    const urls = (Array.isArray(c && c.urls) ? c.urls : String((c && c.urls) || '').split(/[\s,]+/)).filter((u) => /^turns?:/i.test(u));
+    return urls.length ? { urls, username: String(c.username || ''), credential: String(c.credential || '') } : null;
+  };
+  let shipped = [];
+  RTC.turnReady = (async () => {
+    try {
+      if (!/^https?:$/.test(location.protocol)) return;
+      const r = await fetch('turn.json', { cache: 'no-store' });
+      if (r.ok) { const j = await r.json(); shipped = (Array.isArray(j) ? j : [j]).map(turnOf).filter(Boolean); }
+    } catch (_) {}
+  })();
+  const turnServers = () => { const st = BP.state && BP.state.settings && BP.state.settings.turn; const mine = st && turnOf(st); return mine ? shipped.concat(mine) : shipped; };
+  RTC.relayCount = () => turnServers().length;
+
   RTC.join = async (id, topicHex) => {
     if (!RTC.available()) return { error: 'WebRTC is not available' };
     if (rooms.has(id)) return { ok: true };
     try {
-      const room = T.joinRoom({ appId: 'blockpad-p2p-v1', password: 'bp:' + topicHex }, topicHex);
+      await RTC.turnReady;
+      const cfg = { appId: 'blockpad-p2p-v1', password: 'bp:' + topicHex };
+      const turn = turnServers();
+      if (turn.length) cfg.turnConfig = turn;
+      const room = T.joinRoom(cfg, topicHex);
       const act = room.makeAction('bp');
       const rec = { room, act, peers: new Set() };
       const pid = (p) => 'w:' + id + ':' + p;
@@ -81,6 +102,7 @@
     });
     out.push((types.includes('srflx') ? 'OK   ' : 'FAIL ') + 'public address via STUN (candidates: ' + (types.join(', ') || 'none') + ')');
     const st = await RTC.status();
+    out.push((RTC.relayCount() ? 'OK   ' : 'none ') + 'relay servers configured: ' + RTC.relayCount() + (RTC.relayCount() ? '' : '  (only direct connections are possible)'));
     out.push('rooms joined: ' + st.topics + ', peers: ' + st.peers);
     return out;
   };

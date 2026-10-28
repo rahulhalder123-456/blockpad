@@ -24,6 +24,9 @@ fs.mkdirSync(path.join(out, 'assets'), { recursive: true });
 fs.copyFileSync(path.join(root, 'assets', 'logo.svg'), path.join(out, 'assets', 'logo.svg'));
 ['icon-192.png', 'icon-512.png', 'maskable-512.png', 'apple-touch-180.png'].forEach((f) => fs.copyFileSync(path.join(root, 'assets', 'icons', f), path.join(out, 'assets', f)));
 
+// optional relay (TURN) servers shipped with the web/phone app: put turn.json ([{urls, username, credential}]) in the project root
+if (fs.existsSync(path.join(root, 'turn.json'))) fs.copyFileSync(path.join(root, 'turn.json'), path.join(out, 'turn.json'));
+
 // index.html for the web
 let html = fs.readFileSync(path.join(out, 'index.html'), 'utf8');
 const csp = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: http:; media-src 'self' data: blob: https: http:; frame-src 'self' blob: data: https: http:; object-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' blob: data: https: http: wss:; manifest-src 'self'; worker-src 'self'";
