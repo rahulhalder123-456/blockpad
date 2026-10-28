@@ -5,7 +5,7 @@ window.BLOCKPAD = {
     "windows": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.7.3/Blockpad-Setup.exe",
     "macosArm": "",
     "macosIntel": "",
-    "linux": "",
+    "linux": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.7.3/Blockpad-linux-x64.tar.gz",
     "android": "https://blockpad-umber.vercel.app/download/Blockpad.apk"
   },
   "downloadUrl": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.7.3/Blockpad-Setup.exe",
