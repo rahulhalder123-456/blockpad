@@ -1,0 +1,2 @@
+Blockpad keeps your notes, databases and comments on your own device: no account, no cloud. Share a page with one link, device to device. Free for Windows, Linux, Android and the web.
+blockpad-umber.vercel.app

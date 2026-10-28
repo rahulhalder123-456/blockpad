@@ -24,3 +24,6 @@ release/
 android/keystore.properties
 *.jks
 *.keystore
+
+# promo video working files
+brag-output/work/

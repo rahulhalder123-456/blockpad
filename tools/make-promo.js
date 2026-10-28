@@ -51,14 +51,14 @@ async function scene(name, meta, frames, step) {
   segs.push(Object.assign({ name, frames }, meta)); console.log('scene', name, frames);
 }
 const cardScene = (name, html, frames) => async () => {
-  expectRatio = 16 / 9; win.webContents.disableDeviceEmulation(); win.setContentSize(1280, 720); await win.loadURL(card(html)); win.webContents.setZoomFactor(1); await wait(250);
+  expectRatio = 16 / 9; win.setContentSize(1280, 720); await win.loadURL(card(html)); win.webContents.setZoomFactor(1); await wait(250);
   await ev(`document.getAnimations().forEach(a=>a.pause())`);
   await scene(name, { type: 'card' }, frames, (p, i) => ev(`document.getAnimations().forEach(a=>{a.currentTime=${(i / 30) * 1000}})`));
 };
 const key = (k) => { win.webContents.sendInputEvent({ type: 'keyDown', keyCode: k }); if (k === 'Enter') win.webContents.sendInputEvent({ type: 'char', keyCode: '\r' }); win.webContents.sendInputEvent({ type: 'keyUp', keyCode: k }); };
 const typeCh = (ch) => win.webContents.sendInputEvent({ type: 'char', keyCode: ch });
 const typingPlan = (tokens, start, perChar) => { const ops = []; let f = start; for (const t of tokens) { if (t === 'Enter') { ops.push({ f: Math.round(f), k: 1 }); f += 7; } else { for (const ch of t) { ops.push({ f: Math.round(f), ch }); f += perChar; } f += 6; } } return { ops, end: Math.round(f) }; };
-const desktop = async () => { expectRatio = 16 / 9; win.webContents.disableDeviceEmulation(); win.setContentSize(1280, 720); await win.loadURL(APP); win.webContents.setZoomFactor(1); await wait(3200); await ev(`BP.setTheme('dark')`); await ev(CURSOR); await wait(300); };
+const desktop = async () => { expectRatio = 16 / 9; win.setContentSize(1280, 720); await win.loadURL(APP); win.webContents.setZoomFactor(1); await wait(3200); await ev(`BP.setTheme('dark')`); await ev(CURSOR); await wait(300); };
 const phone = async () => { expectRatio = 390 / 780; win.setContentSize(390, 780); await win.loadURL(APP); win.webContents.setZoomFactor(1); await wait(3200); await ev(`BP.setTheme('light')`); await ev(CURSOR); await wait(300); };
 const openPage = (re) => ev(`(()=>{BP.open(BP.allPages().find(x=>${re}.test(x.title)).id)})()`);
 
