@@ -43,7 +43,12 @@ fs.writeFileSync(path.join(out, 'manifest.webmanifest'), JSON.stringify({
 }, null, 2));
 
 fs.writeFileSync(path.join(out, 'pwa.js'), `/* registers the offline cache (only over http/https; not in the Electron app) */
-if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  const had = !!navigator.serviceWorker.controller;      // an update (not the first install) takes over: reload once so the new version runs
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (had && !reloaded) { reloaded = true; location.reload(); } });
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').then((r) => r.update()).catch(() => {}));
+}
 `);
 const all = walk(out).filter((f) => f !== 'sw.js');
 const hash = crypto.createHash('sha1'); all.sort().forEach((f) => { hash.update(f); hash.update(fs.readFileSync(path.join(out, f))); });
