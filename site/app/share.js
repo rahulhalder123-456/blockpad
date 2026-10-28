@@ -76,6 +76,12 @@
     for (let c = p, n = 0; c && n < 60; c = BP.page(c.parent), n++) if (c.sharedRoot && spaces[c.sharedRoot]) return spaces[c.sharedRoot];
     return null;
   };
+  /* a joined page that is still the empty stub: the owner's content has not arrived yet */
+  SH.loading = (p) => {
+    const sp = p && p.sharedRoot && store().spaces[p.sharedRoot];
+    const u = sp && p.id === sp.root && sp.units[kP(p.id)];
+    return !!(u && u.t && u.t[0] === 0 && !(p.blocks || []).length);
+  };
   SH.isViewer = (p) => { const sp = p && SH.spaceOf(p); return !!sp && sp.role === 'viewer'; };
   const members = (sp) => [sp.root, ...BP.descendants(sp.root)].filter((id) => BP.page(id));
   const kP = (pid) => 'p:' + pid;
@@ -389,6 +395,7 @@
   SH.join = async function (info) {
     if (!SH.available()) throw new Error('Sharing is not available here (no network transport)');
     const have = SH.space(info.id);
+    if (have && (!BP.page(info.root) || BP.isTrashed(BP.page(info.root)))) { await SH.leave(info.id); return SH.join(info); }      // the page was deleted here: start the join over
     if (have) {
       if (info.writeSec && have.role === 'viewer') { have.writeSec = info.writeSec; have.role = 'editor'; (BP.__origSave || BP.save)(); changed(); }
       return have;

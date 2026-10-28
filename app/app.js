@@ -114,6 +114,7 @@
       if (editor && p.type !== 'db' && !r.metaCh.has(id)) { editor.page = p; editor.render(); editor.base = editor.serialize(); }
       else renderAll();
       restoreFocus(keep);
+      const sk = BP.$('.sh-loading'); if (sk && !BP.share.loading(p)) sk.remove();
       BP.share.paintMarks();
     },
   };
@@ -379,6 +380,7 @@
     } else {
       const host = h('div', { class: 'edhost' });
       page.append(host);
+      if (BP.share.loading(p)) page.append(h('div', { class: 'sh-loading' }, h('div', { class: 'sh-sk', style: { width: '92%' } }), h('div', { class: 'sh-sk', style: { width: '78%' } }), h('div', { class: 'sh-sk', style: { width: '85%' } }), h('div', { class: 'sh-sk', style: { width: '52%' } }), h('div', { class: 'sh-msg' }, h('i', { class: 'sh-spin' }), 'Loading shared content… waiting for the owner’s device to come online.')));
       editor = new BP.Editor(host, p, { readonly: locked });
       BP.currentEditor = editor;
       // children pages listed under the editor if the page has subpages without a link block (e.g. created in the sidebar before links existed)
