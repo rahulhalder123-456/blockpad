@@ -342,10 +342,46 @@
     }
     return box;
   }
+  /* the placeholder on a joined page whose content has not arrived: a skeleton while there is hope, a clear answer once there is not */
+  function shLoading(p) {
+    const st = BP.share.loadState(p);
+    if (!st) return null;
+    const sp = BP.share.spaceOf(p);
+    const box = h('div', { class: 'sh-loading', 'data-state': st });
+    const remove = h('button', { class: 'btn small danger', onclick: async () => {
+      await BP.share.leave(sp.id); BP.purge(p.id);
+      BP.state.current = (BP.children(null)[0] || {}).id || null; renderAll();
+    } }, 'Remove this page');
+    if (st === 'waiting' || st === 'syncing') {
+      ['92%', '78%', '85%', '52%'].forEach((w) => box.append(h('div', { class: 'sh-sk', style: { width: w } })));
+      box.append(h('div', { class: 'sh-msg' }, h('i', { class: 'sh-spin' }), st === 'syncing' ? 'Connected. Loading shared content…' : 'Looking for the owner’s device…'));
+    } else if (st === 'offline') {
+      box.append(h('div', { class: 'sh-msg sh-stuck' }, h('b', null, 'Nobody who has this page is online right now.'),
+        h('span', null, 'The owner may have closed Blockpad, lost internet, or stopped sharing. It loads by itself as soon as someone who has it comes online.'),
+        h('div', { class: 'sh-act' }, h('button', { class: 'btn small', onclick: () => BP.share.retry(sp.id) }, 'Try again'), remove)));
+    } else {
+      box.append(h('div', { class: 'sh-msg sh-stuck' }, h('b', null, 'The owner stopped sharing this page.'),
+        h('span', null, 'Its content never reached this device, so there is nothing to keep. Ask the owner for a new link if you still need it.'),
+        h('div', { class: 'sh-act' }, remove)));
+    }
+    return box;
+  }
+  BP.share.on(() => {
+    const sk = BP.$('.sh-loading'), p = cur();
+    if (!sk || !p) return;
+    const st = BP.share.loadState(p);
+    if (!st) sk.remove();
+    else if (st !== sk.dataset.state) sk.replaceWith(shLoading(p));
+  });
+  BP.ui.shareEnded = (sp) => { const p = cur(); if (p && BP.share.spaceOf(p) === sp) renderAll(); };
   const coverClass = (c) => (c && c.startsWith('g:') ? 'cv-' + c.slice(2) : '');
   function pageView(p) {
     const trashed = BP.isTrashed(p);
     const wrap = h('div', { class: 'pagewrap' + (p.full || p.type === 'db' ? ' full' : '') + (p.small ? ' small' : '') + (p.font ? ' font-' + p.font : '') });
+    const esp = BP.share.spaceOf(p);
+    if (esp && esp.ended && !BP.share.loading(p)) {
+      wrap.append(h('div', { class: 'banner' }, 'The owner stopped sharing this page. This is your own copy now and it no longer syncs.', h('button', { class: 'btn small', onclick: async () => { await BP.share.leave(esp.id); renderAll(); } }, 'OK')));
+    }
     if (trashed) {
       wrap.append(h('div', { class: 'banner' }, 'This page is in the trash.', h('button', { class: 'btn small', onclick: () => { BP.restore(p.id); renderAll(); } }, 'Restore'), h('button', { class: 'btn small danger', onclick: async () => { if (await BP.confirm('Delete forever', 'This permanently deletes the page and everything inside it.')) { BP.purge(p.id); BP.state.current = (BP.children(null)[0] || {}).id || null; renderAll(); } } }, 'Delete forever')));
     }
@@ -386,7 +422,7 @@
     } else {
       const host = h('div', { class: 'edhost' });
       page.append(host);
-      if (BP.share.loading(p)) page.append(h('div', { class: 'sh-loading' }, h('div', { class: 'sh-sk', style: { width: '92%' } }), h('div', { class: 'sh-sk', style: { width: '78%' } }), h('div', { class: 'sh-sk', style: { width: '85%' } }), h('div', { class: 'sh-sk', style: { width: '52%' } }), h('div', { class: 'sh-msg' }, h('i', { class: 'sh-spin' }), 'Loading shared content… waiting for the owner’s device to come online.')));
+      const ls = shLoading(p); if (ls) page.append(ls);
       editor = new BP.Editor(host, p, { readonly: locked });
       BP.currentEditor = editor;
       // children pages listed under the editor if the page has subpages without a link block (e.g. created in the sidebar before links existed)

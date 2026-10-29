@@ -82,6 +82,23 @@
     const u = sp && p.id === sp.root && sp.units[kP(p.id)];
     return !!(u && u.t && u.t[0] === 0 && !(p.blocks || []).length);
   };
+  /* what to tell someone looking at that stub: still trying, connected and syncing, nobody with the page is online, or the owner stopped sharing */
+  const WAIT = 15000;
+  const waitFrom = new Map();
+  SH.loadState = (p) => {
+    if (!SH.loading(p)) return null;
+    const sp = store().spaces[p.sharedRoot];
+    if (sp.ended) return 'ended';
+    if (verifiedPeers(sp).length) return 'syncing';
+    return Date.now() - (waitFrom.get(sp.id) || 0) > WAIT ? 'offline' : 'waiting';
+  };
+  SH.retry = (spId) => {
+    const sp = SH.space(spId);
+    if (!sp) return;
+    SH.peers.forEach((peer) => { peer.hiTries = 0; });
+    connect(sp);
+    changed();
+  };
   SH.isViewer = (p) => { const sp = p && SH.spaceOf(p); return !!sp && sp.role === 'viewer'; };
   const members = (sp) => [sp.root, ...BP.descendants(sp.root)].filter((id) => BP.page(id));
   const kP = (pid) => 'p:' + pid;
@@ -241,6 +258,9 @@
   const send = (peer, msg) => { try { SH.net.send(peer, JSON.stringify(msg)); } catch (_) {} };
   const proof = (readKey, a, b) => hex(sha(readKey + '|' + a + '|' + b)).slice(0, 32);
   const verifiedPeers = (sp, except) => [...SH.peers.values()].filter((p) => p.ok.has(sp.id) && p.id !== except);
+  /* "the owner stopped sharing": signed with the write key, so a view-only member cannot fake it; everyone who hears it passes it on */
+  const endCanon = (spId) => sha('blockpad-end|' + spId);
+  const sendEnd = (sp, peerId) => sp.ended && send(peerId, { t: 'end', s: sp.id, sig: sp.ended.sig });
 
   function sendHi(peerId, retry) {
     const peer = SH.peers.get(peerId);
@@ -275,6 +295,7 @@
         scan(sp);
         sendHave(sp, peerId);
         sendPresence(sp, peerId);
+        sendEnd(sp, peerId);
       });
       changed();
       return;
@@ -295,6 +316,16 @@
         if (BP.ui && BP.ui.remote) BP.ui.remote(r);
         changed();
       }
+    } else if (m.t === 'end') {
+      if (sp.ended || sp.role === 'owner') return;
+      let ok = false;
+      try { ok = nacl.sign.detached.verify(endCanon(sp.id), unhex(String(m.sig)), b64.dec(sp.writePub)); } catch (_) {}
+      if (!ok) return;
+      sp.ended = { at: Date.now(), sig: String(m.sig) };
+      (BP.__origSave || BP.save)();
+      verifiedPeers(sp, peerId).forEach((p) => sendEnd(sp, p.id));
+      if (BP.ui && BP.ui.shareEnded) BP.ui.shareEnded(sp);
+      changed();
     } else if (m.t === 'pres') {
       const P = (SH.pres[sp.id] = SH.pres[sp.id] || {});
       const w = m.who || {};
@@ -357,6 +388,8 @@
   const topicOf = (readKey) => hex(sha('blockpad-topic|' + readKey).slice(0, 32));
   async function connect(sp) {
     if (!SH.available()) return;
+    waitFrom.set(sp.id, Date.now());
+    setTimeout(changed, WAIT + 500);
     try { await SH.net.join(sp.id, topicOf(sp.readKey)); } catch (e) { console.error(e); }
     [...SH.peers.keys()].forEach(sendHi);
   }
@@ -423,6 +456,13 @@
   SH.leave = async function (spId) {
     const sp = SH.space(spId);
     if (!sp) return;
+    if (sp.role === 'owner' && sp.writeSec && !sp.ended) {
+      // tell everyone online that sharing is over, so nobody waits for content that will not come; give the message a moment to leave
+      const sig = hex(nacl.sign.detached(endCanon(sp.id), b64.dec(sp.writeSec)));
+      const peers = verifiedPeers(sp);
+      peers.forEach((p) => send(p.id, { t: 'end', s: sp.id, sig }));
+      if (peers.length) await new Promise((r) => setTimeout(r, 400));
+    }
     delete store().spaces[spId];
     delete SH.pres[spId];
     const root = BP.page(sp.root);
