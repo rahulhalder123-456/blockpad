@@ -1,6 +1,6 @@
 {
   "name": "blockpad",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "Blockpad - a local-first block editor, wiki and database workspace",
   "main": "main.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "package:linux": "node tools/build.js linux-x64",
     "package:mac-arm64": "node tools/build.js darwin-arm64",
     "package:mac-x64": "node tools/build.js darwin-x64",
-    "installer": "electron-builder --prepackaged build/v1.8.3/Blockpad-win32-x64 --win nsis",
+    "installer": "electron-builder --prepackaged build/v1.8.4/Blockpad-win32-x64 --win nsis",
     "android": "node tools/build-web.js && cap sync android",
     "icons": "node tools/make-icon.js && node tools/make-pwa-icons.js"
   },
