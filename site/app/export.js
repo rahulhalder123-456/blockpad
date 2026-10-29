@@ -314,7 +314,7 @@
   /* ---------- workspace import / export ---------- */
   const stamp = () => new Date().toISOString().slice(0, 10);
   BP.safeName = (s) => (s || 'Untitled').replace(/[\\/:*?"<>|]+/g, '-').slice(0, 60);
-  BP.exportWorkspace = () => BP.download('blockpad-backup-' + stamp() + '.json', JSON.stringify(Object.assign({}, BP.state, { share: undefined }), null, 1), 'application/json');   // share links and keys are not exported: a backup must not be an invite
+  BP.exportWorkspace = () => (BP.materializeHistory(), BP.download('blockpad-backup-' + stamp() + '.json', JSON.stringify(Object.assign({}, BP.state, { share: undefined }), null, 1), 'application/json'));   // share links and keys are not exported: a backup must not be an invite
   BP.importWorkspaceText = function (text, mode) {
     const st = JSON.parse(text);
     if (!st || typeof st.pages !== 'object') throw new Error('Not a Blockpad backup file');

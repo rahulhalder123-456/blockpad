@@ -65,6 +65,7 @@ app.whenReady().then(() => {
   session.defaultSession.setPermissionCheckHandler((_wc, perm) => allowed.includes(perm));
   fs.mkdirSync(dataDir(), { recursive: true });
   try { if (fs.existsSync(dataFile())) fs.copyFileSync(dataFile(), path.join(dataDir(), 'workspace.bak.json')); } catch (_) {}
+  try { const hf = dataFile().replace(/\.json$/i, '') + '.history.json'; if (fs.existsSync(hf)) fs.copyFileSync(hf, path.join(dataDir(), 'workspace.history.bak.json')); } catch (_) {}
   createWindow();
   if (!smokeArg) {
     try {
@@ -141,6 +142,12 @@ function watchWorkspace() {
   });
 }
 ipcMain.handle('ws:load', () => { try { stamp(); return fs.readFileSync(dataFile(), 'utf8'); } catch (_) { return null; } });
+// page history lives next to the workspace (workspace.history.json): rewritten only when a version is added, so normal saves stay small
+const historyFile = () => dataFile().replace(/\.json$/i, '') + '.history.json';
+function writeHistory(json) { const tmp = historyFile() + '.tmp'; fs.writeFileSync(tmp, json, 'utf8'); fs.renameSync(tmp, historyFile()); }
+ipcMain.handle('ws:loadHistory', () => { try { return fs.readFileSync(historyFile(), 'utf8'); } catch (_) { return null; } });
+ipcMain.handle('ws:saveHistory', (_e, json) => { writeHistory(json); return true; });
+ipcMain.on('ws:saveHistorySync', (e, json) => { try { writeHistory(json); e.returnValue = true; } catch (_) { e.returnValue = false; } });
 ipcMain.handle('ws:save', (_e, json) => { writeWorkspace(json); return true; });
 ipcMain.on('ws:saveSync', (e, json) => { try { writeWorkspace(json); e.returnValue = true; } catch (_) { e.returnValue = false; } });
 ipcMain.handle('ws:path', () => dataFile());
@@ -156,7 +163,7 @@ ipcMain.handle('ws:chooseDir', async () => {
 ipcMain.handle('ws:setDir', (_e, dir, useExisting) => {
   const c = readConfig();
   const target = path.join(dir, 'workspace.json');
-  if (!useExisting || !fs.existsSync(target)) { try { fs.copyFileSync(dataFile(), target); } catch (_) {} }
+  if (!useExisting || !fs.existsSync(target)) { try { fs.copyFileSync(dataFile(), target); } catch (_) {} try { fs.copyFileSync(historyFile(), path.join(dir, 'workspace.history.json')); } catch (_) {} }
   c.dataDir = dir;
   writeConfig(c);
   watchWorkspace();

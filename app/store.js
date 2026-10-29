@@ -49,6 +49,59 @@
     try { await idbSet('ws', json); try { localStorage.removeItem('blockpad.ws'); } catch (_) {} }
     catch (e) { localStorage.setItem('blockpad.ws', json); }
   };
+
+  /* ---------- fast saving, at any workspace size ----------
+     Page history (up to 25 old copies of every page) lives in its own file / storage key and is rewritten only when a
+     version is added (or every 30 s while the newest one keeps changing); the main file holds the pages without it.
+     A save caused by editing (BP.touch) re-serializes only the pages that were edited and reuses the text of the rest;
+     any other change, a check a few seconds after editing stops, hiding / closing the app serialize every page, so a
+     change that did not go through BP.touch can never be left out for long. In memory nothing changes: pages keep
+     their .history, so every feature reads and writes the same objects as before. */
+  let split = true;                      // false only in a browser without IndexedDB: history then stays in the main data
+  const pageCache = new Map();           // page id -> { obj, json } (json without history)
+  const editedPages = new Set();
+  let fullSave = true, touching = false, needVerify = false, lastMain = '';
+  let savedHistSig = null, histDirty = false, lastHistWrite = 0;
+  const pageJson = (p) => { const h = p.history; p.history = undefined; try { return JSON.stringify(p); } finally { p.history = h; } };
+  function serializeMain(full) {
+    const st = BP.state, parts = [], pg = [];
+    for (const k of Object.keys(st)) {
+      if (k === 'pages') continue;
+      const v = JSON.stringify(st[k]);
+      if (v !== undefined) parts.push(JSON.stringify(k) + ':' + v);
+    }
+    for (const id of Object.keys(st.pages)) {
+      const p = st.pages[id];
+      if (!p || typeof p !== 'object') { pg.push(JSON.stringify(id) + ':null'); continue; }
+      let c = pageCache.get(id);
+      if (full || !c || c.obj !== p || editedPages.has(id)) { c = { obj: p, json: pageJson(p) }; pageCache.set(id, c); }
+      pg.push(JSON.stringify(id) + ':' + c.json);
+    }
+    if (pageCache.size > pg.length) for (const id of pageCache.keys()) if (!st.pages[id]) pageCache.delete(id);
+    parts.push('"pages":{' + pg.join(',') + '}');
+    return '{' + parts.join(',') + '}';
+  }
+  const histSig = () => { let n = 0, s = 0; for (const p of Object.values(BP.state.pages)) { const h = p && p.history; if (h && h.length) { n += h.length; s += (h[0].t || 0) + (h[h.length - 1].t || 0); } } return n + ':' + s; };
+  // history is serialized per page too: only pages whose versions were added, removed or updated are re-serialized
+  const histCache = new Map();          // page id -> { h, key, json }
+  const histEdited = new Set();         // pages whose newest version's content changed (key alone cannot see that)
+  function serializeHistory(full) {
+    const parts = [];
+    for (const [id, p] of Object.entries(BP.state.pages)) {
+      const h = p && p.history;
+      if (!h || !h.length) continue;
+      const key = h.length + ':' + (h[0].t || 0) + ':' + (h[h.length - 1].t || 0);
+      let c = histCache.get(id);
+      if (full || !c || c.h !== h || c.key !== key || histEdited.has(id)) { c = { h, key, json: JSON.stringify(h) }; histCache.set(id, c); }
+      parts.push(JSON.stringify(id) + ':' + c.json);
+    }
+    if (histCache.size > parts.length) for (const id of histCache.keys()) { const p = BP.state.pages[id]; if (!p || !p.history || !p.history.length) histCache.delete(id); }
+    histEdited.clear();
+    return '{' + parts.join(',') + '}';
+  }
+  const loadHistory = async () => { try { return window.bp ? await window.bp.loadHistory() : await idbGet('hist'); } catch (_) { return null; } };
+  const saveHistory = async (json) => { if (window.bp) await window.bp.saveHistory(json); else await idbSet('hist', json); };
+
   BP.state = null;
   BP.corrupted = false;
   BP.init = async function () {
@@ -57,6 +110,7 @@
       raw = window.bp ? await window.bp.load() : await BP.webLoad();
       if (!window.bp && navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
     } catch (e) {}
+    if (!window.bp) { try { await idb(); } catch (_) { split = false; } }
     let st = null;
     if (raw) {
       try {
@@ -71,6 +125,18 @@
     } else {
       BP.state = st;
       st.settings = Object.assign({ theme: 'auto', sidebar: true, name: 'My Workspace' }, st.settings);
+      // history: from its own file; a page that still carries it inline (written before this change, or by an older
+      // version) keeps that, and the first save moves it out
+      let inline = false;
+      for (const p of Object.values(st.pages)) if (p && p.history && p.history.length) { inline = true; break; }
+      const hraw = split ? await loadHistory() : null;
+      if (hraw) {
+        try {
+          const h = JSON.parse(hraw);
+          for (const id of Object.keys(h)) { const p = st.pages[id]; if (p && !(p.history && p.history.length)) p.history = h[id]; }
+        } catch (_) {}
+      }
+      savedHistSig = inline || !hraw ? null : histSig();
     }
     const s = BP.state.settings;
     s.userName = s.userName || 'You';
@@ -87,34 +153,67 @@
   BP.me = () => (BP.state && BP.state.settings.userName) || 'You';
   let timer = null;
   window.addEventListener('beforeunload', () => {
-    if (!BP.dirty || (BP.corrupted && !BP.allowOverwrite)) return;
+    if (BP.corrupted && !BP.allowOverwrite) return;
+    BP.materializeHistory();
+    const histDue = split && (histDirty || histSig() !== savedHistSig);
+    if (!BP.dirty && !needVerify && !histDue) return;
     try {
-      if (window.bp) window.bp.saveSync(JSON.stringify(BP.state));
-      else BP.webSave(JSON.stringify(BP.state));
+      if (window.bp) {
+        if (histDue) window.bp.saveHistorySync(serializeHistory(true));
+        window.bp.saveSync(split ? serializeMain(true) : JSON.stringify(BP.state));
+      } else {
+        if (histDue) saveHistory(serializeHistory(true)).catch(() => {});
+        BP.webSave(split ? serializeMain(true) : JSON.stringify(BP.state));
+      }
     } catch (_) {}
   });
   BP.save = function () {
     BP.dirty = true;
+    if (!touching) fullSave = true;            // not an edit through BP.touch: we do not know which pages changed
     clearTimeout(timer);
     timer = setTimeout(BP.flush, 350);
   };
-  BP.flush = async function () {
+  BP.flush = async function (opts = {}) {
     clearTimeout(timer);
     timer = null;
     if (BP.corrupted && !BP.allowOverwrite) return;
-    const json = JSON.stringify(BP.state);
+    BP.materializeHistory();
+    const full = fullSave || !!opts.full;
+    fullSave = false;
+    if (!split) {
+      const json = JSON.stringify(BP.state);
+      BP.dirty = false;
+      try { if (window.bp) await window.bp.save(json); else await BP.webSave(json); }
+      catch (e) { BP.dirty = true; console.error(e); BP.toast && BP.toast('Could not save: ' + e.message); }
+      return;
+    }
+    const json = serializeMain(full);
+    editedPages.clear();
+    needVerify = !full;
+    const sig = histSig();
+    const hjson = sig !== savedHistSig || (histDirty && (opts.full || Date.now() - lastHistWrite > 30000)) ? serializeHistory() : null;
+    if (opts.onlyIfChanged && json === lastMain && hjson == null) return;
     BP.dirty = false;
     try {
+      if (hjson != null) {            // history first: if the app stops between the two writes, the old copies are already safe
+        try { await saveHistory(hjson); savedHistSig = sig; histDirty = false; lastHistWrite = Date.now(); }
+        catch (e) { if (!window.bp) { split = false; return BP.flush({ full: true }); } throw e; }
+      }
       if (window.bp) await window.bp.save(json);
       else await BP.webSave(json);
+      lastMain = json;
     } catch (e) {
       BP.dirty = true;
+      fullSave = true;
       console.error(e);
       BP.toast && BP.toast('Could not save: ' + e.message);
     }
   };
+  // a few seconds after editing stops: serialize every page once and save if anything differs from what was written
+  // (covers any change that skipped BP.touch while a fast, edit-only save was going on)
+  setInterval(() => { if (needVerify && !timer && BP.state) { needVerify = false; BP.flush({ full: true, onlyIfChanged: true }); } }, 4000);
   window.addEventListener('blur', () => timer && BP.flush());
-  document.addEventListener('visibilitychange', () => document.hidden && timer && BP.flush());
+  document.addEventListener('visibilitychange', () => document.hidden && (timer || needVerify || histDirty) && BP.flush({ full: true }));
 
   /* ---------- pages ---------- */
   const now = () => Date.now();
@@ -139,17 +238,21 @@
     p.updated = now();
     p.editedBy = BP.me();
     BP.snapshot(p);
-    BP.save();
+    editedPages.add(p.id);
+    touching = true;
+    try { BP.save(); } finally { touching = false; }
   };
+  /* the newest history version follows the page while it is being edited: it is copied when saving (at most every
+     350 ms), not on every keystroke, which used to deep-copy the whole page per key */
+  const pendingSnap = new Set();
+  const copySnap = (p) => { const h = p.history, last = h && h[h.length - 1]; if (last) { last.title = p.title; last.blocks = JSON.parse(JSON.stringify(p.blocks)); histEdited.add(p.id); } pendingSnap.delete(p); };
+  BP.materializeHistory = () => { pendingSnap.forEach(copySnap); };
   BP.snapshot = (p) => {
     if (p.type === 'db') return;
     p.history = p.history || [];
     const last = p.history[p.history.length - 1];
-    if (last && now() - last.t < 180000) {
-      last.title = p.title;
-      last.blocks = JSON.parse(JSON.stringify(p.blocks));
-      return;
-    }
+    if (last && now() - last.t < 180000) { pendingSnap.add(p); histDirty = true; return; }
+    if (pendingSnap.has(p)) copySnap(p);       // finish the previous version before starting a new one
     p.history.push({ t: now(), title: p.title, blocks: JSON.parse(JSON.stringify(p.blocks)) });
     if (p.history.length > 25) p.history.shift();
   };
@@ -263,7 +366,10 @@
     Object.keys(r.pages).forEach((id) => {
       const rp = r.pages[id], lp = S.pages[id];
       if (S.purged[id] && S.purged[id] >= (rp.updated || 0)) return;
-      if (!lp || (rp.updated || 0) > (lp.updated || 0)) { S.pages[id] = rp; changed = true; if (id === S.current) currentChanged = true; }
+      if (!lp || (rp.updated || 0) > (lp.updated || 0)) {
+        if (lp && lp.history && lp.history.length && !(rp.history && rp.history.length)) rp.history = lp.history;   // the other device's file has no history in it: keep ours
+        S.pages[id] = rp; changed = true; if (id === S.current) currentChanged = true;
+      }
     });
     (r.templates || []).forEach((t) => { S.templates = S.templates || []; if (!S.templates.some((x) => x.id === t.id)) { S.templates.push(t); changed = true; } });
     const rs = r.settings || {};

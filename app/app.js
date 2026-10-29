@@ -118,7 +118,8 @@
       BP.share.paintMarks();
     },
   };
-  const refreshChrome = BP.debounce(() => { refreshSidebar(); const bc = BP.$('.crumbs'); if (bc) bc.replaceWith(crumbs()); const p = cur(); p && (document.title = (p.title || 'Untitled') + ' – Blockpad'); }, 200);
+  // typing a title: update that page's rows in the sidebar in place (rebuilding the whole tree on every pause was the slow part)
+  const refreshChrome = BP.debounce(() => { const p = cur(); if (p) BP.$$('.sb-item[data-pid="' + p.id + '"] .sb-title').forEach((t) => { t.textContent = p.title || 'Untitled'; }); const bc = BP.$('.crumbs'); if (bc) bc.replaceWith(crumbs()); p && (document.title = (p.title || 'Untitled') + ' – Blockpad'); }, 200);
 
   /* ---------- sidebar ---------- */
   function sidebar() {
@@ -134,12 +135,16 @@
     const favs = BP.allPages().filter((p) => p.favorite && !BP.isTrashed(p));
     if (favs.length) {
       sc.append(h('div', { class: 'sb-sec' }, 'Favorites'));
-      favs.forEach((p) => sc.append(h('div', { class: 'sb-item' + (p.id === BP.state.current ? ' on' : ''), onclick: () => BP.open(p.id), oncontextmenu: (e) => { e.preventDefault(); pageMenu(p, { x: e.clientX, y: e.clientY }); } }, h('span', { class: 'sb-twirl' }), h('span', { class: 'sb-pico' }, icoOf(p)), h('span', { class: 'sb-title' }, p.title || 'Untitled'))));
+      favs.forEach((p) => sc.append(h('div', { class: 'sb-item' + (p.id === BP.state.current ? ' on' : ''), 'data-pid': p.id, onclick: () => BP.open(p.id), oncontextmenu: (e) => { e.preventDefault(); pageMenu(p, { x: e.clientX, y: e.clientY }); } }, h('span', { class: 'sb-twirl' }), h('span', { class: 'sb-pico' }, icoOf(p)), h('span', { class: 'sb-title' }, p.title || 'Untitled'))));
     }
     sc.append(h('div', { class: 'sb-sec' }, 'Pages', h('button', { class: 'icon-btn', title: 'Add a page', html: BP.icons.plus, onclick: () => BP.newPage(null) })));
     const tree = h('div', { class: 'tree' });
-    const roots = BP.children(null);
+    sbKids = new Map();
+    for (const p of BP.allPages()) { if (p.rowOf || p.inline || p.trashed) continue; const k = p.parent || null; if (!sbKids.has(k)) sbKids.set(k, []); sbKids.get(k).push(p); }
+    sbKids.forEach((a) => a.sort((x, y) => (x.order || 0) - (y.order || 0)));
+    const roots = sbKids.get(null) || [];
     roots.forEach((p) => tree.append(treeItem(p, 0)));
+    sbKids = null;
     if (!roots.length) tree.append(h('div', { class: 'muted pad-s' }, 'No pages yet'));
     tree.addEventListener('dragover', (e) => { if (BP.dragPage && e.target === tree) e.preventDefault(); });
     tree.addEventListener('drop', (e) => { if (BP.dragPage && e.target === tree) { e.preventDefault(); BP.movePage(BP.dragPage, null); BP.dragPage = null; renderAll(); } });
@@ -158,10 +163,11 @@
     } }));
     return sb;
   }
+  let sbKids = null;      // parent id -> children, built once per sidebar render (same filter and order as BP.children)
   function treeItem(p, depth) {
-    const kids = BP.children(p.id);
+    const kids = (sbKids ? sbKids.get(p.id) : BP.children(p.id)) || [];
     const frag = h('div', { class: 'tnode' });
-    const row = h('div', { class: 'sb-item' + (p.id === BP.state.current ? ' on' : ''), style: { paddingLeft: 8 + depth * 14 + 'px' }, draggable: 'true',
+    const row = h('div', { class: 'sb-item' + (p.id === BP.state.current ? ' on' : ''), 'data-pid': p.id, style: { paddingLeft: 8 + depth * 14 + 'px' }, draggable: 'true',
       onclick: () => BP.open(p.id), oncontextmenu: (e) => { e.preventDefault(); pageMenu(p, { x: e.clientX, y: e.clientY }); } },
       h('button', { class: 'sb-twirl' + (p.open ? ' open' : '') + (kids.length ? '' : ' empty'), html: BP.icons.chevron, onclick: (e) => { e.stopPropagation(); p.open = !p.open; BP.save(); refreshSidebar(); } }),
       h('span', { class: 'sb-pico' }, icoOf(p)),
@@ -505,6 +511,7 @@
 
   /* ---------- history ---------- */
   function historyDialog(p) {
+    BP.materializeHistory();
     if (p.type === 'db') return BP.toast('Databases keep their data in rows, which have their own history');
     BP.modal('Page history', (body, close) => {
       const hist = (p.history || []).slice().reverse();
