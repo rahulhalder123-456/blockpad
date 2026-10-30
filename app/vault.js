@@ -1,10 +1,10 @@
-/* Blockpad <-> Obsidian vaults (a vault is a plain folder of Markdown files).
+/* Blockpad <-> Markdown vaults (a vault is a plain folder of Markdown notes, as several notes apps keep them).
    Import: folders become pages that hold their notes; [[links]] (with |alias, #heading, ^block) become page links;
    YAML frontmatter becomes page properties (tags, aliases, the rest); #tags stay tags; ![[embeds]] of images, PDFs,
    audio and video become media blocks with the file inside the workspace; callouts, tables, tasks, nested lists, code,
    math, ==highlights== and %%comments%% are converted; .canvas files become canvas pages.
    Export: the reverse: one .md per page with frontmatter and [[links]], a folder per page that has sub-pages (with the
-   page itself inside as a folder note), attachments in attachments/, databases as an Obsidian Base (.base) plus one
+   page itself inside as a folder note), attachments in attachments/, databases as a .base view file plus one
    note per row, canvases as .canvas. Saved into a folder (desktop app) or a .zip (browser / phone). */
 (function () {
   const BP = (window.BP = window.BP || {});
@@ -61,7 +61,7 @@
     const rep = { notes: 0, folders: 0, attachments: 0, canvases: 0, links: 0, unresolved: 0, skipped: [], tooBig: [] };
     const all = entries.filter((e) => e.path && !e.path.split('/').some((s) => s.startsWith('.') || s === 'node_modules'));
     if (!all.length) throw new Error('That folder has no notes in it');
-    const rootName = opt.name || all[0].path.split('/')[0] || 'Obsidian vault';
+    const rootName = opt.name || all[0].path.split('/')[0] || 'Markdown vault';
     const strip = (p) => (p.split('/')[0] === rootName ? p.split('/').slice(1).join('/') : p);
     const files = all.map((e) => ({ rel: strip(e.path.replace(/\\/g, '/')), file: e.file }));
     const notes = files.filter((f) => extOf(f.rel) === 'md');
@@ -70,7 +70,7 @@
     if (!notes.length && !canvases.length) throw new Error('No .md notes were found in that folder');
     const byAttPath = new Map(), byAttName = new Map();
     others.forEach((f) => { byAttPath.set(low(f.rel), f); const k = low(baseOf(f.rel)); if (!byAttName.has(k)) byAttName.set(k, f); });
-    others.filter((f) => !MEDIA[extOf(f.rel)]).forEach((f) => { if (extOf(f.rel) === 'base') rep.skipped.push(f.rel + ' (Obsidian Base: its notes come in, the view does not)'); });
+    others.filter((f) => !MEDIA[extOf(f.rel)]).forEach((f) => { if (extOf(f.rel) === 'base') rep.skipped.push(f.rel + ' (a .base view: its notes come in, the view does not)'); });
 
     // the workspace page that holds the whole import
     const root = BP.createPage(opt.parent || null, { title: rootName, icon: '🗃', blocks: [] });
@@ -185,13 +185,13 @@
       } catch (e) { rep.skipped.push(c.rel + ' (could not read the canvas: ' + e.message + ')'); }
     }
     // folder pages without a folder note: their sub-pages are listed in them already (createPage added link blocks)
-    root.blocks = [Object.assign(BP.newBlock('callout', 'Imported from the Obsidian vault <b>' + esc(rootName) + '</b> on ' + esc(new Date().toLocaleDateString()) + ': ' + rep.notes + ' notes, ' + rep.folders + ' folders, ' + rep.attachments + ' files.'), { icon: '🗃' })].concat(root.blocks.filter((b) => b.type === 'page'));
+    root.blocks = [Object.assign(BP.newBlock('callout', 'Imported from the vault <b>' + esc(rootName) + '</b> on ' + esc(new Date().toLocaleDateString()) + ': ' + rep.notes + ' notes, ' + rep.folders + ' folders, ' + rep.attachments + ' files.'), { icon: '🗃' })].concat(root.blocks.filter((b) => b.type === 'page'));
     BP.save();
     rep.root = root;
     return rep;
   };
 
-  /* ---------- Obsidian Markdown -> blocks ---------- */
+  /* ---------- vault Markdown -> blocks ---------- */
   const CALLOUT_ICON = { note: '📝', info: 'ℹ️', tip: '💡', hint: '💡', important: '❗', success: '✅', check: '✅', done: '✅', question: '❓', help: '❓', faq: '❓', warning: '⚠️', caution: '⚠️', attention: '⚠️', failure: '❌', fail: '❌', missing: '❌', danger: '⛔', error: '⛔', bug: '🐞', example: '🧪', quote: '❝', cite: '❝', abstract: '📋', summary: '📋', tldr: '📋', todo: '☑️' };
   const CALLOUT_BG = { warning: 'orange', caution: 'orange', attention: 'orange', danger: 'red', error: 'red', failure: 'red', fail: 'red', bug: 'red', success: 'green', check: 'green', done: 'green', tip: 'green', question: 'yellow', help: 'yellow', faq: 'yellow', important: 'purple', info: 'blue', note: 'blue', todo: 'blue', example: 'purple', abstract: 'blue', summary: 'blue', tldr: 'blue' };
   V.inline = (s, ctx) => {
@@ -325,7 +325,7 @@
       if ((m = /^(\s*)\d+[.)]\s+(.*)$/.exec(l))) { push(BP.newBlock('number', V.inline(m[2], ctx)), indentOf(m[1])); continue; }
       // an indented line right under a list item belongs to it
       if (listStack.length && /^\s+\S/.test(l)) { const last = listStack[listStack.length - 1].block; last.text = BP.sanitize((last.text || '') + '<br>' + V.inline(l.trim(), ctx)); continue; }
-      // a paragraph: following lines join it (Obsidian shows single line breaks)
+      // a paragraph: following lines join it (vault notes show single line breaks)
       const buf = [l];
       while (i + 1 < lines.length && lines[i + 1].trim() && !/^\s*([-*+]\s|\d+[.)]\s|#{1,6}\s|>|```|~~~|\$\$|\||!\[)/.test(lines[i + 1]) && !/^\s*(-{3,}|\*{3,}|_{3,})\s*$/.test(lines[i + 1])) buf.push(lines[++i]);
       push(BP.newBlock('p', buf.map((x) => V.inline(x.trim(), ctx)).join('<br>')));
@@ -396,8 +396,8 @@
   };
   const canPickFolder = () => 'webkitdirectory' in document.createElement('input') && !/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   V.pickImport = () => {
-    BP.modal('Import an Obsidian vault', (body, close) => {
-      body.append(h('p', { class: 'muted' }, 'Pick your vault folder (the one that has the .obsidian folder in it). Notes, folders, links, tags, properties, images and canvases come in as Blockpad pages. Your vault is only read, never changed.'));
+    BP.modal('Import a Markdown vault', (body, close) => {
+      body.append(h('p', { class: 'muted' }, 'Pick the folder that holds your Markdown notes (your vault). Notes, folders, links, tags, properties, images and canvases come in as Blockpad pages. Your vault is only read, never changed.'));
       if (!canPickFolder()) body.append(h('p', { class: 'muted small' }, 'On a phone, choose a .zip of the vault instead (for example, zip the folder on your computer and copy it over).'));
       body.append(h('div', { class: 'row-end' }, h('button', { class: 'btn', onclick: () => { close(); pickZip(); } }, 'Choose a .zip…'), canPickFolder() ? h('button', { class: 'btn primary', onclick: () => { close(); pickFolder(); } }, 'Choose the vault folder…') : null));
     }, { class: 'small' });
@@ -541,8 +541,8 @@
   };
   V.exportDialog = (rootId) => {
     const what = rootId ? '“' + ((BP.page(rootId) || {}).title || 'Untitled') + '” and its sub-pages' : 'the whole workspace';
-    BP.modal('Export as an Obsidian vault', (body, close) => {
-      body.append(h('p', { class: 'muted' }, 'Saves ' + what + ' as Markdown notes that Obsidian (or any Markdown editor) opens directly: links become [[links]], properties and tags go into each note’s frontmatter, images and files go into attachments/, databases become an Obsidian Base with one note per row, canvases become .canvas files.'),
+    BP.modal('Export as a Markdown vault', (body, close) => {
+      body.append(h('p', { class: 'muted' }, 'Saves ' + what + ' as Markdown notes that Markdown note apps and editors open directly: links become [[links]], properties and tags go into each note’s frontmatter, images and files go into attachments/, databases become a .base view file with one note per row, canvases become .canvas files.'),
         h('p', { class: 'muted small' }, 'Comments, page history and sharing stay in Blockpad.'),
         h('div', { class: 'row-end' }, h('button', { class: 'btn', onclick: close }, 'Cancel'), h('button', { class: 'btn primary', onclick: async () => {
           close();
@@ -554,8 +554,8 @@
               BP.toast('Exported ' + r.count + ' files to ' + r.dir, 6000);
               window.bp.showItem && window.bp.showItem(r.dir);
             } else {
-              await BP.download(name + ' (Obsidian vault).zip', V.zip(files.map((f) => Object.assign({}, f, { path: name + '/' + f.path }))), 'application/zip');
-              BP.toast('Saved a .zip with ' + files.length + ' files. Unzip it and open the folder in Obsidian as a vault.', 6000);
+              await BP.download(name + ' (Markdown vault).zip', V.zip(files.map((f) => Object.assign({}, f, { path: name + '/' + f.path }))), 'application/zip');
+              BP.toast('Saved a .zip with ' + files.length + ' files. Unzip it and open the folder in your Markdown notes app.', 6000);
             }
           } catch (e) { BP.toast('Export failed: ' + e.message, 6000); }
         } }, 'Export')));

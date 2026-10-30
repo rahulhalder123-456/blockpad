@@ -1,5 +1,5 @@
 /* Blockpad canvas: an endless board of cards joined by arrows, a page of type 'canvas'.
-   The data follows the open JSON Canvas format (jsoncanvas.org) so boards move to and from Obsidian's .canvas files:
+   The data follows the open JSON Canvas format (jsoncanvas.org) so boards move to and from other apps' .canvas files:
      p.canvas = { nodes: [{ id, type: 'text'|'file'|'link'|'group', x, y, width, height, color?, text?, page?, src?, url?, label? }],
                   edges: [{ id, fromNode, fromSide, toNode, toSide, toEnd?, color?, label? }] }
    A 'file' card shows a Blockpad page (page: id) or an image (src). Colours are JSON Canvas presets "1".."6".
@@ -331,7 +331,7 @@
     return { board, fit };
   };
 
-  /* ---------- JSON Canvas files (Obsidian .canvas) ---------- */
+  /* ---------- JSON Canvas files (.canvas) ---------- */
   // pathOf(pageId) -> vault path of that page ("Folder/Note.md"); assetOf(dataUrl, hint) -> vault path of the saved file
   CV.toJson = (p, pathOf, assetOf) => {
     const D = data(p);

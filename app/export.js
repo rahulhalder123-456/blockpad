@@ -65,7 +65,7 @@
       const t = inlineMd(b.text);
       const kids = () => (b.children && b.children.length ? BP.blocksToMd(b.children, depth + 1) : '');
       const ob = BP._mdMode;
-      // Obsidian flavour (vault export): callouts, [[sub-page]] links, embedded files and databases as ![[ ]]
+      // vault flavour (Markdown vault export): callouts, [[sub-page]] links, embedded files and databases as ![[ ]]
       if (ob && b.type === 'callout') { out += '> [!' + (CALLOUT_OF[b.icon] || 'note') + ']\n> ' + t.replace(/ {2}\n/g, '\n> ') + '\n\n' + kids(); return; }
       if (ob && b.type === 'page') { const n = ob.linkName(b.ref); if (n) out += (/\.base$/.test(n) ? '![[' : '[[') + n + ']]\n\n'; return; }
       if (ob && b.type === 'dbview') { const d = BP.page(b.ref); const n = d && ob.linkName(b.ref); if (n) out += '![[' + n + ']]\n\n'; return; }

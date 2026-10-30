@@ -142,6 +142,7 @@
       nm(BP.icons.plus, 'New page', 'Ctrl+N', (e) => BP.menu(e.currentTarget, [
         { label: 'Page', icon: '📄', kbd: 'Ctrl+N', onClick: () => BP.newPage(null) },
         { label: 'Canvas', icon: '🧭', onClick: () => BP.open(BP.canvas.create(null).id) },
+        { label: 'Clip a web page…', icon: '🔖', onClick: () => BP.clip.dialog() },
         { label: 'Database', icon: '🗂', onClick: () => BP.open(BP.createDatabase(null, { title: 'Untitled database' }).id) },
       ]))));
     const sc = h('div', { class: 'sb-scroll' });
@@ -235,8 +236,8 @@
       { label: 'Rename workspace', icon: '✎', onClick: async () => { const n = await BP.prompt('Workspace name', BP.state.settings.name); if (n) { BP.state.settings.name = n; BP.save(); refreshSidebar(); } } },
       { label: 'Settings', icon: BP.icons.settings, onClick: () => openSettings() },
       { label: 'Export backup', icon: BP.icons.share, onClick: BP.exportWorkspace },
-      { label: 'Import an Obsidian vault…', icon: '🗃', onClick: () => BP.vault.pickImport() },
-      { label: 'Export as an Obsidian vault…', icon: '🗃', onClick: () => BP.vault.exportDialog(null) },
+      { label: 'Import a Markdown vault…', icon: '🗃', onClick: () => BP.vault.pickImport() },
+      { label: 'Export as a Markdown vault…', icon: '🗃', onClick: () => BP.vault.exportDialog(null) },
       { divider: true },
       { label: 'About Blockpad', icon: 'ℹ', onClick: () => openSettings('about') },
     ]);
@@ -321,6 +322,7 @@
       p.type === 'page' && !p.rowOf ? { label: 'Add property', icon: '+', onClick: () => { if (!BP.kb.hasProps(p)) p.tags = []; BP.touch(p); renderAll(); setTimeout(() => { const b = BP.$('.kb-padd'); b && b.click(); }, 30); } } : null,
       { label: 'Links and backlinks', icon: BP.icons.backlinks, onClick: () => togglePanel('links', true) },
       { label: 'Local graph', icon: BP.icons.graph, onClick: () => BP.graph.open({ local: p.id }) },
+      p.type === 'page' ? { label: 'Present as slides', icon: '▶', onClick: () => BP.slides.present(p) } : null,
       { label: p.favorite ? 'Remove from favorites' : 'Add to favorites', icon: BP.icons.star, onClick: () => { p.favorite = !p.favorite; BP.save(); renderAll(); } },
       { label: 'Copy link', icon: BP.icons.link, onClick: () => { navigator.clipboard.writeText('bp://page/' + p.id); BP.toast('Link copied. Paste it into another page to link here.'); } },
       p.rowOf ? null : { label: 'Move to…', icon: '↪', onClick: () => moveDialog(p) },
@@ -330,7 +332,7 @@
       { label: 'Duplicate', icon: BP.icons.copy, onClick: () => { const c = BP.clonePage(p.id); BP.open(c.id); } },
       { label: 'Save as template', icon: BP.icons.template, onClick: () => { BP.saveTemplate(p.id); BP.toast('Saved as a template. Find it under Templates.'); } },
       { label: 'Export / print…', icon: BP.icons.share, onClick: () => BP.shareDialog(p, 'export') },
-      { label: 'Export as an Obsidian vault…', icon: '🗃', onClick: () => BP.vault.exportDialog(p.id) },
+      { label: 'Export as a Markdown vault…', icon: '🗃', onClick: () => BP.vault.exportDialog(p.id) },
       { label: 'Move to trash', icon: BP.icons.trash, danger: true, onClick: () => trashPage(p) },
     ]);
   }
@@ -716,6 +718,7 @@
       ['📚', 'Reading list', 'Books and articles as a gallery', () => dbWith('Reading list', '📚', [{ name: 'Status', type: 'status', options: opts(['To read', 'Reading', 'Finished']) }, { name: 'Author', type: 'text' }, { name: 'Rating', type: 'number' }, { name: 'Link', type: 'url' }], [{ t: 'A book to start with', v: { Status: 'To read' } }], [{ type: 'gallery', name: 'Gallery' }, { type: 'table', name: 'Table' }])],
       ['🗂', 'Blank database', 'An empty table to shape yourself', () => BP.createDatabase(null, { title: 'Untitled database', icon: '🗂' })],
       ['🧭', 'Canvas', 'An endless board of cards and arrows', () => BP.canvas.create(null)],
+      ['▶', 'Slide deck', 'Sections split by dividers; ⋯ → Present as slides', () => BP.createPage(null, { title: 'My talk', icon: '▶', blocks: [b('h1', 'The idea'), b('bullet', 'What it is'), b('bullet', 'Why it matters'), b('divider'), b('h1', 'How it works'), b('p', 'Write each slide, put a divider between slides.'), b('divider'), b('h1', 'Next steps'), b('todo', 'Try it')] })],
       ['🗓', 'Today’s daily note', 'One page per day, opened from the sidebar', () => BP.kb.dailyFor(new Date(), true)],
     ];
     BP.modal('Templates', (body, close) => {
@@ -757,6 +760,8 @@
       const inp = h('input', { class: 'input', value: BP.state.settings.name || '' });
       inp.addEventListener('change', () => { BP.state.settings.name = inp.value || 'My Workspace'; BP.save(); refreshSidebar(); });
       p.append(inp);
+      p.append(h('h3', null, 'Typing'), h('label', { class: 'chk' }, h('input', { type: 'checkbox', checked: BP.state.settings.vim ? '' : null, onchange: (e) => { BP.state.settings.vim = e.target.checked; BP.save(); BP.vim.refresh(); BP.toast(e.target.checked ? 'Vim keys on: Esc for NORMAL mode, i to type' : 'Vim keys off'); } }), ' Vim keys in the editor'),
+        h('p', { class: 'muted small' }, 'Esc switches to NORMAL mode (h j k l, w b, 0 $, gg G, x, dd, yy, p, o O, u, Ctrl+R, counts like 3j); i, a, o or A to type again.'));
       const d = BP.kb.dailySettings();
       p.append(h('h3', null, 'Daily notes'), h('p', { class: 'muted small' }, '“Today” in the sidebar (Ctrl+Shift+D) opens one page per day, made from the template you pick.'));
       const folder = h('input', { class: 'input', value: d.folder, placeholder: 'Leave empty to put them at the top level' });
@@ -790,8 +795,8 @@
         h('button', { class: 'btn', onclick: BP.exportWorkspace }, 'Export full backup (.json)'),
         h('button', { class: 'btn', onclick: () => pickText('.json', (t) => importBackup(t)) }, 'Import backup…')));
       p.append(h('h3', null, 'Import'), h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => { const i = h('input', { type: 'file', accept: '.csv,.tsv,.txt' }); i.onchange = async () => { const f = i.files[0]; if (!f) return; try { const r = BP.importCsv(await f.text(), null, null, f.name.replace(/\.\w+$/, '')); BP.toast('Created a database with ' + r.added + ' rows'); BP.open(r.db.id); } catch (e) { BP.toast('Import failed: ' + e.message); } }; i.click(); } }, 'Import CSV as a database…'), h('button', { class: 'btn', onclick: () => { const i = h('input', { type: 'file', accept: '.md,.markdown,.txt', multiple: '' }); i.onchange = async () => { let n = 0, last; for (const f of i.files) { last = BP.importMarkdown(f.name, await f.text(), null); n++; } if (n) { BP.toast('Imported ' + n + ' page' + (n > 1 ? 's' : '')); BP.open(last.id); } }; i.click(); } }, 'Import Markdown files…')));
-      p.append(h('h3', null, 'Obsidian'), h('p', { class: 'muted small' }, 'Bring a whole Obsidian vault in (notes, folders, [[links]], tags, properties, images and canvases), or save Blockpad as a vault that Obsidian opens. The vault folder is only read, never changed.'),
-        h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => { close(); BP.vault.pickImport(); } }, 'Import an Obsidian vault…'), h('button', { class: 'btn', onclick: () => { close(); BP.vault.exportDialog(null); } }, 'Export as an Obsidian vault…')));
+      p.append(h('h3', null, 'Markdown vaults'), h('p', { class: 'muted small' }, 'Bring in a whole vault, a folder of Markdown notes from another notes app (notes, folders, [[links]], tags, properties, images and canvases), or save Blockpad as one that Markdown note apps open. The vault folder is only read, never changed.'),
+        h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => { close(); BP.vault.pickImport(); } }, 'Import a Markdown vault…'), h('button', { class: 'btn', onclick: () => { close(); BP.vault.exportDialog(null); } }, 'Export as a Markdown vault…')));
       p.append(h('h3', null, 'Danger zone'), h('button', { class: 'btn danger', onclick: async () => { if (await BP.confirm('Reset workspace', 'This erases every page and starts fresh. Export a backup first if you might want anything back.', 'Erase everything')) { BP.allowOverwrite = true; BP.corrupted = false; BP.state = { v: 1, pages: {}, settings: BP.state.settings, current: null }; BP.seed(); await BP.flush(); nav.stack = []; nav.i = -1; renderAll(); BP.toast('Workspace reset'); } } }, 'Reset workspace…'));
     }
     function keys(p) {

@@ -143,8 +143,9 @@
     { t: 'divider', label: 'Divider', desc: 'Visually divide blocks', ico: '—', kw: 'hr line separator' },
     { t: 'code', label: 'Code', desc: 'Capture a code snippet', ico: '</>', kw: 'snippet pre' },
     { t: 'equation', label: 'Equation', desc: 'Show a formula as text', ico: '∑', kw: 'math latex' },
+    { t: 'mermaid', label: 'Diagram from text', desc: 'Flowchart, sequence, Gantt, pie, mind map…', ico: '◇', kw: 'mermaid chart flowchart sequence gantt pie mindmap uml graph' },
     { g: 'Pages & structure', t: 'page', label: 'Page', desc: 'Create a sub-page', ico: '📄', kw: 'subpage new' },
-    { t: 'canvas', label: 'Canvas', desc: 'A board of cards joined by arrows', ico: '🧭', kw: 'cards mind map diagram obsidian' },      // no "board" in the words: /board must still give the Board view
+    { t: 'canvas', label: 'Canvas', desc: 'A board of cards joined by arrows', ico: '🧭', kw: 'cards mind map diagram json canvas' },      // no "board" in the words: /board must still give the Board view
     { t: 'flow', label: 'Flow diagram', desc: 'Boxes joined by arrows (process, request cycle)', ico: '⇅', kw: 'diagram process steps arrows cycle' },
     { t: 'tabs', label: 'Tabs', desc: 'Switch between groups of blocks', ico: '⎘', kw: 'tab panel' },
     { t: 'synced', label: 'Synced block', desc: 'Content mirrored across pages', ico: '🔁', kw: 'sync mirror shared' },
@@ -372,17 +373,33 @@
         }
         case 'divider': main.append(h('hr')); break;
         case 'code': {
-          const langs = ['plain', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'json', 'sql', 'java', 'c', 'cpp', 'go', 'rust', 'php', 'yaml', 'xml', 'markdown'];
+          const langs = ['plain', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'json', 'sql', 'java', 'c', 'cpp', 'go', 'rust', 'php', 'yaml', 'xml', 'markdown', 'mermaid'];
           const ta = this.plain(b, 'code', '// code');
           const pre = h('pre', { class: 'hl', 'aria-hidden': 'true' });
           const hl = () => { pre.innerHTML = BP.highlight(ta.value, b.lang); };
-          ta.addEventListener('input', hl);
+          // the "mermaid" language draws the text as a diagram; the code shows while you edit it
+          const out = h('div', { class: 'mm-out' });
+          const box = h('div', { class: 'codebox' });
+          const drawNow = () => { if (b.lang === 'mermaid') BP.diagrams.render(out, ta.value); };
+          out.__draw = drawNow;
+          const draw = BP.debounce(drawNow, 450);
+          const editBtn = h('button', { class: 'btn small mm-edit', onclick: () => { const on = !box.classList.contains('editing'); box.classList.toggle('editing', on); editBtn.textContent = on ? 'Done' : 'Edit diagram'; if (on) { ta.focus(); autosize(ta); } else drawNow(); } }, 'Edit diagram');
+          const mode = () => {
+            const m = b.lang === 'mermaid';
+            box.classList.toggle('mm', m);
+            if (m && !(ta.value || '').trim() && !this.readonly) { box.classList.add('editing'); editBtn.textContent = 'Done'; }
+            if (m) drawNow(); else out.innerHTML = '';
+          };
+          ta.addEventListener('input', () => { hl(); draw(); });
           const bar = h('div', { class: 'code-bar' },
-            h('select', { class: 'lang', disabled: this.readonly ? '' : null, onchange: (e) => { b.lang = e.target.value; BP.touch(this.page); hl(); } }, (langs.includes(b.lang || 'plain') ? langs : langs.concat(b.lang)).map((l) => h('option', { value: l, selected: (b.lang || 'plain') === l ? '' : null }, l))),
+            h('select', { class: 'lang', disabled: this.readonly ? '' : null, onchange: (e) => { b.lang = e.target.value; BP.touch(this.page); hl(); mode(); } }, (langs.includes(b.lang || 'plain') ? langs : langs.concat(b.lang)).map((l) => h('option', { value: l, selected: (b.lang || 'plain') === l ? '' : null }, l === 'mermaid' ? 'mermaid (diagram)' : l))),
+            this.readonly ? null : editBtn,
             h('button', { class: 'btn small', onclick: () => { navigator.clipboard.writeText(b.text || ''); BP.toast('Copied'); } }, 'Copy')
           );
           hl();
-          main.append(h('div', { class: 'codebox' }, bar, h('div', { class: 'codewrap' }, pre, ta)));
+          box.append(bar, h('div', { class: 'codewrap' }, pre, ta), out);
+          main.append(box);
+          mode();
           break;
         }
         case 'equation': {
@@ -857,7 +874,7 @@
       if (this.readonly || isPlainEl(el)) return;
       const pre = textBeforeCaret(el);
       if (pre == null) return this.closeMenu();
-      // [[ links to a page (Obsidian style, spaces allowed), #word picks or makes a tag
+      // [[ links to a page (wiki style, spaces allowed), #word picks or makes a tag
       const wl = /\[\[([^\]\n[]{0,40})$/.exec(pre);
       const tg = !wl && /(?:^|\s)#([\p{L}\p{N}_\-/]{1,30})$/u.exec(pre);
       if (wl || tg) {
@@ -1029,6 +1046,8 @@
         if (!nb.children.length) nb.children = [BP.newBlock('p')];
       } else if (t === 'meeting') {
         nb = BP.meetingBlocks();
+      } else if (t === 'mermaid') {
+        nb = Object.assign(makeBlock('code'), { lang: 'mermaid', text: 'graph TD\n  A[Idea] --> B{Worth it?}\n  B -- yes --> C[Build it]\n  B -- no --> D[Park it]' });
       } else if (t === 'columns2' || t === 'columns3') {
         nb = makeBlock('columns');
         if (t === 'columns3') nb.children.push({ id: uid(), type: 'column', children: [BP.newBlock('p')] });
@@ -1473,8 +1492,8 @@
     const hits = lines.filter((l) => codeScore(l) >= 2 || /^\s{2,}\S/.test(l)).length;
     return hits / lines.length >= 0.6;
   };
-  const SELECT_LANGS = ['plain', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'json', 'sql', 'java', 'c', 'cpp', 'go', 'rust', 'php', 'yaml', 'xml', 'markdown'];
-  const LABELS = new Set('bash sh shell zsh console terminal powershell python python3 py javascript js typescript ts html css json sql text plaintext plain http yaml yml xml php java c cpp c++ go rust ruby perl markdown md diff ini toml dockerfile csharp'.split(' '));
+  const SELECT_LANGS = ['plain', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'json', 'sql', 'java', 'c', 'cpp', 'go', 'rust', 'php', 'yaml', 'xml', 'markdown', 'mermaid'];
+  const LABELS = new Set('bash sh shell zsh console terminal powershell python python3 py javascript js typescript ts html css json sql text plaintext plain http yaml yml xml php java c cpp c++ go rust ruby perl markdown md diff ini toml dockerfile csharp mermaid'.split(' '));
   const AMBIG = new Set(['text', 'plain', 'plaintext', 'go', 'c', 'http', 'sh', 'console', 'terminal', 'diff', 'ini', 'md', 'py', 'js', 'ts', 'shell', 'perl', 'ruby']);
   const LANG_MAP = { sh: 'bash', shell: 'bash', zsh: 'bash', console: 'bash', terminal: 'bash', powershell: 'bash', python3: 'python', py: 'python', js: 'javascript', ts: 'typescript', text: 'plain', plaintext: 'plain', http: 'plain', yml: 'yaml', 'c++': 'cpp', md: 'markdown', csharp: 'plain', dockerfile: 'plain', ini: 'plain', toml: 'plain', diff: 'plain', perl: 'plain', ruby: 'plain' };
   const normLang = (l) => { l = (l || '').toLowerCase(); l = LANG_MAP[l] || l; return SELECT_LANGS.includes(l) ? l : 'plain'; };

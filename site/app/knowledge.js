@@ -156,7 +156,7 @@
     return n;
   };
 
-  /* ---------- properties (Obsidian-style frontmatter) on normal pages: p.tags, p.aliases, p.meta ---------- */
+  /* ---------- properties (Markdown frontmatter) on normal pages: p.tags, p.aliases, p.meta ---------- */
   const fmtVal = (v) => (Array.isArray(v) ? v.join(', ') : v == null ? '' : String(v));
   const parseVal = (s, old) => {
     s = String(s).trim();
@@ -425,6 +425,9 @@
       pageCmd('Open local graph of this page', (q) => BP.graph && BP.graph.open({ local: q.id })),
       pageCmd('Show links panel (backlinks, outline)', () => U.togglePanel && U.togglePanel('links', true)),
       { name: 'Browse tags', run: () => KB.openTag() },
+      { name: 'Clip a web page…', run: () => BP.clip && BP.clip.dialog() },
+      pageCmd('Present this page as slides', (q) => BP.slides && BP.slides.present(q)),
+      { name: 'Turn Vim keys on / off', run: () => { const s = BP.state.settings; s.vim = !s.vim; BP.save(); BP.vim && BP.vim.refresh(); BP.toast(s.vim ? 'Vim keys on: Esc for NORMAL mode, i to type' : 'Vim keys off'); } },
       { name: 'Open a random page', run: () => { const all = KB.pages().filter((x) => !x.rowOf); if (all.length) BP.open(all[Math.floor(Math.random() * all.length)].id); } },
       { name: 'Toggle sidebar', key: 'Ctrl+\\', run: () => U.toggleSidebar && U.toggleSidebar() },
       { name: 'Switch light / dark theme', run: () => BP.setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark') },
@@ -432,9 +435,9 @@
       { name: 'Templates', run: () => U.openTemplates && U.openTemplates() },
       { name: 'Open trash', run: () => U.openTrash && U.openTrash() },
       { name: 'Join a shared page', run: () => BP.joinDialog && BP.joinDialog() },
-      { name: 'Import an Obsidian vault…', run: () => BP.vault && BP.vault.pickImport() },
-      { name: 'Export workspace as an Obsidian vault…', run: () => BP.vault && BP.vault.exportDialog(null) },
-      pageCmd('Export this page as an Obsidian vault…', (q) => BP.vault && BP.vault.exportDialog(q.id)),
+      { name: 'Import a Markdown vault…', run: () => BP.vault && BP.vault.pickImport() },
+      { name: 'Export workspace as a Markdown vault…', run: () => BP.vault && BP.vault.exportDialog(null) },
+      pageCmd('Export this page as a Markdown vault…', (q) => BP.vault && BP.vault.exportDialog(q.id)),
       { name: 'Export full backup (.json)', run: () => BP.exportWorkspace() },
       pageCmd('Share this page', (q) => BP.shareDialog(q)),
       pageCmd('Export / print this page…', (q) => BP.shareDialog(q, 'export')),

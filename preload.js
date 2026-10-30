@@ -19,6 +19,7 @@ contextBridge.exposeInMainWorld('bp', {
   showItem: (p) => ipcRenderer.invoke('show:item', p),
   devtools: () => ipcRenderer.invoke('devtools'),
   fetchMeta: (url) => ipcRenderer.invoke('meta:fetch', url),
+  fetchPage: (url) => ipcRenderer.invoke('web:fetch', url),
   aiChat: (req) => ipcRenderer.invoke('ai:chat', req),
   apiConfigure: (cfg) => ipcRenderer.invoke('api:configure', cfg),
   ready: () => ipcRenderer.invoke('app:ready'),

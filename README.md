@@ -44,15 +44,19 @@ The phone/web build keeps your workspace in the browser's IndexedDB on that devi
 - Views: table (resizable columns, **group by**, **calculation footer**), board, list (also groupable), gallery, calendar (multi-day ranges), **timeline** (drag to move / resize bars), **chart** (bar, horizontal bar, line, donut), **form** (adds rows, required fields), **map** (pins on OpenStreetMap, tiles need internet), **dashboard** (number, chart and list widgets). **Nested AND/OR filter groups**, sorts, search, hidden properties, several views per database, inline, full-page, or as a **linked view** of another database with its own settings. **Row templates** with default values and a default for the New button. Every row is a page.
 - **CSV** import (types are inferred) and export for any database; Settings can create a database from a CSV file.
 
-**Linked notes (the Obsidian side)**
+**Linked notes**
 - **Links and backlinks:** type `[[` (or `@`) to link a page, or to create the page you are linking to. The **Links** panel (top bar, with a count) shows the page's outline, every page that links here with the sentence around the link, **unlinked mentions** (pages that name this one without linking it, with a one-click **Link**), outgoing links, tags and a word count. Hover a link to preview the page. Renaming a page updates link text that still shows the old name.
 - **Tags:** type `#` to pick or make a tag (`#work/client` nests under `#work`), or give a page a Tags property. **Tags** in the sidebar lists them with counts; search `#tag` finds tagged pages.
-- **Properties:** ⋯ → Add property puts tags, aliases and your own fields (text, numbers, yes/no, lists) under the title, like Obsidian's frontmatter.
+- **Properties:** ⋯ → Add property puts tags, aliases and your own fields (text, numbers, yes/no, lists) under the title, saved as frontmatter in Markdown exports.
 - **Graph view** (Ctrl+G): every page as a dot, every link as a line; drag, zoom, hover to highlight neighbours, click to open; filters for tags, sub-pages, database rows, pages without links. **Local graph** of one page, 1-3 steps out.
 - **Daily notes:** **Today** in the sidebar (Ctrl+Shift+D) opens one page per day from your template; Settings → General sets the folder, name format and template; the palette has previous / next.
 - **Command palette** (Ctrl+P): every action by name, matching letters in order ("ogv" finds Open graph view), recent first. Ctrl+K / Ctrl+O stay search.
 - **Canvas:** New page → Canvas (or `/canvas`): an endless board of text cards (Markdown), page cards, link cards and groups joined by labelled arrows; colours, resize, pan and pinch-zoom. Stored in the open JSON Canvas format.
-- **Obsidian vaults both ways** (Settings → Data → Obsidian, or the workspace menu): **import** a vault folder (or a .zip of it on a phone): folders become pages, `[[links]]` with aliases and headings, frontmatter, tags, embedded images / PDFs / audio / video, callouts, tables, tasks, nested lists, code, math, highlights and `.canvas` files come across; the vault is only read. **Export** the workspace or one page as a vault: Markdown with frontmatter and `[[links]]`, attachments/, databases as an Obsidian **Base** with a note per row, canvases as `.canvas` (a folder on desktop, a .zip in the browser and on phones).
+- **Markdown vaults both ways** (Settings → Data → Markdown vaults, or the workspace menu): **import** a vault folder (or a .zip of it on a phone): folders become pages, `[[links]]` with aliases and headings, frontmatter, tags, embedded images / PDFs / audio / video, callouts, tables, tasks, nested lists, code, math, highlights and `.canvas` files come across; the vault is only read. **Export** the workspace or one page as a vault: Markdown with frontmatter and `[[links]]`, attachments/, databases as a `.base` view with a note per row, canvases as `.canvas` (a folder on desktop, a .zip in the browser and on phones).
+- **Diagrams from text:** `/diagram` (or a code block set to `mermaid`) draws flowcharts, sequence, class, state, ER, Gantt, pie, mind-map and timeline diagrams from a few lines of text. The code shows under **Edit diagram**; a mistake in it shows a message instead of breaking the page. The drawing library (MIT, 3.5 MB) is loaded the first time a page has a diagram, and cached for offline use after that.
+- **Web clipper:** workspace menu → **Clip a web page…** (or the palette) saves the article on a web address as a page: headings, lists, code, quotes, images with captions, tables and links, without menus, ads or footers; the address, site, author and dates are kept as properties and the page is tagged `#clipped`. The desktop and phone apps fetch the page themselves; a browser can only read sites that allow it, so there it offers a page to paste into.
+- **Slides:** ⋯ → **Present as slides** shows a page full screen, one slide per section: cut at dividers (`---`), or at top headings when there are none, after a title slide. → / Space / click for next, ← for back, F for full screen, Esc to stop, swipe on a phone. A **Slide deck** template shows the idea.
+- **Vim keys** (Settings → General → Typing, off by default): Esc leaves typing for NORMAL mode: `h j k l`, `w b e`, `0 ^ $`, `gg G`, `x`, `dd`, `D`, `cc`, `yy`, `p P`, `o O`, `i a I A`, `u`, Ctrl+R, counts like `3j`, `/` search and `:` for the command palette. A label at the bottom shows the mode.
 
 **Everything else**
 - Search (Ctrl+K) over titles and content, trash with restore, page history with restore, comments with resolve, templates (six built in, plus **your own**: page menu > Save as template), light/dark/system theme, page font / small text / full width / lock.
@@ -98,7 +102,11 @@ app/export.js         markdown / html / backup import-export
 app/knowledge.js      link and tag index, backlinks, properties, link previews, daily notes, command palette
 app/graph.js          graph view
 app/canvas.js         canvas pages (JSON Canvas)
-app/vault.js          Obsidian vault import / export, .zip read and write
+app/vault.js          Markdown vault import / export, .zip read and write
+app/diagrams.js       diagrams from text (vendor/mermaid.min.js, loaded on first use)
+app/clipper.js        web clipper
+app/slides.js         present a page as slides
+app/vim.js            Vim keys
 assets/               logo.svg, icon.png, icon.ico
 tools/                icon generator and smoke tests (npm start with --smoke=tools/smokeN.js)
 replica/              recon map and feature matrix from the replica-recon step

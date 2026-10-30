@@ -258,6 +258,27 @@ ipcMain.handle('meta:fetch', async (_e, url) => {
     return { title: meta('og:title') || unent(t && t[1]).replace(/\s+/g, ' '), description: meta('og:description') || meta('description'), image, site: meta('og:site_name') };
   } catch (e) { return { error: e.message }; }
 });
+// the web clipper: the whole page's HTML (the app picks out the article itself); http(s) only, 5 MB at most, 15 s
+ipcMain.handle('web:fetch', async (_e, url) => {
+  try {
+    if (!/^https?:\/\//i.test(url)) return { error: 'Only web addresses (http or https) can be clipped' };
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 15000);
+    const res = await net.fetch(url, { signal: ctl.signal, headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128 Safari/537.36 Blockpad-clipper', accept: 'text/html,application/xhtml+xml' } });
+    if (!res.ok) { clearTimeout(timer); return { error: 'The site answered ' + res.status }; }
+    if (!/html|xml/i.test(res.headers.get('content-type') || '')) { clearTimeout(timer); return { error: 'That address is not a web page' }; }
+    const reader = res.body.getReader();
+    const chunks = []; let n = 0;
+    while (n < 5 * 1024 * 1024) { const { done, value } = await reader.read(); if (done) break; chunks.push(value); n += value.length; }
+    try { reader.cancel(); } catch (_) {}
+    clearTimeout(timer);
+    const buf = Buffer.concat(chunks.map((c) => Buffer.from(c)));
+    const cs = /charset=([\w-]+)/i.exec(res.headers.get('content-type') || '') || /<meta[^>]+charset=["']?([\w-]+)/i.exec(buf.slice(0, 4096).toString('latin1'));
+    let html;
+    try { html = new TextDecoder(cs ? cs[1] : 'utf-8').decode(buf); } catch (_) { html = buf.toString('utf8'); }
+    return { html, url: res.url || url };
+  } catch (e) { return { error: e.name === 'AbortError' ? 'The site took too long to answer' : e.message }; }
+});
 
 /* ---- AI: forwards your chat request to the endpoint YOU configured (Ollama, LM Studio, OpenAI-compatible...) ---- */
 const p2p = require('./p2p');

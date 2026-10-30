@@ -1,5 +1,5 @@
-/* Screenshots of the Obsidian-style screens for a visual check (no pass/fail on looks):
-     SHOTS=<folder>  VAULT=<an Obsidian vault folder, read only>  */
+/* Screenshots of the linked-notes screens for a visual check (no pass/fail on looks):
+     SHOTS=<folder>  VAULT=<a Markdown vault folder, read only>  */
 const fs = require('fs'); const path = require('path');
 module.exports = async (t) => {
   const out = process.env.SHOTS; fs.mkdirSync(out, { recursive: true });
@@ -26,9 +26,9 @@ module.exports = async (t) => {
   if (cv) { await t.eval(`BP.open('${cv}')`); await t.wait(600); await shot('6-imported-canvas'); }
   const c2 = await J(`(() => { const c = BP.canvas.create(null, 'Plan'); const ids = BP.descendants('${root}').filter(id => BP.page(id).type === 'page').slice(0, 2);
     c.canvas.nodes = [{ id: 'g', type: 'group', label: 'This week', x: -30, y: -60, width: 940, height: 420, color: '5' },
-      { id: 'a', type: 'text', x: 0, y: 0, width: 260, height: 150, text: '# Goal\\nShip the **Obsidian bridge**\\n- [ ] import\\n- [x] graph' },
+      { id: 'a', type: 'text', x: 0, y: 0, width: 260, height: 150, text: '# Goal\\nShip the **vault bridge**\\n- [ ] import\\n- [x] graph' },
       { id: 'b', type: 'file', page: ids[0], x: 340, y: 0, width: 280, height: 180 },
-      { id: 'c', type: 'link', url: 'https://obsidian.md', x: 660, y: 40, width: 220, height: 100, color: '6' },
+      { id: 'c', type: 'link', url: 'https://example.com', x: 660, y: 40, width: 220, height: 100, color: '6' },
       { id: 'd', type: 'text', x: 340, y: 240, width: 240, height: 90, text: 'Ask for feedback', color: '4' }];
     c.canvas.edges = [{ id: 'e1', fromNode: 'a', fromSide: 'right', toNode: 'b', toSide: 'left', toEnd: 'arrow', label: 'needs' }, { id: 'e2', fromNode: 'b', fromSide: 'bottom', toNode: 'd', toSide: 'top', toEnd: 'arrow' }];
     BP.touch(c); BP.open(c.id); return c.id; })()`);

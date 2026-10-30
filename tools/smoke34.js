@@ -1,4 +1,4 @@
-/* Import real Obsidian vaults (read-only) into a throwaway test workspace and report how well they came across:
+/* Import real Markdown vaults (read-only) into a throwaway test workspace and report how well they came across:
      VAULTS="C:\path\to\Vault1;C:\path\to\Vault2"  (each folder is only read)
    Checks every note became a page, counts links resolved / missing, tags, attachments, and that the graph and an
    export of the import work. Prints a few links that did not resolve so they can be looked at. */

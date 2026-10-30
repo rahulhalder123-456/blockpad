@@ -1,9 +1,9 @@
 feature,area,priority,original,clone,notes
-Import an Obsidian vault folder (folders -> page tree),bridge,must,yes,yes,vault.js; tested on both real vaults (118/118 and 201/201 notes)
+Import a Markdown vault folder (folders -> page tree),bridge,must,yes,yes,vault.js; tested on both real vaults (118/118 and 201/201 notes)
 Resolve [[wikilinks]] / [[note|alias]] / [[note#heading]] on import,bridge,must,yes,yes,by path then by name (closest folder wins); links in tables kept in a list under the table
 YAML frontmatter -> page properties,bridge,must,yes,yes,tags / aliases / everything else in p.meta; created date used
 Attachments (![[image.png]] / PDFs) imported,bridge,must,yes,yes,images (with |width) PDFs audio video; 25 MB per file cap
-Export workspace as an Obsidian vault (md + frontmatter + [[links]]),bridge,must,yes,yes,folder on desktop; .zip in browser and phone; databases as .base; round trip tested
+Export workspace as a Markdown vault (md + frontmatter + [[links]]),bridge,must,yes,yes,folder on desktop; .zip in browser and phone; databases as .base; round trip tested
 Backlinks pane (linked mentions with context),links,must,yes,yes,Links panel (topbar button with count)
 Unlinked mentions with one-click Link,links,should,yes,yes,matches title and aliases
 Outgoing links pane,links,could,yes,yes,
@@ -18,12 +18,12 @@ Quick switcher,commands,must,yes,yes,Ctrl+K / Ctrl+O
 Outline side panel,editor,could,yes,yes,in the Links panel
 Hover page preview,editor,could,yes,yes,desktop (mouse) only
 Page properties UI,editor,should,yes,yes,Add property; tags chips; aliases
-Mermaid diagrams,editor,could,yes,no,not used in either vault; Blockpad has flow diagram blocks
+Diagrams from text (Mermaid),editor,could,yes,yes,code block language "mermaid" or /diagram; library loads on first use
 Math,editor,must,yes,yes,KaTeX
 PDF viewer,editor,should,yes,yes,pdf block
-Vim keys,editor,could,yes,no,
-Web clipper / web page to note,capture,could,yes,no,
-Slides from a page,present,could,yes,no,Slides plugin is off in both vaults
+Vim keys,editor,could,yes,yes,Settings → General; NORMAL/INSERT modes, counts, dd yy p, gg G
+Web clipper / web page to note,capture,could,yes,yes,Clip a web page; desktop and phone fetch it, a browser falls back to paste
+Slides from a page,present,could,yes,yes,⋯ → Present as slides; split at dividers or headings
 Canvas (JSON Canvas open format),canvas,could,yes,yes,cards pages links groups arrows labels colours; .canvas import/export
 Database views over pages (Bases),data,must,yes,yes,Blockpad databases are richer
 File recovery / history,data,must,yes,yes,
@@ -31,4 +31,4 @@ Local REST API,api,should,community plugin,yes,Blockpad Local API
 Live collaboration,share,must,paid Sync only,yes,Blockpad advantage
 Comments,share,should,no,yes,Blockpad advantage
 Community plugin ecosystem,platform,skip,yes,no,their community and private API
-Obsidian Sync / Publish servers,platform,skip,yes,no,their paid service
+Sync / Publish servers,platform,skip,yes,no,their paid service

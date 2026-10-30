@@ -1,7 +1,7 @@
-# Recon: Obsidian 1.14.5 vs Blockpad 1.8.4
+# Recon: reference notes app 1.14.5 vs Blockpad 1.8.4
 
-Goal: not a clone. Map what Obsidian does, find what Blockpad is missing, and pick what to build.
-Core loop of Obsidian: **write a note -> link it to other notes with `[[ ]]` -> find it again through links, backlinks, tags, search and the graph.**
+Goal: not a clone. Map what the reference app does, find what Blockpad is missing, and pick what to build.
+Core loop of the reference app: **write a note -> link it to other notes with `[[ ]]` -> find it again through links, backlinks, tags, search and the graph.**
 Blockpad's core loop is different: **write blocks -> organise in pages and databases -> share live with others.**
 The gap is the "find it again through links" half.
 
@@ -9,10 +9,10 @@ The gap is the "find it again through links" half.
 
 | source | what it gave | how |
 | --- | --- | --- |
-| Installed app package `%APPDATA%\obsidian\obsidian-1.14.5.asar` | the list of files and bundled libraries (names and sizes only) | REA, package-level only: the archive's file table was read; no code was opened, decompiled or saved. A deeper REA code analysis was started and stopped before it produced output, because the Replica rules forbid reading the target's JavaScript. |
-| The bundled starter vault (`/sandbox/*.md` names) | Obsidian's own feature tour topics | file names only |
-| Your own vaults (`Documents\Obsidian Vault`, `Documents\obsidian\Clients\client`) | which core plugins you actually use; 118 + 201 notes | read `.obsidian/core-plugins.json`, `community-plugins.json` (your data) |
-| Public docs: help.obsidian.md, jsoncanvas.org (open spec, MIT) | feature behaviour | public pages |
+| Installed app package `%APPDATA%\reference-app\app package` | the list of files and bundled libraries (names and sizes only) | REA, package-level only: the archive's file table was read; no code was opened, decompiled or saved. A deeper REA code analysis was started and stopped before it produced output, because the Replica rules forbid reading the target's JavaScript. |
+| The bundled starter vault (`/sandbox/*.md` names) | the reference app's own feature tour topics | file names only |
+| Your own vaults (`Documents\the reference app Vault`, `Documents\reference-app\Clients\client`) | which core plugins you actually use; 118 + 201 notes | read `settings folder core-plugins.json`, `community-plugins.json` (your data) |
+| Public docs: help.reference-app.md, jsoncanvas.org (open spec, MIT) | feature behaviour | public pages |
 | Blockpad source (this repo) | what Blockpad already has | grep of `app/*.js` |
 
 Observed in the package (bundled libraries -> features they power): CodeMirror + vim mode (editor, Vim keys),
@@ -25,7 +25,7 @@ Your own setup (observed): both vaults use Graph, Backlinks, Outgoing links, Tag
 Templates, Bookmarks, Outline, Page preview, Bases, Sync, File recovery, Word count, Command palette,
 Quick switcher. One vault also runs the community plugin **Local REST API**.
 
-## Screens (Obsidian)
+## Screens (the reference app)
 
 | ID | screen | how you get there | purpose | Blockpad today |
 | --- | --- | --- | --- | --- |
@@ -61,7 +61,7 @@ F04 Today                      one click -> today's note (created from the daily
 F05 Move between apps          the vault is a folder: any editor, Git or cloud drive can read it
 ```
 
-## Inferred data model (Obsidian, from public docs, high confidence)
+## Inferred data model (the reference app, from public docs, high confidence)
 
 ```
 Note      path (folder/name.md), body (Markdown), frontmatter properties (YAML), tags (#x and tags: [...])
@@ -73,25 +73,25 @@ Blockpad already maps well: page <-> note, page props <-> frontmatter, mention b
 
 ## The missing parts, ranked for Blockpad
 
-1. **Obsidian vault bridge (import and export a vault folder).** You have 319 notes in Obsidian. Today Blockpad imports
+1. **the reference app vault bridge (import and export a vault folder).** You have 319 notes in the reference app. Today Blockpad imports
    one .md at a time, ignores frontmatter, does not resolve `[[links]]`, folders or attachments. A bridge makes those notes usable
    in Blockpad and lets Blockpad write a vault back out. This unlocks everything else on this list.
 2. **Backlinks and unlinked mentions** (S04/S05). Blockpad already stores page links (mention blocks); it just never looks backwards.
-3. **Tags** (S07): `#tag` in text plus a tags property, a tag pane, click to filter. Imported Obsidian notes carry tags today and would lose them.
+3. **Tags** (S07): `#tag` in text plus a tags property, a tag pane, click to filter. Imported the reference app notes carry tags today and would lose them.
 4. **Graph view** (S06): global and local graph from the same link index. Canvas 2D is enough for a few thousand pages.
 5. **Daily notes** (S14): one click, today's page from a chosen template; dates in mentions link to it.
 6. **Command palette** (S11): Ctrl+P over every menu action.
 7. **Canvas** (S09) using the open JSON Canvas format, so boards open in both apps. Biggest build; do it last.
 
-What Blockpad already does better (keep pitching it): free live P2P sharing (Obsidian charges for Sync),
+What Blockpad already does better (keep pitching it): free live P2P sharing (the reference app charges for Sync),
 comments, databases with 10 view types, forms, built-in AI, one-file install on Android/iOS/web.
 
 ## Cannot / should not be copied
 
-- Obsidian's plugin ecosystem (2,000+ community plugins) - it is their community, and running their plugins would mean matching their private API.
-- Obsidian Sync / Publish servers - their service.
-- Their code, CSS, icons, starter-vault text and translations - owned by Obsidian. Build every line fresh.
-- Note: Obsidian's terms restrict reverse engineering the app; that is why this map uses package file names, your own vault settings and public docs only.
+- the reference app's plugin ecosystem (2,000+ community plugins) - it is their community, and running their plugins would mean matching their private API.
+- Sync / Publish servers - their service.
+- Their code, CSS, icons, starter-vault text and translations - owned by the reference app. Build every line fresh.
+- Note: the reference app's terms restrict reverse engineering the app; that is why this map uses package file names, your own vault settings and public docs only.
 
 ## Size
 

@@ -1,6 +1,6 @@
-/* The Obsidian-style features, end to end in the real app: links and backlinks, unlinked mentions, tags, renames,
+/* The linked-notes features, end to end in the real app: links and backlinks, unlinked mentions, tags, renames,
    [[ and # in the editor, the links panel, hover previews, daily notes, the command palette, the graph, canvases,
-   page properties, importing an Obsidian vault folder and exporting one (folder and .zip). */
+   page properties, importing a Markdown vault folder and exporting one (folder and .zip). */
 const fs = require('fs'); const path = require('path');
 module.exports = async (t) => {
   let fails = 0;
@@ -138,7 +138,7 @@ module.exports = async (t) => {
   const round = await J(`(() => { const p = BP.page('${cvId}'); const j = BP.canvas.toJson(p, (id) => id === '${ids.A}' ? 'Alpha programme.md' : null); const back = BP.canvas.fromJson(j, (f) => f === 'Alpha programme.md' ? { page: '${ids.A}' } : null); const o = JSON.parse(j); return { types: o.nodes.map(n => n.type).join(), file: o.nodes[1].file, edges: o.edges.length, backPage: back.nodes[1].page, backEdge: back.edges[0].toNode === o.edges[0].toNode }; })()`);
   check('canvas saves as JSON Canvas and reads back', round.types === 'text,file' && round.file === 'Alpha programme.md' && round.edges === 1 && round.backPage === ids.A && round.backEdge, JSON.stringify(round));
 
-  // ---------- import an Obsidian vault ----------
+  // ---------- import a Markdown vault ----------
   const png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
   const noteA = ['---', 'tags: [project, "area/home"]', 'aliases:', '  - The A note', 'status: draft', 'rating: 4', 'published: false', 'created: 2025-03-01', '---', '# Heading one', 'Link to [[Note B]] and [[Folder/Note B|the B note]] and [[Missing note]].', 'Second line of the same paragraph with ==highlight== and #inline/tag.',
     '', '> [!warning] Careful', '> Mind the gap', '', '| Name | Value |', '| --- | --- |', '| a | [[Note B]] |', '', '- [ ] a task', '  - nested under it', '- [x] done', '', '![[pic.png|200]]', '', '```js', 'const x = 1; // #notatag', '```', '', '$$', 'x^2 + y^2', '$$', '', '%%a private comment%%', 'See [the B note](Folder/Note%20B.md).'].join('\n');
@@ -152,7 +152,7 @@ module.exports = async (t) => {
       { path: 'My Vault/Folder/Note B.md', file: f('Note B.md', ${JSON.stringify(noteB)}) },
       { path: 'My Vault/Folder/Folder.md', file: f('Folder.md', ${JSON.stringify(folderNote)}) },
       { path: 'My Vault/attachments/pic.png', file: f('pic.png', '${png}', true) },
-      { path: 'My Vault/.obsidian/app.json', file: f('app.json', '{}') },
+      { path: 'My Vault/.notes-app/app.json', file: f('app.json', '{}') },
       { path: 'My Vault/Board.canvas', file: f('Board.canvas', ${JSON.stringify(board)}) },
     ];
     const r = await BP.vault.importEntries(entries);
@@ -217,7 +217,7 @@ module.exports = async (t) => {
   check('export: [[links]] with alias', (ex.a || '').includes('[[Note B]]') && (ex.a || '').includes('[[Note B|the B note]]'));
   check('export: ==highlight==, #tag, callout', ex.a.includes('==highlight==') && ex.a.includes('#inline/tag') && ex.a.includes('> [!warning]'));
   check('export: image saved under attachments/ and embedded', ex.paths.some((p) => /^attachments\/pic.*\.png$/.test(p)) && /!\[\[pic[^\]]*\.png\|200\]\]/.test(ex.a), (ex.a.match(/!\[\[[^\]]*\]\]/) || [''])[0]);
-  check('export: database as an Obsidian Base + a note per row', (ex.base || '').includes('file.inFolder("Tasks")') && (ex.base || '').includes('type: table') && /Status: In progress/.test(ex.row || ''), (ex.row || '').slice(0, 120));
+  check('export: database as a .base view + a note per row', (ex.base || '').includes('file.inFolder("Tasks")') && (ex.base || '').includes('type: table') && /Status: In progress/.test(ex.row || ''), (ex.row || '').slice(0, 120));
   check('export: canvas as JSON Canvas pointing at the note', JSON.parse(ex.canvas || '{}').nodes.some((n) => n.type === 'file' && n.file === 'Note A.md'));
   // re-import what was exported: a round trip keeps the links
   const rt = await J(`(async () => {

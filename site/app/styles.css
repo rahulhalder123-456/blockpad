@@ -501,3 +501,27 @@ button, .icon-btn, .sb-item, .menu-item { touch-action: manipulation; }
 .pagewrap.canvas-page .page-icon { font-size: 30px; margin-top: 0; }
 .pagewrap.canvas-page .title-in { font-size: 1.6em; flex: 1; min-width: 160px; margin-bottom: 0; }
 .pagewrap.canvas-page .phead-ctl { display: none; }
+/* diagrams from text (diagrams.js): the drawing, with the code shown while editing */
+.codebox .mm-edit { display: none; } .codebox.mm .mm-edit { display: inline-block; margin-left: auto; margin-right: 6px; }
+.codebox.mm:not(.editing) .codewrap { display: none; }
+.mm-out { display: none; } .codebox.mm .mm-out { display: block; padding: 14px; background: var(--bg); text-align: center; overflow: auto; }
+.codebox.mm.editing .mm-out { border-top: 1px solid var(--border); }
+.mm-out svg { max-width: 100%; height: auto; }
+.mm-msg { text-align: left; font-size: 13px; } .mm-out.err .mm-msg { color: var(--danger); font-family: var(--mono); }
+@media print { .codebox.mm .codewrap, .codebox.mm .code-bar { display: none !important; } }
+/* slides (slides.js) */
+.sl-deck { position: fixed; inset: 0; z-index: 4000; background: var(--bg); display: flex; flex-direction: column; outline: none; }
+.sl-progress { height: 3px; background: var(--hover); flex: none; } .sl-progress i { display: block; height: 100%; background: var(--accent); transition: width .25s; }
+.sl-stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 3vh 5vw; cursor: pointer; }
+.sl-slide { width: min(1100px, 100%); font-size: clamp(17px, 2.3vw, 30px); line-height: 1.45; transform-origin: center center; cursor: default; }
+.sl-slide .editor { padding: 0; } .sl-slide .bctl, .sl-slide .tail, .sl-slide .add-below { display: none !important; }
+.sl-slide .editor .t-h1 .txt, .sl-slide h1 { font-size: 2.1em; } .sl-slide .editor .t-h2 .txt { font-size: 1.6em; }
+.sl-title { text-align: center; } .sl-title h1 { font-weight: 800; margin: 0 0 .3em; line-height: 1.15; } .sl-ico { font-size: 2.6em; } .sl-by { color: var(--muted); font-size: .8em; }
+.sl-bar { flex: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); opacity: .35; transition: opacity .2s; } .sl-bar:hover, .sl-deck:focus-within .sl-bar:focus-within { opacity: 1; }
+.sl-count { font-size: 13px; color: var(--muted); min-width: 56px; text-align: center; }
+@media (hover: none) { .sl-bar { opacity: .8; } }
+/* vim keys (vim.js) */
+.vim-pill { position: fixed; z-index: 3000; left: 50%; bottom: 14px; transform: translateX(-50%); font: 600 12px/1 var(--mono); letter-spacing: .04em; padding: 6px 12px; border-radius: 6px; background: var(--accent); color: var(--accent-text); box-shadow: var(--shadow); pointer-events: none; }
+.vim-pill.ins { background: var(--pop); color: var(--muted); }
+body.vim-normal .editor .txt:focus { caret-color: var(--accent); }
+body.vim-normal .editor .block:has(.txt:focus) { box-shadow: inset 3px 0 0 var(--accent); }

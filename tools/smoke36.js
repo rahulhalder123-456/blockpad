@@ -1,4 +1,4 @@
-/* Importing a vault from a .zip (the way phones import): ZIP=<a .zip of an Obsidian vault folder>, NOTES=<how many .md notes it has> */
+/* Importing a vault from a .zip (the way phones import): ZIP=<a .zip of a Markdown vault folder>, NOTES=<how many .md notes it has> */
 const fs = require('fs');
 module.exports = async (t) => {
   let fails = 0;
