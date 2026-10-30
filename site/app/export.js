@@ -16,8 +16,15 @@
           else if (t === 'I' || t === 'EM') s += '*' + inner + '*';
           else if (t === 'S' || t === 'STRIKE') s += '~~' + inner + '~~';
           else if (t === 'CODE') s += '`' + inner + '`';
-          else if (t === 'A') { const h = c.getAttribute('href') || ''; s += h.startsWith('bp://') || !h ? inner : '[' + inner + '](' + h + ')'; }
+          else if (t === 'A') {
+            const h = c.getAttribute('href') || '';
+            const ob = BP._mdMode;
+            if (ob && h.startsWith('bp://page/')) { const n = ob.linkName(h.slice(10)); s += n ? '[[' + n + (inner === n ? '' : '|' + inner.replace(/[[\]|]/g, '')) + ']]' : inner; }
+            else if (ob && h.startsWith('bp://tag/')) { let tg = h.slice(9); try { tg = decodeURIComponent(tg); } catch (_) {} s += '#' + tg.replace(/\s+/g, '-'); }
+            else s += h.startsWith('bp://') || !h ? inner : '[' + inner + '](' + h + ')';
+          }
           else if (t === 'BR') s += '  \n';
+          else if (t === 'SPAN' && BP._mdMode && /\bbg-yellow\b/.test(c.className)) s += '==' + inner + '==';
           else s += inner;
         }
       });
@@ -44,6 +51,7 @@
     rows.forEach((r) => (out += '| ' + props.map((p) => cellText(r, p)).join(' | ') + ' |\n'));
     return out;
   };
+  const CALLOUT_OF = { '📝': 'note', 'ℹ️': 'info', '💡': 'tip', '❗': 'important', '✅': 'success', '❓': 'question', '⚠️': 'warning', '❌': 'failure', '⛔': 'danger', '🐞': 'bug', '🧪': 'example', '❝': 'quote', '📋': 'abstract', '☑️': 'todo' };
   BP.blocksToMd = function (blocks, depth = 0) {
     const pad = '  '.repeat(depth);
     let out = '';
@@ -56,6 +64,13 @@
       prevList = isList;
       const t = inlineMd(b.text);
       const kids = () => (b.children && b.children.length ? BP.blocksToMd(b.children, depth + 1) : '');
+      const ob = BP._mdMode;
+      // Obsidian flavour (vault export): callouts, [[sub-page]] links, embedded files and databases as ![[ ]]
+      if (ob && b.type === 'callout') { out += '> [!' + (CALLOUT_OF[b.icon] || 'note') + ']\n> ' + t.replace(/ {2}\n/g, '\n> ') + '\n\n' + kids(); return; }
+      if (ob && b.type === 'page') { const n = ob.linkName(b.ref); if (n) out += (/\.base$/.test(n) ? '![[' : '[[') + n + ']]\n\n'; return; }
+      if (ob && b.type === 'dbview') { const d = BP.page(b.ref); const n = d && ob.linkName(b.ref); if (n) out += '![[' + n + ']]\n\n'; return; }
+      if (ob && ['image', 'pdf', 'audio', 'video', 'file'].includes(b.type) && b.src && b.src.startsWith('data:')) { out += '![[' + assetRef(b.src, b.name || b.caption) + (b.type === 'image' && b.w ? '|' + Math.round(b.w) : '') + ']]\n\n'; return; }
+      if (ob && b.type === 'toc') return;
       switch (b.type) {
         case 'p': out += (t ? pad + t : '') + '\n\n' + kids(); break;
         case 'h1': out += '# ' + t + '\n\n' + kids(); break;

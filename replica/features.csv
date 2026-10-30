@@ -1,47 +1,34 @@
 feature,area,priority,original,clone,notes
-Email + OAuth sign in,auth,must,yes,n/a,local-first: no accounts by design
-Workspace creation,workspace,must,yes,partial,one local workspace; renamable; backup/import
-Nested page tree sidebar,navigation,must,yes,yes,drag to nest/reorder; resizable
-Favorites,navigation,should,yes,yes,
-Page title icon cover,pages,must,yes,yes,emoji icons; gradient or uploaded covers
-Block editor with slash menu,editor,must,yes,yes,
-Paragraph heading list todo toggle quote callout divider code,editor,must,yes,yes,
-Markdown shortcuts,editor,should,yes,yes,
-Drag handle reorder blocks,editor,must,yes,yes,also drop on left/right edge to make columns
-Turn block into other type,editor,should,yes,yes,
-Rich text formatting and links,editor,must,yes,yes,text + background colors too
-Inline mentions of pages and people,editor,should,yes,partial,pages only; people are a local list in properties
-Columns,editor,should,yes,yes,resizable
-Image video file pdf embed blocks,media,should,yes,yes,PDF viewer, audio with recorder, link previews
-Table block,editor,could,yes,yes,
-Table of contents and breadcrumb,editor,could,yes,yes,toc block + topbar breadcrumb
-Synced blocks,editor,could,yes,yes,mirrored across pages
-Equation block,editor,could,yes,yes,rendered with bundled KaTeX; no inline equations
-Undo redo,editor,must,yes,yes,
-Autosave,editor,must,yes,yes,atomic file write; saved on blur/close
-Databases with typed properties,databases,must,yes,yes,23 property types
-Table view,databases,must,yes,yes,
-Board view,databases,should,yes,yes,drag cards between columns
-List gallery calendar views,databases,could,yes,yes,
-Timeline and chart views,databases,could,yes,yes,
-Filter sort group,databases,must,yes,yes,nested AND/OR filter groups; group by in table/list/board
-Relations and rollups,databases,could,yes,yes,one-way relations
-Formulas,databases,could,yes,partial,Blockpad formula language (safe, no eval); not byte-identical to Notion
-Row opens as page,databases,must,yes,yes,
-Share by invite with permission levels,sharing,must,yes,no,replaced by file export (no server)
-Publish page to web,sharing,should,yes,partial,exports a standalone HTML file instead
-Comments and resolve,collab,should,yes,yes,page-level and inline threads with replies
-Realtime multi-user editing and presence,collab,should,yes,no,out of scope for a local-only app
-Offline editing and sync,sync,could,yes,partial,always local; multi-device via a synced folder with page-level merge
-Search,search,must,yes,yes,titles and content
-Trash and restore,pages,must,yes,yes,
-Page history,pages,could,yes,yes,
-Templates,pages,could,yes,yes,6 built in + your own; database row templates
-Settings and members,admin,should,yes,partial,settings yes; members n/a
-Desktop app shell,platform,could,yes,yes,Electron; packaged Blockpad.exe
-Dark mode,design,should,yes,yes,system/light/dark
-Public API,platform,could,yes,partial,local REST API on 127.0.0.1 (opt-in), not a hosted API
-Notion AI and agents,ai,skip,yes,partial,no built-in model; bring-your-own (Ollama / OpenAI-compatible) for text actions
-Third-party connections,integrations,skip,yes,skip,partner deals
-Notion brand icons illustrations and template content,content,skip,yes,skip,owned by Notion; Blockpad uses its own name and logo
-Enterprise SSO SCIM compliance,admin,skip,yes,skip,out of slice
+Import an Obsidian vault folder (folders -> page tree),bridge,must,yes,yes,vault.js; tested on both real vaults (118/118 and 201/201 notes)
+Resolve [[wikilinks]] / [[note|alias]] / [[note#heading]] on import,bridge,must,yes,yes,by path then by name (closest folder wins); links in tables kept in a list under the table
+YAML frontmatter -> page properties,bridge,must,yes,yes,tags / aliases / everything else in p.meta; created date used
+Attachments (![[image.png]] / PDFs) imported,bridge,must,yes,yes,images (with |width) PDFs audio video; 25 MB per file cap
+Export workspace as an Obsidian vault (md + frontmatter + [[links]]),bridge,must,yes,yes,folder on desktop; .zip in browser and phone; databases as .base; round trip tested
+Backlinks pane (linked mentions with context),links,must,yes,yes,Links panel (topbar button with count)
+Unlinked mentions with one-click Link,links,should,yes,yes,matches title and aliases
+Outgoing links pane,links,could,yes,yes,
+Rename keeps links working,links,must,yes,yes,links use ids; link text that showed the old name follows the new one
+Tags (#tag in text + tags property),tags,must,yes,yes,# menu in the editor; nested tags
+Tag pane with counts and filter,tags,should,yes,yes,Tags in the sidebar; #tag in search
+Global graph view,graph,should,yes,yes,Ctrl+G; filters; tags as dots
+Local graph (this page's neighbours),graph,should,yes,yes,depth 1-3
+Daily note (today's page from a template),daily,should,yes,yes,Today / Ctrl+Shift+D; folder name format and template in Settings
+Command palette (Ctrl+P),commands,should,yes,yes,36 commands; letters-in-order matching; recent first
+Quick switcher,commands,must,yes,yes,Ctrl+K / Ctrl+O
+Outline side panel,editor,could,yes,yes,in the Links panel
+Hover page preview,editor,could,yes,yes,desktop (mouse) only
+Page properties UI,editor,should,yes,yes,Add property; tags chips; aliases
+Mermaid diagrams,editor,could,yes,no,not used in either vault; Blockpad has flow diagram blocks
+Math,editor,must,yes,yes,KaTeX
+PDF viewer,editor,should,yes,yes,pdf block
+Vim keys,editor,could,yes,no,
+Web clipper / web page to note,capture,could,yes,no,
+Slides from a page,present,could,yes,no,Slides plugin is off in both vaults
+Canvas (JSON Canvas open format),canvas,could,yes,yes,cards pages links groups arrows labels colours; .canvas import/export
+Database views over pages (Bases),data,must,yes,yes,Blockpad databases are richer
+File recovery / history,data,must,yes,yes,
+Local REST API,api,should,community plugin,yes,Blockpad Local API
+Live collaboration,share,must,paid Sync only,yes,Blockpad advantage
+Comments,share,should,no,yes,Blockpad advantage
+Community plugin ecosystem,platform,skip,yes,no,their community and private API
+Obsidian Sync / Publish servers,platform,skip,yes,no,their paid service

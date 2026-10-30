@@ -3,11 +3,18 @@
   const BP = (window.BP = window.BP || {});
   const { h, uid } = BP;
   const nav = { stack: [], i: -1 };
-  let editor = null, commentsOpen = false;
+  let editor = null, commentsOpen = false, linksOpen = false;
   const GRADS = ['indigo', 'sunset', 'ocean', 'forest', 'rose', 'slate', 'sand', 'violet'];
   const root = () => BP.$('#app');
   const cur = () => BP.page(BP.state.current);
-  const icoOf = (p) => p.icon || (p.type === 'db' ? '🗂' : p.rowOf ? '•' : '📄');
+  const icoOf = (p) => p.icon || (p.type === 'db' ? '🗂' : p.type === 'canvas' ? '🧭' : p.rowOf ? '•' : '📄');
+  // the right-hand panel shows comments or links, not both
+  const togglePanel = (which, force) => {
+    const on = force != null ? force : !(which === 'links' ? linksOpen : commentsOpen);
+    linksOpen = which === 'links' ? on : on ? false : linksOpen;
+    commentsOpen = which === 'comments' ? on : on ? false : commentsOpen;
+    renderAll();
+  };
 
   /* ---------- theme ---------- */
   function applyTheme() {
@@ -130,7 +137,13 @@
     sb.append(h('div', { class: 'sb-actions' },
       nm(BP.icons.search, 'Search', 'Ctrl+K', openSearch),
       nm(BP.icons.home, 'Home', '', () => { BP.state.current = null; BP.save(); renderAll(); }),
-      nm(BP.icons.plus, 'New page', 'Ctrl+N', () => BP.newPage(null))));
+      nm(BP.icons.calendar, 'Today', '', () => BP.kb.openToday()),
+      nm(BP.icons.graph, 'Graph view', 'Ctrl+G', () => BP.graph.open({})),
+      nm(BP.icons.plus, 'New page', 'Ctrl+N', (e) => BP.menu(e.currentTarget, [
+        { label: 'Page', icon: '📄', kbd: 'Ctrl+N', onClick: () => BP.newPage(null) },
+        { label: 'Canvas', icon: '🧭', onClick: () => BP.open(BP.canvas.create(null).id) },
+        { label: 'Database', icon: '🗂', onClick: () => BP.open(BP.createDatabase(null, { title: 'Untitled database' }).id) },
+      ]))));
     const sc = h('div', { class: 'sb-scroll' });
     const favs = BP.allPages().filter((p) => p.favorite && !BP.isTrashed(p));
     if (favs.length) {
@@ -152,6 +165,7 @@
     sb.append(sc);
     sb.append(h('div', { class: 'sb-bottom' },
       nm(BP.icons.template, 'Templates', '', openTemplates),
+      nm(BP.icons.tag, 'Tags', '', () => BP.kb.openTag()),
       nm(BP.icons.share, 'Join a shared page', '', () => BP.joinDialog()),
       nm(BP.icons.trash, 'Trash', '', openTrash),
       nm(BP.icons.settings, 'Settings', 'Ctrl+,', () => openSettings())));
@@ -221,6 +235,8 @@
       { label: 'Rename workspace', icon: '✎', onClick: async () => { const n = await BP.prompt('Workspace name', BP.state.settings.name); if (n) { BP.state.settings.name = n; BP.save(); refreshSidebar(); } } },
       { label: 'Settings', icon: BP.icons.settings, onClick: () => openSettings() },
       { label: 'Export backup', icon: BP.icons.share, onClick: BP.exportWorkspace },
+      { label: 'Import an Obsidian vault…', icon: '🗃', onClick: () => BP.vault.pickImport() },
+      { label: 'Export as an Obsidian vault…', icon: '🗃', onClick: () => BP.vault.exportDialog(null) },
       { divider: true },
       { label: 'About Blockpad', icon: 'ℹ', onClick: () => openSettings('about') },
     ]);
@@ -286,7 +302,8 @@
       t.append(h('span', { class: 'muted small edited' }, 'Edited ' + BP.fmtDate(p.updated)),
         BP.share.bar(p) || '',
         h('button', { class: 'btn ghost', onclick: () => BP.shareDialog(p) }, 'Share'),
-        h('button', { class: 'icon-btn' + (commentsOpen ? ' on' : ''), title: 'Comments', html: BP.icons.comment + ((p.comments || []).filter((c) => !c.resolved).length ? `<i class="badge">${(p.comments || []).filter((c) => !c.resolved).length}</i>` : ''), onclick: () => { commentsOpen = !commentsOpen; renderAll(); } }),
+        (() => { const n = BP.kb.backlinks(p.id).length; return h('button', { class: 'icon-btn kb-btn' + (linksOpen ? ' on' : ''), title: 'Links: backlinks, outline, tags' + (n ? ' (' + n + ' pages link here)' : ''), html: BP.icons.backlinks + (n ? `<i class="badge">${n}</i>` : ''), onclick: () => togglePanel('links') }); })(),
+        h('button', { class: 'icon-btn' + (commentsOpen ? ' on' : ''), title: 'Comments', html: BP.icons.comment + ((p.comments || []).filter((c) => !c.resolved).length ? `<i class="badge">${(p.comments || []).filter((c) => !c.resolved).length}</i>` : ''), onclick: () => togglePanel('comments') }),
         h('button', { class: 'icon-btn', title: 'Favorite', html: BP.icons.star, style: { color: p.favorite ? '#e8a317' : '' }, onclick: () => { p.favorite = !p.favorite; BP.save(); renderAll(); } }),
         h('button', { class: 'icon-btn', title: 'More', html: BP.icons.more, onclick: (e) => moreMenu(p, e.currentTarget) }));
     }
@@ -301,6 +318,9 @@
       flag('full', 'Full width', '↔'),
       p.type === 'db' ? null : flag('locked', 'Lock page', '🔒'),
       { divider: true },
+      p.type === 'page' && !p.rowOf ? { label: 'Add property', icon: '+', onClick: () => { if (!BP.kb.hasProps(p)) p.tags = []; BP.touch(p); renderAll(); setTimeout(() => { const b = BP.$('.kb-padd'); b && b.click(); }, 30); } } : null,
+      { label: 'Links and backlinks', icon: BP.icons.backlinks, onClick: () => togglePanel('links', true) },
+      { label: 'Local graph', icon: BP.icons.graph, onClick: () => BP.graph.open({ local: p.id }) },
       { label: p.favorite ? 'Remove from favorites' : 'Add to favorites', icon: BP.icons.star, onClick: () => { p.favorite = !p.favorite; BP.save(); renderAll(); } },
       { label: 'Copy link', icon: BP.icons.link, onClick: () => { navigator.clipboard.writeText('bp://page/' + p.id); BP.toast('Link copied. Paste it into another page to link here.'); } },
       p.rowOf ? null : { label: 'Move to…', icon: '↪', onClick: () => moveDialog(p) },
@@ -310,6 +330,7 @@
       { label: 'Duplicate', icon: BP.icons.copy, onClick: () => { const c = BP.clonePage(p.id); BP.open(c.id); } },
       { label: 'Save as template', icon: BP.icons.template, onClick: () => { BP.saveTemplate(p.id); BP.toast('Saved as a template. Find it under Templates.'); } },
       { label: 'Export / print…', icon: BP.icons.share, onClick: () => BP.shareDialog(p, 'export') },
+      { label: 'Export as an Obsidian vault…', icon: '🗃', onClick: () => BP.vault.exportDialog(p.id) },
       { label: 'Move to trash', icon: BP.icons.trash, danger: true, onClick: () => trashPage(p) },
     ]);
   }
@@ -327,6 +348,7 @@
     if (!p) { sc.append(home()); return m; }
     sc.append(pageView(p));
     if (commentsOpen) area.append(commentsPanel(p));
+    else if (linksOpen) area.append(BP.kb.panel(p, () => togglePanel('links', false)));
     return m;
   }
   function home() {
@@ -377,7 +399,7 @@
   const coverClass = (c) => (c && c.startsWith('g:') ? 'cv-' + c.slice(2) : '');
   function pageView(p) {
     const trashed = BP.isTrashed(p);
-    const wrap = h('div', { class: 'pagewrap' + (p.full || p.type === 'db' ? ' full' : '') + (p.small ? ' small' : '') + (p.font ? ' font-' + p.font : '') });
+    const wrap = h('div', { class: 'pagewrap' + (p.full || p.type === 'db' || p.type === 'canvas' ? ' full' : '') + (p.type === 'canvas' ? ' canvas-page' : '') + (p.small ? ' small' : '') + (p.font ? ' font-' + p.font : '') });
     const esp = BP.share.spaceOf(p);
     if (esp && esp.ended && !BP.share.loading(p)) {
       wrap.append(h('div', { class: 'banner' }, 'The owner stopped sharing this page. This is your own copy now and it no longer syncs.', h('button', { class: 'btn small', onclick: async () => { await BP.share.leave(esp.id); renderAll(); } }, 'OK')));
@@ -406,7 +428,11 @@
     const title = h('textarea', { class: 'title-in', rows: '1', placeholder: 'Untitled', readonly: locked ? '' : null, spellcheck: 'true' });
     title.value = p.title || '';
     const fit = () => { title.style.height = 'auto'; title.style.height = title.scrollHeight + 'px'; };
+    let titleBefore = p.title || '';
+    title.addEventListener('focus', () => { titleBefore = p.title || ''; });
     title.addEventListener('input', () => { p.title = title.value.replace(/\n/g, ' '); fit(); BP.touch(p); refreshChrome(); });
+    // links show the page's name: when it changes, update link text that still shows the old name
+    title.addEventListener('change', () => { const n = BP.kb.renamed(p, titleBefore); titleBefore = p.title || ''; if (n) BP.toast('Updated ' + n + ' link' + (n === 1 ? '' : 's') + ' to the new name'); });
     title.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); if (editor) { const f = editor.focusables()[0]; f ? BP.editorHelpers.setCaret(f, 'start') : editor.clickTail(); } else BP.$('.db-new') && BP.$('.db-new').click(); }
       else if (e.key === 'ArrowDown' && editor && title.selectionStart === title.value.length) { const f = editor.focusables()[0]; if (f) { e.preventDefault(); BP.editorHelpers.setCaret(f, 'start'); } }
@@ -415,7 +441,17 @@
     page.append(head);
     requestAnimationFrame(fit);
     if (p.rowOf) { const rp = h('div', { class: 'rowprops' }); BP.renderRowProps(rp, p); page.append(rp, h('hr', { class: 'rp-hr' })); }
-    if (p.type === 'db') {
+    else if (p.type === 'page' && BP.kb.hasProps(p)) {
+      const slot = h('div');
+      const draw = () => { slot.innerHTML = ''; if (BP.kb.hasProps(p)) slot.append(BP.kb.propsView(p, locked, draw)); };
+      draw();
+      page.append(slot);
+    }
+    if (p.type === 'canvas') {
+      const box = h('div', { class: 'cvpage' });
+      page.append(box);
+      BP.canvas.render(box, p, { readonly: locked });
+    } else if (p.type === 'db') {
       const box = h('div', { class: 'dbpage' });
       page.append(box);
       BP.renderDatabase(box, p, {});
@@ -578,7 +614,7 @@
   /* ---------- search ---------- */
   function openSearch() {
     BP.modal('', (body, close) => {
-      const inp = h('input', { class: 'search-in', placeholder: 'Search pages and content…', autofocus: '' });
+      const inp = h('input', { class: 'search-in', placeholder: 'Search pages and content… (#tag for tags)', autofocus: '' });
       const list = h('div', { class: 'search-list' });
       body.append(inp, list);
       let items = [], idx = 0;
@@ -597,11 +633,19 @@
           list.append(h('div', { class: 'sr-head' }, 'Recent'));
           all().filter((p) => !p.inline).sort((a, b) => b.updated - a.updated).slice(0, 8).forEach((p) => items.push({ p }));
           items.push({ act: 'New page', fn: () => BP.newPage(null) }, { act: BP.state.settings.theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme', fn: () => BP.setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark') }, { act: 'Open settings', fn: () => openSettings() }, { act: 'Open trash', fn: openTrash });
+        } else if (/^(#|tag:)\S/.test(q)) {
+          // #tag or tag:name lists the pages with that tag (and its nested tags)
+          const tq = q.replace(/^(#|tag:)/, '');
+          const tags = BP.kb.allTags().filter((t) => t.key.startsWith(tq)).slice(0, 6);
+          tags.forEach((t) => items.push({ act: '#' + t.name + ' · ' + t.pages.size + (t.pages.size === 1 ? ' page' : ' pages'), fn: () => BP.kb.openTag(t.key) }));
+          BP.kb.pagesWithTag(tq).sort((a, b) => b.updated - a.updated).slice(0, 30).forEach((p) => items.push({ p, sn: BP.kb.tagsOf(p).map((x) => '#' + x).join(' ') }));
+          if (!items.length) list.append(h('div', { class: 'muted pad' }, 'No pages with that tag'));
         } else {
           const scored = [];
           all().forEach((p) => {
             const t = (p.title || 'Untitled').toLowerCase();
             let s = t === q ? 100 : t.startsWith(q) ? 80 : t.includes(q) ? 60 : 0;
+            if (!s && Array.isArray(p.aliases) && p.aliases.some((a) => String(a).toLowerCase().includes(q))) s = 50;
             let sn = '';
             if (!s) { sn = snippet(p, q); if (sn) s = 20; }
             if (!s && p.type === 'db' === false && p.values && Object.values(p.values).some((v) => String(v).toLowerCase().includes(q))) s = 10;
@@ -612,7 +656,7 @@
         }
         items.forEach((it, i) => {
           const row = h('div', { class: 'sr-item' + (i === idx ? ' on' : ''), onclick: () => pick(it) },
-            it.p ? [h('span', { class: 'sr-ico' }, icoOf(it.p)), h('span', { class: 'sr-main' }, h('b', null, it.p.title || 'Untitled'), it.sn ? h('small', null, '…' + it.sn + '…') : h('small', null, BP.path(it.p).slice(0, -1).map((x) => x.title || 'Untitled').join(' / '))), h('span', { class: 'muted small' }, BP.fmtDay(new Date(it.p.updated).toISOString().slice(0, 10)))] : [h('span', { class: 'sr-ico' }, '⌘'), h('span', { class: 'sr-main' }, h('b', null, it.act))]);
+            it.p ? [h('span', { class: 'sr-ico' }, icoOf(it.p)), h('span', { class: 'sr-main' }, h('b', null, it.p.title || 'Untitled'), it.sn ? h('small', null, it.sn.startsWith('#') ? it.sn : '…' + it.sn + '…') : h('small', null, BP.path(it.p).slice(0, -1).map((x) => x.title || 'Untitled').join(' / '))), h('span', { class: 'muted small' }, BP.fmtDay(new Date(it.p.updated).toISOString().slice(0, 10)))] : [h('span', { class: 'sr-ico' }, '⌘'), h('span', { class: 'sr-main' }, h('b', null, it.act))]);
           row.addEventListener('mouseenter', () => { idx = i; list.querySelectorAll('.sr-item').forEach((x, j) => x.classList.toggle('on', j === i)); });
           list.append(row);
         });
@@ -671,6 +715,8 @@
       ['🚀', 'Project tracker', 'Database with board and table views', () => dbWith('Project tracker', '🚀', [{ name: 'Status', type: 'status', options: opts(['Backlog', 'In progress', 'Review', 'Done']) }, { name: 'Owner', type: 'text' }, { name: 'Due', type: 'date' }, { name: 'Priority', type: 'select', options: [{ id: uid(), name: 'High', color: 'red' }, { id: uid(), name: 'Medium', color: 'yellow' }, { id: uid(), name: 'Low', color: 'green' }] }], [{ t: 'Define scope', v: { Status: 'Done', Priority: 'High' } }, { t: 'Build prototype', v: { Status: 'In progress', Priority: 'High' } }, { t: 'User feedback', v: { Status: 'Backlog', Priority: 'Medium' } }], [{ type: 'board', name: 'Board', groupByName: 'Status' }, { type: 'table', name: 'Table' }, { type: 'calendar', name: 'Calendar', dateName: 'Due' }])],
       ['📚', 'Reading list', 'Books and articles as a gallery', () => dbWith('Reading list', '📚', [{ name: 'Status', type: 'status', options: opts(['To read', 'Reading', 'Finished']) }, { name: 'Author', type: 'text' }, { name: 'Rating', type: 'number' }, { name: 'Link', type: 'url' }], [{ t: 'A book to start with', v: { Status: 'To read' } }], [{ type: 'gallery', name: 'Gallery' }, { type: 'table', name: 'Table' }])],
       ['🗂', 'Blank database', 'An empty table to shape yourself', () => BP.createDatabase(null, { title: 'Untitled database', icon: '🗂' })],
+      ['🧭', 'Canvas', 'An endless board of cards and arrows', () => BP.canvas.create(null)],
+      ['🗓', 'Today’s daily note', 'One page per day, opened from the sidebar', () => BP.kb.dailyFor(new Date(), true)],
     ];
     BP.modal('Templates', (body, close) => {
       const g = h('div', { class: 'tpl-grid' });
@@ -711,8 +757,21 @@
       const inp = h('input', { class: 'input', value: BP.state.settings.name || '' });
       inp.addEventListener('change', () => { BP.state.settings.name = inp.value || 'My Workspace'; BP.save(); refreshSidebar(); });
       p.append(inp);
+      const d = BP.kb.dailySettings();
+      p.append(h('h3', null, 'Daily notes'), h('p', { class: 'muted small' }, '“Today” in the sidebar (Ctrl+Shift+D) opens one page per day, made from the template you pick.'));
+      const folder = h('input', { class: 'input', value: d.folder, placeholder: 'Leave empty to put them at the top level' });
+      folder.addEventListener('change', () => { d.folder = folder.value.trim(); BP.save(); });
+      const fmt = h('input', { class: 'input', value: d.format });
+      const ex = h('span', { class: 'muted small' });
+      const showEx = () => { ex.textContent = 'Today’s note would be called: ' + BP.kb.fmtDate(new Date(), fmt.value || 'YYYY-MM-DD'); };
+      fmt.addEventListener('input', showEx);
+      fmt.addEventListener('change', () => { d.format = fmt.value.trim() || 'YYYY-MM-DD'; BP.save(); });
+      const tpl = h('select', { class: 'input' }, h('option', { value: '' }, 'An empty page'), ...(BP.state.templates || []).map((t) => h('option', { value: t.id, selected: d.template === t.id ? '' : null }, t.name)));
+      tpl.addEventListener('change', () => { d.template = tpl.value; BP.save(); });
+      showEx();
+      p.append(h('label', { class: 'muted' }, 'Put them inside the page'), folder, h('label', { class: 'muted' }, 'Name format (YYYY MM DD, MMMM = month name, dddd = weekday)'), fmt, ex, h('label', { class: 'muted' }, 'Template (save any page as a template to use it here)'), tpl);
     }
-    function data(p) {
+    function data(p, close) {
       p.append(h('h3', null, 'Where your data lives'), h('p', { class: 'muted' }, 'Everything is stored in one file on this computer. Nothing is uploaded.'), h('code', { class: 'pathbox' }, dataPath));
       if (window.bp) {
         p.append(h('div', { class: 'row-gap' },
@@ -731,10 +790,12 @@
         h('button', { class: 'btn', onclick: BP.exportWorkspace }, 'Export full backup (.json)'),
         h('button', { class: 'btn', onclick: () => pickText('.json', (t) => importBackup(t)) }, 'Import backup…')));
       p.append(h('h3', null, 'Import'), h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => { const i = h('input', { type: 'file', accept: '.csv,.tsv,.txt' }); i.onchange = async () => { const f = i.files[0]; if (!f) return; try { const r = BP.importCsv(await f.text(), null, null, f.name.replace(/\.\w+$/, '')); BP.toast('Created a database with ' + r.added + ' rows'); BP.open(r.db.id); } catch (e) { BP.toast('Import failed: ' + e.message); } }; i.click(); } }, 'Import CSV as a database…'), h('button', { class: 'btn', onclick: () => { const i = h('input', { type: 'file', accept: '.md,.markdown,.txt', multiple: '' }); i.onchange = async () => { let n = 0, last; for (const f of i.files) { last = BP.importMarkdown(f.name, await f.text(), null); n++; } if (n) { BP.toast('Imported ' + n + ' page' + (n > 1 ? 's' : '')); BP.open(last.id); } }; i.click(); } }, 'Import Markdown files…')));
+      p.append(h('h3', null, 'Obsidian'), h('p', { class: 'muted small' }, 'Bring a whole Obsidian vault in (notes, folders, [[links]], tags, properties, images and canvases), or save Blockpad as a vault that Obsidian opens. The vault folder is only read, never changed.'),
+        h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => { close(); BP.vault.pickImport(); } }, 'Import an Obsidian vault…'), h('button', { class: 'btn', onclick: () => { close(); BP.vault.exportDialog(null); } }, 'Export as an Obsidian vault…')));
       p.append(h('h3', null, 'Danger zone'), h('button', { class: 'btn danger', onclick: async () => { if (await BP.confirm('Reset workspace', 'This erases every page and starts fresh. Export a backup first if you might want anything back.', 'Erase everything')) { BP.allowOverwrite = true; BP.corrupted = false; BP.state = { v: 1, pages: {}, settings: BP.state.settings, current: null }; BP.seed(); await BP.flush(); nav.stack = []; nav.i = -1; renderAll(); BP.toast('Workspace reset'); } } }, 'Reset workspace…'));
     }
     function keys(p) {
-      const K = [['Ctrl+K / Ctrl+P', 'Search'], ['Ctrl+N', 'New page'], ['Ctrl+\\', 'Toggle sidebar'], ['Ctrl+,', 'Settings'], ['Alt+← / Alt+→', 'Back / forward'], ['Ctrl+Z / Ctrl+Y', 'Undo / redo'], ['/', 'Insert a block'], ['@', 'Mention a page'], ['Ctrl+B / I / U', 'Bold / italic / underline'], ['Ctrl+E', 'Inline code'], ['Ctrl+K (with text selected)', 'Add link'], ['Ctrl+Shift+S', 'Strikethrough'], ['Tab / Shift+Tab', 'Nest / un-nest a block'], ['Ctrl+Enter', 'Toggle to-do or toggle'], ['Esc', 'Close menus']];
+      const K = [['Ctrl+K / Ctrl+O', 'Search / jump to a page'], ['Ctrl+P', 'Command palette (every action by name)'], ['Ctrl+G', 'Graph view'], ['Ctrl+Shift+D', 'Today’s daily note'], ['[[', 'Link to a page (or create one)'], ['#word', 'Add a tag'], ['Ctrl+N', 'New page'], ['Ctrl+\\', 'Toggle sidebar'], ['Ctrl+,', 'Settings'], ['Alt+← / Alt+→', 'Back / forward'], ['Ctrl+Z / Ctrl+Y', 'Undo / redo'], ['/', 'Insert a block'], ['@', 'Mention a page'], ['Ctrl+B / I / U', 'Bold / italic / underline'], ['Ctrl+E', 'Inline code'], ['Ctrl+K (with text selected)', 'Add link'], ['Ctrl+Shift+S', 'Strikethrough'], ['Tab / Shift+Tab', 'Nest / un-nest a block'], ['Ctrl+Enter', 'Toggle to-do or toggle'], ['Esc', 'Close menus']];
       const t = h('table', { class: 'keys' });
       K.forEach(([k, d]) => t.append(h('tr', null, h('td', null, h('span', { class: 'kbd' }, k)), h('td', null, d))));
       p.append(t);
@@ -870,7 +931,10 @@
   document.addEventListener('keydown', (e) => {
     if (!BP.state) return;
     const mod = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
-    if (mod && (k === 'k' || k === 'p') && !e.shiftKey && !(k === 'k' && getSelection().toString() && document.activeElement.closest && document.activeElement.closest('.txt'))) { e.preventDefault(); return openSearch(); }
+    if (mod && (k === 'k' || k === 'o') && !e.shiftKey && !(k === 'k' && getSelection().toString() && document.activeElement.closest && document.activeElement.closest('.txt'))) { e.preventDefault(); return openSearch(); }
+    if (mod && k === 'p' && !e.shiftKey) { e.preventDefault(); return BP.kb.palette(); }
+    if (mod && k === 'g' && !e.shiftKey && !BP.$('.modal-back')) { e.preventDefault(); return BP.graph.open({}); }
+    if (mod && e.shiftKey && k === 'd') { e.preventDefault(); return BP.kb.openToday(); }
     if (mod && k === 'n' && !e.shiftKey) { e.preventDefault(); return BP.newPage(null); }
     if (mod && k === '\\') { e.preventDefault(); return toggleSidebar(); }
     if (mod && k === ',') { e.preventDefault(); return openSettings(); }
@@ -925,6 +989,7 @@
   };
   BP.renderAll = renderAll;
   BP.openSettings = (tab) => openSettings(tab);
+  Object.assign(BP.ui, { openSearch, openTemplates, openTrash, toggleSidebar, go, trashPage, moveDialog, historyDialog, infoDialog, togglePanel });
   BP.reload = async function () {
     BP.corrupted = false;
     await BP.init();

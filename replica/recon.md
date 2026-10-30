@@ -1,89 +1,101 @@
-# Recon map: Notion-style workspace (clean-room)
+# Recon: Obsidian 1.14.5 vs Blockpad 1.8.4
 
-## Scope
-- App: Notion (desktop and web are the same product; desktop is an Electron-style shell around the web app, so the clone targets web first and wraps it for desktop later).
-- Slice: **pages, blocks, databases (with views), sharing**. Out of this slice: AI agents, enterprise search, meeting notes, calendar app, admin/SCIM.
-- Audience: user's own product (to be decided at /replica-entrepreneur).
-- Core loop: open workspace -> create page -> type `/` to add blocks -> nest pages -> turn data into a database -> view it as table/board -> share a link.
+Goal: not a clone. Map what Obsidian does, find what Blockpad is missing, and pick what to build.
+Core loop of Obsidian: **write a note -> link it to other notes with `[[ ]]` -> find it again through links, backlinks, tags, search and the graph.**
+Blockpad's core loop is different: **write blocks -> organise in pages and databases -> share live with others.**
+The gap is the "find it again through links" half.
 
-## Rules followed
-`Notion.exe` was NOT decompiled, unpacked or inspected, and no private endpoints or bundles were read. REA was deliberately not used on it (see replica-recon rules). Everything below comes from public sources.
+## How this was gathered (and what was not done)
 
-## Sources
-| source | URL | gave |
+| source | what it gave | how |
 | --- | --- | --- |
-| API reference: Block | https://developers.notion.com/reference/block | full block type list, nesting rules |
-| API reference: objects/endpoints index | https://developers.notion.com/reference/intro | Page, Database, Data source, View, Comment, File, User, Parent, Search |
-| Pricing | https://www.notion.com/pricing | plan gating: forms, sites, charts, collab blocks, uploads, connections |
-| Help center | https://www.notion.com/help | (to read in a user-driven pass for states and settings) |
-| Releases | https://www.notion.com/releases | recent direction |
-| User's own account | n/a | to be driven by the user for empty/error states and screenshots into replica/screens/ |
+| Installed app package `%APPDATA%\obsidian\obsidian-1.14.5.asar` | the list of files and bundled libraries (names and sizes only) | REA, package-level only: the archive's file table was read; no code was opened, decompiled or saved. A deeper REA code analysis was started and stopped before it produced output, because the Replica rules forbid reading the target's JavaScript. |
+| The bundled starter vault (`/sandbox/*.md` names) | Obsidian's own feature tour topics | file names only |
+| Your own vaults (`Documents\Obsidian Vault`, `Documents\obsidian\Clients\client`) | which core plugins you actually use; 118 + 201 notes | read `.obsidian/core-plugins.json`, `community-plugins.json` (your data) |
+| Public docs: help.obsidian.md, jsoncanvas.org (open spec, MIT) | feature behaviour | public pages |
+| Blockpad source (this repo) | what Blockpad already has | grep of `app/*.js` |
 
-## Screen inventory
-| ID | screen | how you get there | purpose | key components | states |
-| --- | --- | --- | --- | --- | --- |
-| S01 | Sign up / log in | / | auth | email form, OAuth buttons | error, loading |
-| S02 | Onboarding | after first login | create workspace, pick use | steps, template picker | skip |
-| S03 | App shell | /app | navigation frame | sidebar, topbar, breadcrumb, search button | collapsed sidebar, mobile |
-| S04 | Sidebar page tree | S03 left | nested page navigation | tree, favorites, private/shared sections, drag reorder | empty, deep nesting |
-| S05 | Page editor | click a page | main authoring surface | title, icon, cover, block list, slash menu, block handle, selection toolbar | empty, loading, read-only, offline |
-| S06 | Slash menu | type `/` | insert block | filtered list of block types | no results |
-| S07 | Block context menu | drag handle click | turn into, duplicate, delete, color, comment | menu | - |
-| S08 | Database page | click a database | rows + views | view tabs, filter, sort, group, properties, new row | empty, filtered-empty |
-| S09 | Table view | S08 | spreadsheet-like rows | column header menu, cell editors | - |
-| S10 | Board view | S08 | kanban by select/status | columns, cards, drag | empty column |
-| S11 | Gallery / list / calendar / timeline views | S08 | alternate renderings | cards, date grid, bars | no date property |
-| S12 | Row as page | open row | row properties + body | property panel, editor | - |
-| S13 | Property editor | column menu | type, options | type list, option colors | - |
-| S14 | Share dialog | Share button | invite, link access, publish | people list, permission dropdown, publish toggle | no access |
-| S15 | Comments panel | comment icon | discussion on blocks/pages | thread, mention, resolve | empty |
-| S16 | Search | Ctrl+K | find pages | query box, recent, results | no results |
-| S17 | Trash / page history | sidebar, menu | restore | list, restore button | empty |
-| S18 | Settings | sidebar | account, workspace, members | tabs | - |
-| S19 | Public page | shared URL | read-only render | page body, optional branding | not found, no access |
-| S20 | Templates gallery | new page | start from template | cards | - |
+Observed in the package (bundled libraries -> features they power): CodeMirror + vim mode (editor, Vim keys),
+pdf.js (PDF viewer), MathJax (math), Mermaid (diagrams), Prism (code highlighting), Pixi (GPU-drawn graph view),
+reveal.js (Slides), Readability + Defuddle + Turndown (web page -> Markdown, i.e. Web viewer / clipper),
+i18n with 55 languages, a quick-look viewer, a starter "sandbox" vault.
+Inference, not observed: which code uses which library. Library names only show the feature exists.
 
-## User flows
-- F01 Write a page: S03 -> new page -> S05 -> type title -> `/` S06 -> add heading/to-do -> auto-saved. Happy path about 4 actions.
-- F02 Organize: S04 drag page under another page -> nested; breadcrumb updates.
-- F03 Make a database: S05 `/table` -> S08 -> add property S13 -> add rows -> add Board view S10.
-- F04 Share: S05 -> Share S14 -> invite by email or toggle publish -> S19.
-- F05 Find: Ctrl+K S16 -> pick page.
-- F06 Recover: delete -> S17 -> restore.
-- Edges: offline edit then sync, two people editing one block, permission removed while open, deleting a page with children, database with no date for calendar view.
+Your own setup (observed): both vaults use Graph, Backlinks, Outgoing links, Tags, Canvas, Daily notes,
+Templates, Bookmarks, Outline, Page preview, Bases, Sync, File recovery, Word count, Command palette,
+Quick switcher. One vault also runs the community plugin **Local REST API**.
 
-## Components
-Button (primary/ghost/danger), text input, icon/emoji picker, cover picker, dropdown/select, multi-select tag with colors, date picker (range, time), checkbox, popover/menu, modal, toast, tooltip, tree item, tabs, avatar stack, command palette, drag handle, resize handle (columns, images), skeleton loader. State sets: hover, focus, disabled, loading, error.
+## Screens (Obsidian)
 
-## Inferred data model
-(sourced from public API object model; confidence high unless noted)
-- **User** id, name, email, avatar.
-- **Workspace** id, name, members(role).
-- **Page** id, parent (workspace | page | data_source), title, icon, cover, properties (when in a database), archived, created/last_edited by+time, in_trash. Evidence: API Page object. high.
-- **Block** id, parent (page|block), type, content (rich_text[] + type-specific fields), has_children, position, archived. Evidence: API Block object. high.
-- **RichText** text, annotations (bold, italic, strike, underline, code, color), link, mention. high.
-- **Database / DataSource** id, title, properties schema (title, text, number, select, multi_select, status, date, person, files, checkbox, url, email, phone, formula, relation, rollup, created/edited time/by). high for list; formula/rollup engine medium.
-- **View** id, data_source, type (table|board|gallery|list|calendar|timeline|chart), filter, sort, group, visible properties. high.
-- **Comment** id, parent (page|block), discussion_id, rich_text, author, resolved. high.
-- **File** upload or external, name, size, type, expiry. high.
-- **Permission/Share** page, subject (user|workspace|public), level (full|edit|comment|view). medium (inferred from UI and plans).
-- **Relations**: Workspace 1-n Page; Page 1-n Block; Block self-nesting; Database 1-n Row(Page); Database 1-n View.
+| ID | screen | how you get there | purpose | Blockpad today |
+| --- | --- | --- | --- | --- |
+| S01 | Vault picker | first launch / "Open another vault" | a vault = a normal folder of .md files | none (one workspace, its own JSON file) |
+| S02 | Editor (live preview / source / reading) | open a note | write Markdown | block editor (yes, different model) |
+| S03 | File explorer | left sidebar | folders and files | page tree (yes) |
+| S04 | Backlinks pane (linked + unlinked mentions) | right sidebar | who links here | **missing** |
+| S05 | Outgoing links pane | right sidebar | what this note links to | **missing** |
+| S06 | Graph view (global + local) | ribbon / command | see the web of notes | **missing** |
+| S07 | Tags pane | right sidebar | browse #tags with counts | **missing** |
+| S08 | Outline pane | right sidebar | headings of the open note, always visible | partial (a TOC *block* inside the page) |
+| S09 | Canvas | new canvas | infinite board of cards, notes, links | **missing** |
+| S10 | Bases | new base | database views over notes' properties | yes, stronger (databases with 10 views) |
+| S11 | Command palette | Ctrl+P | every action by name | partial (shortcuts, no palette) |
+| S12 | Quick switcher | Ctrl+O | jump to a note by typing | yes (search) |
+| S13 | Page preview | hover a link | see a note without opening it | check: partial |
+| S14 | Daily note | ribbon / command | one note per day, from a template | partial (a "Journal entry" template, no auto daily page) |
+| S15 | File recovery | settings | snapshots | yes (page history) |
+| S16 | Settings > Community plugins | settings | install plugins | none |
 
-## Block types seen in public docs (build list)
-paragraph, heading 1/2/3 (toggleable), bulleted/numbered list, to-do, toggle, quote, callout, code, divider, table (+rows), column list + column, image, video, audio, file, pdf, bookmark, embed, equation, table of contents, breadcrumb, child page, child database, synced block, mention, link preview, template, tab. Excluded: meeting notes/transcription (AI), unsupported.
+States worth copying: empty backlinks ("No backlinks found"), unlinked mentions with a one-click "Link" button,
+graph with filters (tags, orphans, depth for the local graph).
 
-## Hard parts
-1. **Block editor**: rich text, slash menu, drag/drop, selection across blocks, undo/redo, markdown shortcuts. (Biggest.)
-2. **Realtime collaboration and offline sync**: CRDT or OT, presence, conflict handling.
-3. **Databases**: typed properties, filters/sorts/groups, formulas, relations/rollups, multiple views.
-4. Permissions inheritance down the page tree.
-5. Search over rich content.
+## Flows
 
-## Cannot be cloned (skip)
-Notion's brand, logo, icons, illustrations, copy and template content; its AI models and agents; third-party connections and deals; its user network and public template marketplace; enterprise compliance certifications; proprietary formula language parity is not guaranteed.
+```
+F01 Link two ideas            type [[ -> pick note (or a new name) -> link made        3 keys + choice
+    edge: link to a note that does not exist yet (creates it on click), rename keeps links working
+F02 Find what refers to this   open note -> Backlinks pane shows every linking note with context
+    edge: unlinked mentions (title appears as plain text) -> "Link" converts it
+F03 Explore                    Graph -> click a node -> opens the note; local graph = this note's neighbours
+F04 Today                      one click -> today's note (created from the daily template if missing)
+F05 Move between apps          the vault is a folder: any editor, Git or cloud drive can read it
+```
+
+## Inferred data model (Obsidian, from public docs, high confidence)
+
+```
+Note      path (folder/name.md), body (Markdown), frontmatter properties (YAML), tags (#x and tags: [...])
+Link      from note -> to note (by name or path), optional #heading or #^block, optional |alias, embed (![[ ]])
+Canvas    .canvas file in JSON Canvas format: nodes (text | file | link | group, x, y, w, h, color), edges (from, to, sides, label)
+Base      .base file: filters, formulas and views over notes' properties
+```
+Blockpad already maps well: page <-> note, page props <-> frontmatter, mention block / [[ ]] <-> link, databases <-> bases.
+
+## The missing parts, ranked for Blockpad
+
+1. **Obsidian vault bridge (import and export a vault folder).** You have 319 notes in Obsidian. Today Blockpad imports
+   one .md at a time, ignores frontmatter, does not resolve `[[links]]`, folders or attachments. A bridge makes those notes usable
+   in Blockpad and lets Blockpad write a vault back out. This unlocks everything else on this list.
+2. **Backlinks and unlinked mentions** (S04/S05). Blockpad already stores page links (mention blocks); it just never looks backwards.
+3. **Tags** (S07): `#tag` in text plus a tags property, a tag pane, click to filter. Imported Obsidian notes carry tags today and would lose them.
+4. **Graph view** (S06): global and local graph from the same link index. Canvas 2D is enough for a few thousand pages.
+5. **Daily notes** (S14): one click, today's page from a chosen template; dates in mentions link to it.
+6. **Command palette** (S11): Ctrl+P over every menu action.
+7. **Canvas** (S09) using the open JSON Canvas format, so boards open in both apps. Biggest build; do it last.
+
+What Blockpad already does better (keep pitching it): free live P2P sharing (Obsidian charges for Sync),
+comments, databases with 10 view types, forms, built-in AI, one-file install on Android/iOS/web.
+
+## Cannot / should not be copied
+
+- Obsidian's plugin ecosystem (2,000+ community plugins) - it is their community, and running their plugins would mean matching their private API.
+- Obsidian Sync / Publish servers - their service.
+- Their code, CSS, icons, starter-vault text and translations - owned by Obsidian. Build every line fresh.
+- Note: Obsidian's terms restrict reverse engineering the app; that is why this map uses package file names, your own vault settings and public docs only.
 
 ## Size
-Core loop (S01-S08, S12, S14, S16, S17, S19): **L** (a quarter) for solid single-user plus basic sharing. Realtime multi-user adds a further M. Full parity: XL, rescope.
 
-## Next step
-`/replica-architect`
+Screens to add: 4 (backlinks pane, tags pane, graph, palette) + canvas. Flows: 5. Entities: link index, tag index, canvas.
+Hard parts: (1) round-tripping Markdown without losing Blockpad-only blocks (databases, columns, buttons);
+(2) keeping a link index fast and correct with live P2P edits; (3) canvas UX.
+Size: **M** for items 1-6 (a few weeks), canvas adds another **M**.

@@ -144,6 +144,7 @@
     { t: 'code', label: 'Code', desc: 'Capture a code snippet', ico: '</>', kw: 'snippet pre' },
     { t: 'equation', label: 'Equation', desc: 'Show a formula as text', ico: '∑', kw: 'math latex' },
     { g: 'Pages & structure', t: 'page', label: 'Page', desc: 'Create a sub-page', ico: '📄', kw: 'subpage new' },
+    { t: 'canvas', label: 'Canvas', desc: 'A board of cards joined by arrows', ico: '🧭', kw: 'cards mind map diagram obsidian' },      // no "board" in the words: /board must still give the Board view
     { t: 'flow', label: 'Flow diagram', desc: 'Boxes joined by arrows (process, request cycle)', ico: '⇅', kw: 'diagram process steps arrows cycle' },
     { t: 'tabs', label: 'Tabs', desc: 'Switch between groups of blocks', ico: '⎘', kw: 'tab panel' },
     { t: 'synced', label: 'Synced block', desc: 'Content mirrored across pages', ico: '🔁', kw: 'sync mirror shared' },
@@ -856,6 +857,16 @@
       if (this.readonly || isPlainEl(el)) return;
       const pre = textBeforeCaret(el);
       if (pre == null) return this.closeMenu();
+      // [[ links to a page (Obsidian style, spaces allowed), #word picks or makes a tag
+      const wl = /\[\[([^\]\n[]{0,40})$/.exec(pre);
+      const tg = !wl && /(?:^|\s)#([\p{L}\p{N}_\-/]{1,30})$/u.exec(pre);
+      if (wl || tg) {
+        if (!fromInput && !this.menu) return;
+        const kind = wl ? 'link' : 'tag', q = wl ? wl[1] : tg[1];
+        const start = pre.length - (wl ? 2 : 1) - q.length;
+        if (this.dismissed === b.id + ':' + start) return;
+        return this.openMenu(b, el, kind, start, q);
+      }
       const m = /(?:^|\s)([\/@])([^\s\/@]{0,20})$/.exec(pre);
       if (!m) return this.closeMenu();
       if (!fromInput && !this.menu) return;
@@ -869,8 +880,19 @@
       let items;
       if (kind === 'slash') {
         items = ITEMS.filter((i) => (!i.cond || i.cond()) && (!q || (i.label + ' ' + (i.kw || '')).toLowerCase().includes(q)));
+      } else if (kind === 'tag') {
+        // the tag being typed is already in this page's text: it only counts as existing if another page uses it too
+        const mine = (t) => t.pages.size === 1 && t.pages.has(this.page.id) && t.key.startsWith(q) && q.startsWith(t.key);
+        const all = (BP.kb ? BP.kb.allTags() : []).filter((t) => !mine(t));
+        items = all.filter((t) => t.key.includes(q)).slice(0, 10).map((t) => ({ t: 'tag', label: '#' + t.name, ico: '#', desc: t.pages.size + (t.pages.size === 1 ? ' page' : ' pages'), tag: t.name }));
+        if (q && !all.some((t) => t.key === q)) items.push({ t: 'tag', label: '#' + query, ico: '+', desc: 'New tag', tag: query });
       } else {
-        items = BP.allPages().filter((p) => !p.trashed && !BP.isTrashed(p) && p.id !== this.page.id && (!q || (p.title || 'untitled').toLowerCase().includes(q))).slice(0, 12).map((p) => ({ t: 'pagelink', label: p.title || 'Untitled', ico: p.icon || '📄', desc: p.type === 'db' ? 'Database' : '', ref: p.id }));
+        const match = (p) => (p.title || 'untitled').toLowerCase().includes(q) || (Array.isArray(p.aliases) && p.aliases.some((a) => String(a).toLowerCase().includes(q)));
+        items = BP.allPages().filter((p) => !p.trashed && !BP.isTrashed(p) && p.id !== this.page.id && (!q || match(p)))
+          .sort((a, b) => ((b.title || '').toLowerCase().startsWith(q) ? 1 : 0) - ((a.title || '').toLowerCase().startsWith(q) ? 1 : 0) || (b.updated || 0) - (a.updated || 0))
+          .slice(0, 12).map((p) => ({ t: 'pagelink', label: p.title || 'Untitled', ico: p.icon || '📄', desc: p.type === 'db' ? 'Database' : p.type === 'canvas' ? 'Canvas' : BP.path(p).slice(0, -1).map((x) => x.title || 'Untitled').join(' / '), ref: p.id }));
+        const name = query.trim();
+        if (name && !BP.allPages().some((p) => !BP.isTrashed(p) && (p.title || '').trim().toLowerCase() === name.toLowerCase())) items.push({ t: 'newpage', label: 'Create page “' + name + '”', ico: '+', desc: 'A new page, linked here', title: name });
       }
       if (!items.length) { if (this.menu) this.menu.items = []; this.renderMenu(); return this.menu && q.length > 6 && this.closeMenu(); }
       const same = this.menu && this.menu.kind === kind && this.menu.blockId === b.id;
@@ -944,6 +966,19 @@
       if (el.innerHTML === '<br>') el.innerHTML = '';
       b.text = BP.sanitize(el.innerHTML);
       this.closeMenu();
+      if (it.t === 'newpage') {
+        const np = BP.createPage(null, { title: it.title });
+        it = { t: 'pagelink', ref: np.id, label: it.title };
+        setTimeout(() => BP.ui && BP.ui.refreshChrome && BP.ui.refreshChrome(), 0);
+      }
+      if (it.t === 'tag') {
+        const range = selRange();
+        const a = h('a', { href: BP.kb.tagHref(it.tag) }, '#' + it.tag);
+        range && range.insertNode(a);
+        range && range.setStartAfter(a);
+        document.execCommand('insertText', false, ' ');
+        return this.syncFrom(el, b);
+      }
       if (it.t === 'pagelink') {
         const range = selRange();
         const a = h('a', { href: 'bp://page/' + it.ref }, it.label);
@@ -968,8 +1003,8 @@
       const f = BP.findBlock(this.page.blocks, b.id);
       const newB = (spec) => Object.assign(makeBlock(spec.type || 'p'), spec);
       let nb = null, after = null, nav = null;
-      if (t === 'page') {
-        const p = BP.createPage(this.page.id, { title: '' });
+      if (t === 'page' || t === 'canvas') {
+        const p = t === 'canvas' ? BP.canvas.create(this.page.id) : BP.createPage(this.page.id, { title: '' });
         // createPage appended a link block to the end; move it to the cursor instead
         const link = this.page.blocks.pop();
         nb = link;
