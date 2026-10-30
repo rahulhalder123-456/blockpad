@@ -21,6 +21,8 @@ Build commands: `npm run package` (Windows), `npm run package:linux`, `npm run p
 ### Phones and the browser
 The phone/web build keeps your workspace in the browser's IndexedDB on that device (nothing is uploaded) and works with no network. Built-in AI and peer-to-peer sharing need the desktop apps for now: they rely on a native AI engine and on UDP networking that browsers and phone web views do not provide. A browser-compatible sharing transport (WebRTC) is the planned way to add it.
 
+**Back and the drawer on a phone:** the Back key (or gesture) first closes whatever is open over the page (a dialog, a menu, the slides, the links or comments sheet, the side drawer), then goes to the page you came from, and only on the first page with nothing open does it ask for a second press ("Press back again to exit") before leaving the app. The Android app asks the page first (`BP.handleBack()`, called from `MainActivity`); browsers and a mouse's back button get the same answers through a guard entry in the history. Every button in the side drawer closes it after you use it, and swiping the drawer left closes it. On touch screens, controls that otherwise show only under the mouse (cover buttons, replace image, table row / column tools, database row buttons) are always visible. `tools/smoke38.js` tests all of this; the Android Back key itself was checked on an emulator.
+
 ## Run it
 
 - **Windows:** `build/v1.8.5/Blockpad-win32-x64/Blockpad.exe` (a shortcut named *Blockpad* is on the Desktop), or install with `installer/Blockpad-Setup.exe`.

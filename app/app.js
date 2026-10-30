@@ -2,7 +2,6 @@
 (function () {
   const BP = (window.BP = window.BP || {});
   const { h, uid } = BP;
-  const nav = { stack: [], i: -1 };
   let editor = null, commentsOpen = false, linksOpen = false;
   const GRADS = ['indigo', 'sunset', 'ocean', 'forest', 'rose', 'slate', 'sand', 'violet'];
   const root = () => BP.$('#app');
@@ -27,30 +26,53 @@
 
   /* ---------- navigation ---------- */
   const small = () => matchMedia('(max-width: 760px)').matches;
+  /* The pages you open are kept in a stack of their own (null = Home). Back / Forward (the top-bar buttons, Alt+←/→, a
+     phone's Back key, a mouse's back button) walk through it; see "Back" further down for how each of them reaches it. */
+  const nav = { stack: [], i: -1 };
+  const navPush = (id) => {
+    nav.stack = nav.stack.slice(0, nav.i + 1);
+    if (nav.stack[nav.stack.length - 1] !== id) nav.stack.push(id);
+    nav.i = nav.stack.length - 1;
+  };
+  // on a phone the sidebar is a drawer: it closes once you have picked what you came for
+  const hideDrawer = () => { if (BP.state && small() && BP.state.settings.sidebar) toggleSidebar(); };
   BP.open = function (id, o = {}) {
     const p = BP.page(id);
     if (!p) return;
-    if (small()) BP.state.settings.sidebar = false;          // on a phone the sidebar is a drawer: close it once you pick a page
+    if (small()) BP.state.settings.sidebar = false;
     if (editor) { editor.flushTyping(); }
+    const moved = BP.state.current !== id;
     BP.state.current = id;
-    if (!o.noHistory) {
-      nav.stack = nav.stack.slice(0, nav.i + 1);
-      if (nav.stack[nav.stack.length - 1] !== id) nav.stack.push(id);
-      nav.i = nav.stack.length - 1;
-    }
+    if (!o.noHistory && moved) navPush(id);
     // reveal in the sidebar
     for (let c = BP.page(p.parent); c; c = BP.page(c.parent)) c.open = true;
     BP.save();
     renderAll();
   };
+  const goHome = () => {
+    const was = BP.state.current;
+    if (small()) BP.state.settings.sidebar = false;
+    if (editor) editor.flushTyping();
+    BP.state.current = null;
+    if (was) navPush(null);
+    BP.save();
+    renderAll();
+  };
+  // d = -1 back, +1 forward; pages that no longer exist (or are in the trash) are dropped on the way; true when it moved
   const go = (d) => {
-    const i = nav.i + d;
+    let i = nav.i + d;
     while (i >= 0 && i < nav.stack.length) {
-      if (BP.page(nav.stack[i])) { nav.i = i; return BP.open(nav.stack[i], { noHistory: true }); }
+      const id = nav.stack[i];
+      if (id === null || (BP.page(id) && !BP.isTrashed(BP.page(id)))) {
+        nav.i = i;
+        if (id === null) { if (editor) editor.flushTyping(); if (small()) BP.state.settings.sidebar = false; BP.state.current = null; BP.save(); renderAll(); }
+        else BP.open(id, { noHistory: true });
+        return true;
+      }
       nav.stack.splice(i, 1);
-      if (d > 0) continue;
-      return;
+      if (d < 0) { nav.i--; i--; }
     }
+    return false;
   };
   BP.newPage = function (parent, opts) {
     const p = BP.createPage(parent || null, opts || {});
@@ -133,10 +155,11 @@
     const sb = h('aside', { class: 'sidebar' });
     const ws = h('button', { class: 'ws', onclick: (e) => wsMenu(e.currentTarget) }, h('img', { class: 'ws-logo', src: '../assets/logo.svg', alt: '' }), h('span', { class: 'ws-name' }, BP.state.settings.name || 'My Workspace'), h('span', { class: 'ws-chev', html: BP.icons.chevron }));
     sb.append(h('div', { class: 'sb-top' }, ws, h('button', { class: 'icon-btn', title: 'Hide sidebar (Ctrl+\\)', html: BP.icons.sidebar, onclick: toggleSidebar })));
-    const nm = (ico, label, kbd, fn) => h('button', { class: 'sb-nav', onclick: fn }, h('span', { class: 'sb-ico', html: ico }), h('span', { class: 'sb-label' }, label), kbd ? h('span', { class: 'kbd' }, kbd) : null);
+    // every button here closes the drawer on a phone (keep = the one that opens a menu anchored to it: its choices close it)
+    const nm = (ico, label, kbd, fn, keep) => h('button', { class: 'sb-nav', onclick: (e) => { fn(e); if (!keep) hideDrawer(); } }, h('span', { class: 'sb-ico', html: ico }), h('span', { class: 'sb-label' }, label), kbd ? h('span', { class: 'kbd' }, kbd) : null);
     sb.append(h('div', { class: 'sb-actions' },
       nm(BP.icons.search, 'Search', 'Ctrl+K', openSearch),
-      nm(BP.icons.home, 'Home', '', () => { BP.state.current = null; BP.save(); renderAll(); }),
+      nm(BP.icons.home, 'Home', '', goHome),
       nm(BP.icons.calendar, 'Today', '', () => BP.kb.openToday()),
       nm(BP.icons.graph, 'Graph view', 'Ctrl+G', () => BP.graph.open({})),
       nm(BP.icons.plus, 'New page', 'Ctrl+N', (e) => BP.menu(e.currentTarget, [
@@ -144,7 +167,7 @@
         { label: 'Canvas', icon: '🧭', onClick: () => BP.open(BP.canvas.create(null).id) },
         { label: 'Clip a web page…', icon: '🔖', onClick: () => BP.clip.dialog() },
         { label: 'Database', icon: '🗂', onClick: () => BP.open(BP.createDatabase(null, { title: 'Untitled database' }).id) },
-      ]))));
+      ]), true)));
     const sc = h('div', { class: 'sb-scroll' });
     const favs = BP.allPages().filter((p) => p.favorite && !BP.isTrashed(p));
     if (favs.length) {
@@ -797,7 +820,7 @@
       p.append(h('h3', null, 'Import'), h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => { const i = h('input', { type: 'file', accept: '.csv,.tsv,.txt' }); i.onchange = async () => { const f = i.files[0]; if (!f) return; try { const r = BP.importCsv(await f.text(), null, null, f.name.replace(/\.\w+$/, '')); BP.toast('Created a database with ' + r.added + ' rows'); BP.open(r.db.id); } catch (e) { BP.toast('Import failed: ' + e.message); } }; i.click(); } }, 'Import CSV as a database…'), h('button', { class: 'btn', onclick: () => { const i = h('input', { type: 'file', accept: '.md,.markdown,.txt', multiple: '' }); i.onchange = async () => { let n = 0, last; for (const f of i.files) { last = BP.importMarkdown(f.name, await f.text(), null); n++; } if (n) { BP.toast('Imported ' + n + ' page' + (n > 1 ? 's' : '')); BP.open(last.id); } }; i.click(); } }, 'Import Markdown files…')));
       p.append(h('h3', null, 'Markdown vaults'), h('p', { class: 'muted small' }, 'Bring in a whole vault, a folder of Markdown notes from another notes app (notes, folders, [[links]], tags, properties, images and canvases), or save Blockpad as one that Markdown note apps open. The vault folder is only read, never changed.'),
         h('div', { class: 'row-gap' }, h('button', { class: 'btn', onclick: () => { close(); BP.vault.pickImport(); } }, 'Import a Markdown vault…'), h('button', { class: 'btn', onclick: () => { close(); BP.vault.exportDialog(null); } }, 'Export as a Markdown vault…')));
-      p.append(h('h3', null, 'Danger zone'), h('button', { class: 'btn danger', onclick: async () => { if (await BP.confirm('Reset workspace', 'This erases every page and starts fresh. Export a backup first if you might want anything back.', 'Erase everything')) { BP.allowOverwrite = true; BP.corrupted = false; BP.state = { v: 1, pages: {}, settings: BP.state.settings, current: null }; BP.seed(); await BP.flush(); nav.stack = []; nav.i = -1; renderAll(); BP.toast('Workspace reset'); } } }, 'Reset workspace…'));
+      p.append(h('h3', null, 'Danger zone'), h('button', { class: 'btn danger', onclick: async () => { if (await BP.confirm('Reset workspace', 'This erases every page and starts fresh. Export a backup first if you might want anything back.', 'Erase everything')) { BP.allowOverwrite = true; BP.corrupted = false; BP.state = { v: 1, pages: {}, settings: BP.state.settings, current: null }; BP.seed(); await BP.flush(); nav.stack = [null]; nav.i = 0; renderAll(); BP.toast('Workspace reset'); } } }, 'Reset workspace…'));
     }
     function keys(p) {
       const K = [['Ctrl+K / Ctrl+O', 'Search / jump to a page'], ['Ctrl+P', 'Command palette (every action by name)'], ['Ctrl+G', 'Graph view'], ['Ctrl+Shift+D', 'Today’s daily note'], ['[[', 'Link to a page (or create one)'], ['#word', 'Add a tag'], ['Ctrl+N', 'New page'], ['Ctrl+\\', 'Toggle sidebar'], ['Ctrl+,', 'Settings'], ['Alt+← / Alt+→', 'Back / forward'], ['Ctrl+Z / Ctrl+Y', 'Undo / redo'], ['/', 'Insert a block'], ['@', 'Mention a page'], ['Ctrl+B / I / U', 'Bold / italic / underline'], ['Ctrl+E', 'Inline code'], ['Ctrl+K (with text selected)', 'Add link'], ['Ctrl+Shift+S', 'Strikethrough'], ['Tab / Shift+Tab', 'Nest / un-nest a block'], ['Ctrl+Enter', 'Toggle to-do or toggle'], ['Esc', 'Close menus']];
@@ -928,7 +951,7 @@
       body.append(h('p', { class: 'muted' }, 'The file contains ' + Object.keys(st.pages).length + ' pages. How do you want to import it?'),
         h('div', { class: 'row-end' }, h('button', { class: 'btn', onclick: close }, 'Cancel'),
           h('button', { class: 'btn', onclick: () => { BP.importWorkspaceText(text, 'merge'); close(); renderAll(); BP.toast('Merged'); } }, 'Merge (keep my pages)'),
-          h('button', { class: 'btn danger', onclick: () => { BP.importWorkspaceText(text, 'replace'); close(); nav.stack = []; nav.i = -1; renderAll(); BP.toast('Backup restored'); } }, 'Replace everything')));
+          h('button', { class: 'btn danger', onclick: () => { BP.importWorkspaceText(text, 'replace'); close(); nav.stack = [null]; nav.i = 0; renderAll(); BP.toast('Backup restored'); } }, 'Replace everything')));
     }, { class: 'small' });
   }
 
@@ -982,6 +1005,58 @@
     }
   });
 
+  /* ---------- the Back button, drawers and dialogs ---------- */
+  // a dialog opening on a phone closes the drawer behind it (Search, Settings, Tags, Graph … all open one)
+  const rawModal = BP.modal;
+  BP.modal = function () {
+    hideDrawer();
+    const close = rawModal.apply(this, arguments);
+    const back = BP.$$('.modal-back').pop();
+    if (back) back.__close = close;          // so Back can close the topmost dialog properly
+    return close;
+  };
+  // whatever floats above the page, topmost first; true when Back closed something
+  function closeTopLayer() {
+    if (BP.slides && BP.slides.active) { BP.slides.active.stop(); return true; }
+    const backs = BP.$$('.modal-back');
+    if (backs.length) { const b = backs[backs.length - 1]; if (b.__close) b.__close(); else b.remove(); return true; }
+    if (BP.$('.popover')) { BP.closePopovers(0); return true; }
+    if (editor && editor.menu) { editor.closeMenu(); return true; }
+    if (small() && (commentsOpen || linksOpen)) { commentsOpen = false; linksOpen = false; renderAll(); return true; }
+    if (small() && BP.state.settings.sidebar) { toggleSidebar(); return true; }
+    return false;
+  }
+  const installedApp = () => !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) || matchMedia('(display-mode: standalone)').matches;
+  /* BACK. One function answers every kind of Back: it closes the topmost thing over the page, else goes to the previous
+     page, and returns false only when there is nothing left (then the caller may leave). Who calls it:
+       - the Android app: its shell (MainActivity) asks this function first and exits only when it says false
+       - a browser or desktop: Back / a mouse's back button pops the "guard" entry below, and this function answers it
+       - the top-bar Back button and Alt+← use go(-1) directly
+     (Browsers ignore history entries a page adds without the user touching it, so the phone's Back key cannot rely on them.) */
+  let exitArmed = 0;
+  BP.handleBack = () => {
+    if (!BP.state) return false;
+    if (closeTopLayer()) return true;
+    if (go(-1)) return true;
+    // the first page and nothing to close: an installed app asks for a second Back before it leaves
+    if (installedApp() && Date.now() - exitArmed > 2300) { exitArmed = Date.now(); BP.toast('Press back again to exit', 2200); return true; }
+    return false;
+  };
+  let guarded = false;
+  const pushGuard = () => { try { history.pushState({ bpGuard: 1 }, ''); guarded = true; } catch (_) {} };
+  // the guard is added at the first touch or key press (a page that has not been touched cannot add history entries Back will stop at)
+  const armGuard = () => { if (guarded) return; pushGuard(); ['pointerup', 'keydown'].forEach((ev) => document.removeEventListener(ev, armGuard, true)); };
+  ['pointerup', 'keydown'].forEach((ev) => document.addEventListener(ev, armGuard, true));
+  window.addEventListener('popstate', () => {
+    if (!BP.state || !guarded) return;
+    if (history.state && history.state.bpGuard) return;      // moved forward onto the guard again: nothing to do
+    guarded = false;                                         // Back popped the guard
+    if (BP.handleBack()) pushGuard();                        // handled inside the app: put the guard back; otherwise the browser leaves on the next Back
+  });
+  // swipe the open drawer to the left to close it (opening is from the top-left button: the screen edge belongs to the system's own back gesture)
+  let swX = null, swY = null;
+  document.addEventListener('touchstart', (e) => { const on = small() && e.target.closest && e.target.closest('.sidebar') && e.touches.length === 1; swX = on ? e.touches[0].clientX : null; swY = on ? e.touches[0].clientY : null; }, { passive: true });
+  document.addEventListener('touchend', (e) => { if (swX == null) return; const t = e.changedTouches[0], dx = t.clientX - swX, dy = t.clientY - swY; swX = null; if (dx < -60 && Math.abs(dy) < Math.abs(dx) * 0.6) hideDrawer(); }, { passive: true });
   /* ---------- boot ---------- */
   BP.boot = async function () {
     await BP.init();
@@ -989,7 +1064,7 @@
     if (BP.corrupted) BP.toast('Your workspace file could not be read. A backup copy (workspace.bak.json) is kept next to it; changes are not being saved until you reset or import a backup.', 9000);
     if (BP.state.current && !BP.page(BP.state.current)) BP.state.current = null;
     if (BP.state.current && BP.isTrashed(BP.page(BP.state.current))) BP.state.current = null;
-    if (BP.state.current) { nav.stack = [BP.state.current]; nav.i = 0; }
+    nav.stack = [BP.state.current || null]; nav.i = 0;
     renderAll();
   };
   BP.renderAll = renderAll;
@@ -1000,8 +1075,7 @@
     await BP.init();
     applyTheme();
     if (BP.state.current && !BP.page(BP.state.current)) BP.state.current = null;
-    nav.stack = BP.state.current ? [BP.state.current] : [];
-    nav.i = nav.stack.length - 1;
+    nav.stack = [BP.state.current || null]; nav.i = 0;
     renderAll();
   };
   window.addEventListener('DOMContentLoaded', async () => {

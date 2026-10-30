@@ -525,3 +525,15 @@ button, .icon-btn, .sb-item, .menu-item { touch-action: manipulation; }
 .vim-pill.ins { background: var(--pop); color: var(--muted); }
 body.vim-normal .editor .txt:focus { caret-color: var(--accent); }
 body.vim-normal .editor .block:has(.txt:focus) { box-shadow: inset 3px 0 0 var(--accent); }
+/* touch screens have no hover: controls that only appeared under the mouse are shown (cover buttons, replace image, captions,
+   table row / column tools, database row buttons, property remove) */
+@media (hover: none) {
+  .cover-act { display: flex; }
+  .media-replace { display: block; }
+  .caption:placeholder-shown { opacity: .55; }
+  .tbl-tools { opacity: 1; }
+  .open-btn { display: block; }
+  .row-act .icon-btn { opacity: 1; }
+  .ph { opacity: .55; }
+  .kb-pdel { opacity: 1; }
+}
