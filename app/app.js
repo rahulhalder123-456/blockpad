@@ -961,26 +961,25 @@
       function draw() {
         box.innerHTML = '';
         if (!info) return box.append(h('div', { class: 'muted small' }, 'Loading…'));
-        const tok = a.token || 'YOUR_TOKEN';
         const cmd = info.packaged ? info.exec : 'node';
-        const env = Object.assign({ BLOCKPAD_TOKEN: tok }, a.port !== 7878 ? { BLOCKPAD_PORT: String(a.port) } : {}, info.packaged ? { ELECTRON_RUN_AS_NODE: '1' } : {});
+        const env = info.packaged ? { ELECTRON_RUN_AS_NODE: '1' } : {};      // no key here: while agents are allowed in, Blockpad publishes its port and key to the server itself
         const q = (s) => (/\s/.test(s) ? '"' + s + '"' : s);
         const snippets = {
           claude: ['Claude Code', 'Run this once in a terminal:', ['claude mcp add --scope user', ...Object.entries(env).map(([k, v]) => '--env ' + k + '=' + v), 'blockpad --', q(cmd), q(info.script)].join(' ')],
-          codex: ['Codex', 'Add this to ~/.codex/config.toml (on Windows: %USERPROFILE%\\.codex\\config.toml), then restart Codex:', '[mcp_servers.blockpad]\ncommand = ' + tomlStr(cmd) + '\nargs = [' + tomlStr(info.script) + ']\nenv = { ' + Object.entries(env).map(([k, v]) => k + ' = ' + tomlStr(v)).join(', ') + ' }'],
-          json: ['Cursor, Claude Desktop, others', 'Add this to the app’s MCP settings (Cursor: ~/.cursor/mcp.json, Claude Desktop: claude_desktop_config.json):', JSON.stringify({ mcpServers: { blockpad: { command: cmd, args: [info.script], env } } }, null, 2)],
+          codex: ['Codex', 'Add this to ~/.codex/config.toml (on Windows: %USERPROFILE%\\.codex\\config.toml), then restart Codex:', '[mcp_servers.blockpad]\ncommand = ' + tomlStr(cmd) + '\nargs = [' + tomlStr(info.script) + ']' + (Object.keys(env).length ? '\nenv = { ' + Object.entries(env).map(([k, v]) => k + ' = ' + tomlStr(v)).join(', ') + ' }' : '')],
+          json: ['Cursor, Claude Desktop, others', 'Add this to the app’s MCP settings (Cursor: ~/.cursor/mcp.json, Claude Desktop: claude_desktop_config.json):', JSON.stringify({ mcpServers: { blockpad: Object.assign({ command: cmd, args: [info.script] }, Object.keys(env).length ? { env } : {}) } }, null, 2)],
         };
         const seg = h('div', { class: 'seg' });
         Object.keys(snippets).forEach((k) => seg.append(h('button', { class: which === k ? 'on' : '', onclick: () => { which = k; draw(); } }, snippets[k][0])));
         const sn = snippets[which];
         box.append(seg, h('div', { class: 'muted small ag-how' }, sn[1]), h('code', { class: 'pathbox pre ag-code' }, sn[2]),
           h('div', { class: 'row-gap' },
-            h('button', { class: 'btn small', onclick: () => { navigator.clipboard.writeText(sn[2]); BP.toast('Copied. It contains your key: keep it private.', 3500); } }, 'Copy'),
+            h('button', { class: 'btn small', onclick: () => { navigator.clipboard.writeText(sn[2]); BP.toast('Copied', 2500); } }, 'Copy'),
             h('button', { class: 'btn small', onclick: testIt }, 'Test the connection'),
-            h('button', { class: 'btn small', title: 'Make a new key; agents using the old one stop working until you update them', onclick: () => { a.token = ''; if (a.enabled) apply(); else { BP.save(); draw(); } BP.toast('New key made. Update the agents with the new snippet.', 4500); } }, 'New key')),
+            h('button', { class: 'btn small', title: 'Make a new key. Agents pick it up by themselves', onclick: () => { a.token = ''; if (a.enabled) apply(); else { BP.save(); draw(); } BP.toast('New key made. Agents pick it up by themselves.', 3500); } }, 'New key')),
           h('div', { class: 'muted small ag-test' }),
-          !a.token ? h('div', { class: 'muted small' }, 'Switch on “Let AI agents connect” first: that creates your key.') : null,
-          h('p', { class: 'muted small' }, 'The key lets anything on this computer that has it read and change your notes while Blockpad is open. Do not share it. Agents work on this computer only; nothing is sent anywhere by Blockpad.'));
+          !a.enabled ? h('div', { class: 'muted small' }, 'Agents can only connect while “Let AI agents connect” is on and Blockpad is open.') : null,
+          h('p', { class: 'muted small' }, 'There is no key to paste: while this is on, Blockpad keeps its port and key in a small file in its data folder (readable only by you) and removes it when you switch off or quit; the agent’s server reads it from there. Anything on this computer that can read that file can read and change your notes while Blockpad is open, so only connect agents you trust. Nothing is sent anywhere by Blockpad.'));
       }
       async function testIt() {
         const out = box.querySelector('.ag-test');

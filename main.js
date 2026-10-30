@@ -50,6 +50,7 @@ function createWindow() {
 
 if (process.platform === 'win32') app.setAppUserModelId('app.blockpad.desktop');      // stable taskbar identity (icon, pinning, grouping)
 app.whenReady().then(() => {
+  dropConn();      // a note left by a crash would point agents at a port nobody listens on
   // macOS needs a real menu for Cmd+C/V/X/Z/Q to work in text fields; the other platforms run without one
   if (process.platform === 'darwin') {
     Menu.setApplicationMenu(Menu.buildFromTemplate([
@@ -94,7 +95,7 @@ app.on('second-instance', (_e, argv) => {
   const l = linkIn(argv); if (l) deliverLink(l);
 });
 app.on('window-all-closed', () => { stopApi(); localAi.stopSync(); p2p.stopAll(); app.quit(); });
-app.on('before-quit', () => { try { localAi.stopSync(); } catch (_) {} });
+app.on('before-quit', () => { try { localAi.stopSync(); } catch (_) {} try { stopApi(); } catch (_) {} });
 
 async function runSmoke(script) {
   const wc = win.webContents;
@@ -319,7 +320,11 @@ ipcMain.handle('ai:chat', async (_e, { provider, local, endpoint, model, key, me
 
 /* ---- local REST API (off by default; 127.0.0.1 only; bearer token required) ---- */
 let apiServer = null, apiToken = '';
-function stopApi() { if (apiServer) { try { apiServer.close(); } catch (_) {} apiServer = null; } }
+/* While agents are allowed in, the port and key are kept in agent-connection.json in the app's data folder (readable only by this user)
+   so the MCP server finds them by itself: no key has to be pasted into any agent's settings. Removed when the switch goes off, on quit, and at start-up. */
+const connFile = () => path.join(app.getPath('userData'), 'agent-connection.json');
+const dropConn = () => { try { fs.unlinkSync(connFile()); } catch (_) {} };
+function stopApi() { dropConn(); if (apiServer) { try { apiServer.close(); } catch (_) {} apiServer = null; } }
 function startApi(port, token) {
   stopApi();
   apiToken = token;
@@ -345,7 +350,11 @@ function startApi(port, token) {
       });
     });
     srv.on('error', (e) => { apiServer = null; resolve({ ok: false, error: e.code === 'EADDRINUSE' ? 'Port ' + port + ' is already in use' : e.message }); });
-    srv.listen(port, '127.0.0.1', () => { apiServer = srv; resolve({ ok: true, port }); });
+    srv.listen(port, '127.0.0.1', () => {
+      apiServer = srv;
+      try { fs.writeFileSync(connFile(), JSON.stringify({ port, token: apiToken, pid: process.pid, started: new Date().toISOString(), version: app.getVersion() }), { mode: 0o600 }); } catch (_) { /* agents can still use BLOCKPAD_TOKEN / BLOCKPAD_PORT */ }
+      resolve({ ok: true, port });
+    });
   });
 }
 ipcMain.handle('api:configure', async (_e, { enabled, port, token }) => (enabled ? startApi(+port || 7878, String(token || '')) : (stopApi(), { ok: true, stopped: true })));

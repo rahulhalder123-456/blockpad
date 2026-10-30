@@ -6,21 +6,46 @@
    with Settings → AI agents → "Let AI agents connect" switched on. It has no dependencies: Node 18+ or the Blockpad app
    itself (ELECTRON_RUN_AS_NODE=1) can run it.
 
-   Settings (environment variables):
-     BLOCKPAD_TOKEN         the token shown in Settings → AI agents (required)
-     BLOCKPAD_PORT          the API port, default 7878
+   No key to paste: while agents are allowed in, Blockpad keeps a small file (agent-connection.json: port and key) in its data
+   folder, readable only by you, and removes it when the switch goes off or the app quits. This server reads it on every call,
+   so it follows the app through restarts, new ports and new keys. Settings (environment variables) only override that:
+     BLOCKPAD_TOKEN, BLOCKPAD_PORT   use this key / port instead of the file
+     BLOCKPAD_DATA_DIR      look for the file in this folder (a non-default Blockpad profile)
      BLOCKPAD_AGENT         the name your changes are credited to; default: taken from the agent that connects
      BLOCKPAD_READONLY=1    offer read tools only
      BLOCKPAD_ALLOW_DELETE=1  also offer page_trash (moves a page to Blockpad's Trash, where it can be restored)
      BLOCKPAD_URL           only for a non-default address; must be on this computer (127.0.0.1 / localhost)
 
+   Besides tools it offers your pages as MCP *resources*: in Claude Code type @blockpad and pick a page to attach it.
    Speaks MCP over stdio: one JSON-RPC message per line on stdin / stdout. Logs go to stderr. */
 'use strict';
 const readline = require('readline');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
-const BASE = process.env.BLOCKPAD_URL || 'http://127.0.0.1:' + (process.env.BLOCKPAD_PORT || 7878);
-const TOKEN = process.env.BLOCKPAD_TOKEN || '';
 const flag = (v) => /^(1|true|yes|on)$/i.test(String(v || ''));
+const isLocal = (url) => { try { return ['127.0.0.1', 'localhost', '[::1]', '::1'].includes(new URL(url).hostname); } catch (_) { return false; } };
+// where Blockpad (Electron) keeps its data on each system; the app name is "Blockpad" (a source checkout may use the lower-case package name)
+const dataDirs = () => {
+  const home = os.homedir();
+  const base = process.platform === 'win32' ? (process.env.APPDATA || path.join(home, 'AppData', 'Roaming')) : process.platform === 'darwin' ? path.join(home, 'Library', 'Application Support') : (process.env.XDG_CONFIG_HOME || path.join(home, '.config'));
+  return [process.env.BLOCKPAD_DATA_DIR, path.join(base, 'Blockpad'), path.join(base, 'blockpad')].filter(Boolean);
+};
+const discover = () => {
+  for (const d of dataDirs()) {
+    try { const j = JSON.parse(fs.readFileSync(path.join(d, 'agent-connection.json'), 'utf8')); if (j && j.port && j.token) return j; } catch (_) { /* not there */ }
+  }
+  return null;
+};
+// read on every call: the app may have been restarted, or switched to another port or key since the last one
+const conn = () => {
+  const found = discover();
+  const token = process.env.BLOCKPAD_TOKEN || (found && found.token) || '';
+  const base = process.env.BLOCKPAD_URL || 'http://127.0.0.1:' + (process.env.BLOCKPAD_PORT || (found && found.port) || 7878);
+  if (!isLocal(base)) throw new Error('Refusing to connect: the address must be on this computer (127.0.0.1 or localhost).');
+  return { base, token, found: !!found };
+};
 const READONLY = flag(process.env.BLOCKPAD_READONLY);
 const ALLOW_DELETE = flag(process.env.BLOCKPAD_ALLOW_DELETE);
 let AGENT = String(process.env.BLOCKPAD_AGENT || '').trim().slice(0, 40);
@@ -28,8 +53,7 @@ const SERVER = { name: 'blockpad', title: 'Blockpad', version: '1.0.0' };
 const PROTOCOLS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 const log = (...a) => process.stderr.write('[blockpad-mcp] ' + a.join(' ') + '\n');
 
-try { const h = new URL(BASE).hostname; if (!['127.0.0.1', 'localhost', '[::1]', '::1'].includes(h)) throw new Error('not local'); }
-catch (_) { log('BLOCKPAD_URL must point at this computer (127.0.0.1 or localhost). Refusing to start.'); process.exit(2); }
+if (process.env.BLOCKPAD_URL && !isLocal(process.env.BLOCKPAD_URL)) { log('BLOCKPAD_URL must point at this computer (127.0.0.1 or localhost). Refusing to start.'); process.exit(2); }
 
 const INSTRUCTIONS = [
   'Blockpad is the user\'s notes app. These tools read and write their pages and keep a shared memory ("Shared Brain") that every agent they use can read.',
@@ -41,20 +65,22 @@ const INSTRUCTIONS = [
 ].join('\n');
 
 /* ---------- talking to Blockpad ---------- */
-async function api(method, path, o = {}) {
-  const u = new URL(path, BASE);
+async function api(method, apiPath, o = {}) {
+  const c = conn();
+  if (!c.token) throw new Error('Blockpad is not letting agents in. Open the Blockpad desktop app and switch on Settings → AI agents → "Let AI agents connect" (the app has to stay open while agents work).');
+  const u = new URL(apiPath, c.base);
   Object.entries(o.query || {}).forEach(([k, v]) => { if (v !== undefined && v !== null) u.searchParams.set(k, String(v)); });
   let body = o.body;
   if (method !== 'GET') body = Object.assign(AGENT ? { agent: AGENT } : {}, body || {});
   let res;
   try {
-    res = await fetch(u, { method, headers: { authorization: 'Bearer ' + TOKEN, 'content-type': 'application/json' }, body: method === 'GET' ? undefined : JSON.stringify(body || {}), signal: AbortSignal.timeout(30000) });
+    res = await fetch(u, { method, headers: { authorization: 'Bearer ' + c.token, 'content-type': 'application/json' }, body: method === 'GET' ? undefined : JSON.stringify(body || {}), signal: AbortSignal.timeout(30000) });
   } catch (e) {
-    throw new Error('Cannot reach Blockpad at ' + BASE + ' (' + ((e.cause && e.cause.code) || e.message) + '). Open the Blockpad desktop app and switch on Settings → AI agents → "Let AI agents connect". The app has to stay open while agents work.');
+    throw new Error('Cannot reach Blockpad at ' + c.base + ' (' + ((e.cause && e.cause.code) || e.message) + '). Open the Blockpad desktop app and switch on Settings → AI agents → "Let AI agents connect". The app has to stay open while agents work.');
   }
   const text = await res.text();
   let j; try { j = JSON.parse(text); } catch (_) { j = { error: text.slice(0, 200) }; }
-  if (res.status === 401) throw new Error('Blockpad did not accept the token. Copy it again from Settings → AI agents (BLOCKPAD_TOKEN' + (TOKEN ? '' : ' is empty') + ').');
+  if (res.status === 401) throw new Error('Blockpad did not accept the key' + (process.env.BLOCKPAD_TOKEN ? ' in BLOCKPAD_TOKEN (remove it to use the key Blockpad publishes itself)' : '') + '. Switch "Let AI agents connect" off and on again in Settings → AI agents.');
   if (res.status === 403 && /read-only/i.test(j.error || '')) throw new Error('Blockpad is set to read-only for agents. The user can allow changes in Settings → AI agents → "Agents can change pages".');
   if (!res.ok) throw new Error(j.error || 'Blockpad answered ' + res.status);
   return j;
@@ -242,6 +268,40 @@ const PROMPTS = [
     text: 'We are stopping. Save lasting facts with brain_remember, record choices with brain_decision, then write a handoff with brain_handoff: a short summary, what is done, concrete next steps, and the files or links that matter.' },
 ];
 
+/* ---------- pages as MCP resources: in Claude Code, type @blockpad and pick a page to attach it ---------- */
+const RES_CONTEXT = 'blockpad://brain/context';
+const runTool = (name, args) => TOOLS.find((t) => t.name === name).run(args);
+let resCache = { t: 0, list: null };
+async function listResources() {
+  if (resCache.list && Date.now() - resCache.t < 5000) return resCache.list;
+  const r = await api('GET', '/api/pages', { query: { limit: 400 } });
+  const pages = r.pages.filter((p) => p.type !== 'row').sort((a, b) => String(b.updated).localeCompare(String(a.updated)));
+  const seen = {};
+  pages.forEach((p) => { const k = (p.title || 'Untitled').toLowerCase(); seen[k] = (seen[k] || 0) + 1; });
+  const list = [{ uri: RES_CONTEXT, name: 'Shared Brain: what is going on now', description: 'CURRENT, the latest handoffs and recent memories', mimeType: 'text/markdown' }].concat(pages.map((p) => ({
+    uri: 'blockpad://page/' + p.id,
+    name: (p.icon ? p.icon + ' ' : '') + (p.title || 'Untitled') + (seen[(p.title || 'Untitled').toLowerCase()] > 1 ? '  · ' + p.id.slice(0, 5) : ''),
+    description: (p.type === 'database' ? 'Database' : p.type === 'canvas' ? 'Canvas' : 'Page') + ' · updated ' + day(p.updated) + (p.tags && p.tags.length ? ' · ' + tagText(p.tags) : ''),
+    mimeType: 'text/markdown',
+  })));
+  resCache = { t: Date.now(), list };
+  return list;
+}
+const TEMPLATES = [
+  { uriTemplate: 'blockpad://page/{id}', name: 'Blockpad page', description: 'A page (or database) by its id', mimeType: 'text/markdown' },
+  { uriTemplate: 'blockpad://page-title/{title}', name: 'Blockpad page by title', description: 'A page by its exact title', mimeType: 'text/markdown' },
+  { uriTemplate: 'blockpad://search/{query}', name: 'Search Blockpad', description: 'Pages whose title or text contains the words', mimeType: 'text/markdown' },
+];
+async function readResource(uri) {
+  const dec = (s) => { try { return decodeURIComponent(s); } catch (_) { return s; } };
+  let m;
+  if (uri === RES_CONTEXT) return runTool('brain_context', {});
+  if ((m = /^blockpad:\/\/page\/(.+)$/.exec(uri))) return runTool('page_read', { id: dec(m[1]) });
+  if ((m = /^blockpad:\/\/page-title\/(.+)$/.exec(uri))) return runTool('page_read', { title: dec(m[1]) });
+  if ((m = /^blockpad:\/\/search\/(.+)$/.exec(uri))) return runTool('pages_search', { query: dec(m[1]) });
+  return undefined;
+}
+
 /* ---------- MCP over stdio ---------- */
 const send = (m) => process.stdout.write(JSON.stringify(m) + '\n');
 const reply = (id, result) => send({ jsonrpc: '2.0', id, result });
@@ -256,7 +316,7 @@ async function handle(msg) {
       case 'initialize': {
         if (!AGENT) AGENT = niceName(params && params.clientInfo && params.clientInfo.name);
         const want = params && params.protocolVersion;
-        return reply(id, { protocolVersion: PROTOCOLS.includes(want) ? want : PROTOCOLS[0], capabilities: { tools: { listChanged: false }, prompts: { listChanged: false } }, serverInfo: SERVER, instructions: INSTRUCTIONS });
+        return reply(id, { protocolVersion: PROTOCOLS.includes(want) ? want : PROTOCOLS[0], capabilities: { tools: { listChanged: false }, prompts: { listChanged: false }, resources: { listChanged: false, subscribe: false } }, serverInfo: SERVER, instructions: INSTRUCTIONS });
       }
       case 'notifications/initialized': case 'notifications/cancelled': return;
       case 'ping': return reply(id, {});
@@ -268,6 +328,14 @@ async function handle(msg) {
           const text = await tool.run((params && params.arguments) || {});
           return reply(id, { content: [{ type: 'text', text: String(text) }] });
         } catch (e) { return reply(id, { content: [{ type: 'text', text: 'Error: ' + (e && e.message ? e.message : e) }], isError: true }); }
+      }
+      case 'resources/list': return reply(id, { resources: await listResources() });
+      case 'resources/templates/list': return reply(id, { resourceTemplates: TEMPLATES });
+      case 'resources/read': {
+        const uri = String((params && params.uri) || '');
+        const text = await readResource(uri);
+        if (text === undefined) return error(id, -32002, 'Resource not found: ' + uri);
+        return reply(id, { contents: [{ uri, mimeType: 'text/markdown', text: String(text) }] });
       }
       case 'prompts/list': return reply(id, { prompts: PROMPTS.map(({ name, title, description }) => ({ name, title, description })) });
       case 'prompts/get': {
@@ -291,4 +359,4 @@ rl.on('line', (l) => {
   handle(msg);
 });
 rl.on('close', () => process.exit(0));
-if (!TOKEN) log('BLOCKPAD_TOKEN is not set: copy the token from Blockpad → Settings → AI agents. Tools will report this when used.');
+try { if (!conn().token) log('Blockpad is not letting agents in yet: open the Blockpad desktop app and switch on Settings → AI agents → "Let AI agents connect". The tools work as soon as it is on.'); } catch (_) { /* reported when a tool is used */ }

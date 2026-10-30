@@ -11,11 +11,15 @@ module.exports = async (t) => {
   const PORT = 47800 + Math.floor(Math.random() * 150), TOKEN = 'test-token-' + Math.random().toString(36).slice(2);
   const nl = String.fromCharCode(10);
 
-  const startApi = (enabled) => t.eval(`(() => { const a = BP.state.settings.api; a.enabled = ${enabled}; a.port = ${PORT}; a.token = '${TOKEN}'; return window.bp.apiConfigure({ enabled: ${enabled}, port: ${PORT}, token: '${TOKEN}' }).then((r) => JSON.stringify(r)); })()`);
+  const startApi = (enabled, port = PORT) => t.eval(`(() => { const a = BP.state.settings.api; a.enabled = ${enabled}; a.port = ${port}; a.token = '${TOKEN}'; return window.bp.apiConfigure({ enabled: ${enabled}, port: ${port}, token: '${TOKEN}' }).then((r) => JSON.stringify(r)); })()`);
+  const connFile = path.join(process.env.BP_SMOKE_DIR, 'agent-connection.json');
+  const readConn = () => { try { return JSON.parse(require('fs').readFileSync(connFile, 'utf8')); } catch (_) { return null; } };
   check('the local API starts', JSON.parse(await startApi(true)).ok === true);
 
+  const cn = readConn();
+  check('while agents are allowed in, Blockpad publishes its port and key in a small file', !!cn && cn.port === PORT && cn.token === TOKEN && typeof cn.pid === 'number', JSON.stringify(cn && { port: cn.port, pid: cn.pid, keys: Object.keys(cn) }));
   const mk = (env) => {
-    const child = spawn(process.execPath, [script], { env: Object.assign({}, process.env, { ELECTRON_RUN_AS_NODE: '1', BLOCKPAD_TOKEN: TOKEN, BLOCKPAD_PORT: String(PORT) }, env || {}), stdio: ['pipe', 'pipe', 'pipe'] });
+    const child = spawn(process.execPath, [script], { env: Object.assign({}, process.env, { ELECTRON_RUN_AS_NODE: '1', BLOCKPAD_DATA_DIR: process.env.BP_SMOKE_DIR }, env || {}), stdio: ['pipe', 'pipe', 'pipe'] });
     let buf = '', errs = '';
     const pend = new Map();
     let next = 1, exited = null;
@@ -31,7 +35,7 @@ module.exports = async (t) => {
   // ---------- the protocol ----------
   const init = await mcp.rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'claude-code', version: '2.0' } });
   mcp.notify('notifications/initialized');
-  check('initialize: server name, protocol and capabilities', init.result.serverInfo.name === 'blockpad' && init.result.protocolVersion === '2025-06-18' && !!init.result.capabilities.tools && !!init.result.capabilities.prompts, JSON.stringify(init.result.serverInfo));
+  check('initialize: server name, protocol and capabilities', init.result.serverInfo.name === 'blockpad' && init.result.protocolVersion === '2025-06-18' && !!init.result.capabilities.tools && !!init.result.capabilities.prompts && !!init.result.capabilities.resources, JSON.stringify(init.result.serverInfo));
   check('initialize: instructions tell the agent how to use the brain', /brain_context/.test(init.result.instructions) && /brain_handoff/.test(init.result.instructions) && /not instructions/i.test(init.result.instructions));
   const old = await mcp.rpc('initialize', { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'x' } });
   check('an older protocol version is answered in kind', old.result.protocolVersion === '2024-11-05');
@@ -143,6 +147,19 @@ module.exports = async (t) => {
   const race = await J(`(() => { const m = BP.allPages().filter((p) => p.title === 'Race topic'); return { n: m.length, entries: m[0] ? (BP.pageToMd(m[0]).match(/entry number/g) || []).length : 0 }; })()`);
   check('eight simultaneous memories on one topic make one page with all eight entries', race.n === 1 && race.entries === 8, JSON.stringify(race));
 
+  // ---------- pages as resources (what @blockpad offers in Claude Code) ----------
+  const rl = (await mcp.rpc('resources/list')).result.resources;
+  const depRes = rl.find((r) => /Deploy script/.test(r.name));
+  check('resources: the Shared Brain context comes first, then every page, newest first', rl[0].uri === 'blockpad://brain/context' && !!depRes && /^blockpad:\/\/page\/[a-z0-9]+$/.test(depRes.uri) && rl.length > 10 && depRes.mimeType === 'text/markdown', rl.length + ' resources; ' + (depRes && depRes.uri));
+  check('resources: each has a readable description (kind, date, tags)', /Page · updated \d{4}-\d{2}-\d{2} · #project-x/.test(depRes.description), depRes && depRes.description);
+  check('resources: two pages with one title are told apart', rl.filter((r) => /Dup/.test(r.name)).length === 2 && new Set(rl.filter((r) => /Dup/.test(r.name)).map((r) => r.name)).size === 2);
+  const rr = await mcp.rpc('resources/read', { uri: depRes.uri });
+  check('resources/read: a page comes back as Markdown with its tags and links', /NODE_ENV=production/.test(rr.result.contents[0].text) && /#project-x/.test(rr.result.contents[0].text) && rr.result.contents[0].mimeType === 'text/markdown' && rr.result.contents[0].uri === depRes.uri);
+  check('resources/read: the brain context', /Latest handoffs/.test((await mcp.rpc('resources/read', { uri: 'blockpad://brain/context' })).result.contents[0].text));
+  check('resources/read: by title and by search', /NODE_ENV/.test((await mcp.rpc('resources/read', { uri: 'blockpad://page-title/' + encodeURIComponent('Deploy script') })).result.contents[0].text) && /Deploy script/.test((await mcp.rpc('resources/read', { uri: 'blockpad://search/deploy' })).result.contents[0].text));
+  check('resources/read: an unknown address is a JSON-RPC error', (await mcp.rpc('resources/read', { uri: 'blockpad://nothing/here' })).error.code === -32002);
+  check('resources/templates/list: page, page-title and search', (await mcp.rpc('resources/templates/list')).result.resourceTemplates.map((x) => x.uriTemplate).join() === 'blockpad://page/{id},blockpad://page-title/{title},blockpad://search/{query}');
+
   // ---------- the activity log ----------
   const log = await J(`(BP.state.agentLog || []).map((e) => e.agent + ' | ' + e.action)`);
   check('every change by an agent is listed in the activity log', log.length >= 25 && log.some((l) => /^Claude Code \| remembered/.test(l)) && log.some((l) => /wrote a handoff/.test(l)) && log.some((l) => /created page/.test(l)) && log.some((l) => /added a row/.test(l)), log.length + ' entries');
@@ -151,15 +168,15 @@ module.exports = async (t) => {
   await t.eval(`BP.openSettings('agents'); 0`); await W(900);
   const ui = await J(`(() => { const m = document.querySelector('.modal'); return { tab: [...m.querySelectorAll('.set-tabs button')].some((b) => b.textContent === 'AI agents' && b.classList.contains('on')), text: m.querySelector('.set-pane').textContent, code: (m.querySelector('.ag-code') || {}).textContent, enabled: m.querySelector('.set-pane input[type=checkbox]').checked }; })()`);
   check('Settings has an AI agents tab, on', ui.tab && /Let AI agents connect/.test(ui.text) && ui.enabled);
-  check('Claude Code snippet: the claude mcp add command with the key and the server file', /^claude mcp add --scope user/.test(ui.code) && ui.code.includes('--env BLOCKPAD_TOKEN=' + TOKEN) && /blockpad-mcp\.js/.test(ui.code) && /blockpad --/.test(ui.code) && ui.code.includes('BLOCKPAD_PORT=' + PORT), ui.code);
+  check('Claude Code snippet: the claude mcp add command, the server file, and NO key', /^claude mcp add --scope user/.test(ui.code) && /blockpad --/.test(ui.code) && /blockpad-mcp\.js/.test(ui.code) && !ui.code.includes(TOKEN) && !/BLOCKPAD_TOKEN|BLOCKPAD_PORT/.test(ui.code), ui.code);
   await t.eval(`[...document.querySelectorAll('.modal .seg button')].find((b) => /Codex/.test(b.textContent)).click()`); await W(150);
   const codex = await J(`document.querySelector('.ag-code').textContent`);
-  check('Codex snippet: a [mcp_servers.blockpad] block with command, args and env', /\[mcp_servers\.blockpad\]/.test(codex) && /command = /.test(codex) && /args = \[/.test(codex) && codex.includes('BLOCKPAD_TOKEN = \'' + TOKEN + '\''), codex);
+  check('Codex snippet: a [mcp_servers.blockpad] block with command and args, and NO key', /\[mcp_servers\.blockpad\]/.test(codex) && /command = /.test(codex) && /args = \[/.test(codex) && !codex.includes(TOKEN), codex);
   await t.eval(`[...document.querySelectorAll('.modal .seg button')].find((b) => /Cursor/.test(b.textContent)).click()`); await W(150);
   const cj = await J(`document.querySelector('.ag-code').textContent`);
   let parsed = null; try { parsed = JSON.parse(cj); } catch (_) {}
   check('the snippet points at a server file that exists, and a command that can run it', !!parsed && require('fs').existsSync(parsed.mcpServers.blockpad.args[0]) && (parsed.mcpServers.blockpad.command === 'node' || require('fs').existsSync(parsed.mcpServers.blockpad.command)), parsed && parsed.mcpServers.blockpad.args[0]);
-  check('JSON snippet: valid, with the server command, args and env', !!parsed && parsed.mcpServers.blockpad.args[0].endsWith('blockpad-mcp.js') && parsed.mcpServers.blockpad.env.BLOCKPAD_TOKEN === TOKEN, cj.slice(0, 160));
+  check('JSON snippet: valid, with the server command and args, and NO key', !!parsed && parsed.mcpServers.blockpad.args[0].endsWith('blockpad-mcp.js') && !cj.includes(TOKEN), cj.slice(0, 160));
   await t.eval(`[...document.querySelectorAll('.modal .ag-box .btn')].find((b) => /Test the connection/.test(b.textContent)).click()`); await W(900);
   check('Test the connection: the app reaches its own API with the key', /Blockpad answers/.test(await J(`document.querySelector('.ag-test').textContent`)), await J(`document.querySelector('.ag-test').textContent`));
   const acts = await J(`document.querySelector('.ag-act').textContent`);
@@ -196,20 +213,36 @@ module.exports = async (t) => {
   const bad = mk({ BLOCKPAD_TOKEN: 'wrong' });
   await bad.rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'x' } });
   const b1 = await bad.call('blockpad_status');
-  check('a wrong key gives a clear message', b1.isError && /did not accept the token/.test(b1.text), b1.text);
+  check('a wrong key gives a clear message', b1.isError && /did not accept the key/.test(b1.text), b1.text);
   bad.kill();
 
-  const noKey = mk({ BLOCKPAD_TOKEN: '' });
+  const emptyDir = require('fs').mkdtempSync(path.join(require('os').tmpdir(), 'bp-nokey-'));
+  const noKey = mk({ BLOCKPAD_DATA_DIR: emptyDir });
   await noKey.rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'x' } });
   const n1 = await noKey.call('blockpad_status');
-  check('a missing key says it is empty', n1.isError && /empty|did not accept/.test(n1.text), n1.text);
+  check('with no connection note and no key, it says how to let agents in', n1.isError && /not letting agents in/.test(n1.text) && /Let AI agents connect/.test(n1.text), n1.text);
   noKey.kill();
 
   await startApi(false); await W(300);
+  check('switching agents off removes the connection note', readConn() === null);
   const off = await mcp.call('blockpad_status');
-  check('when the app is not listening the message says how to switch it on', off.isError && /Cannot reach Blockpad/.test(off.text) && /Let AI agents connect/.test(off.text), off.text);
-  await startApi(true); await W(300);
-  check('and it works again when switched back on', !(await mcp.call('blockpad_status')).isError);
+  check('when agents are not let in, the message says how to switch it on', off.isError && /not letting agents in/.test(off.text) && /Let AI agents connect/.test(off.text), off.text);
+  const PORT2 = PORT + 150;
+  await startApi(true, PORT2); await W(300);
+  const cn2 = readConn();
+  check('switching on again publishes the new port', !!cn2 && cn2.port === PORT2 && cn2.token === TOKEN);
+  check('the server that was already running follows the app to the new port, with no restart', !(await mcp.call('blockpad_status')).isError);
+  await startApi(true, PORT); await W(300);
+  check('and back again', !(await mcp.call('blockpad_status')).isError && readConn().port === PORT);
+  const stale = mk({ BLOCKPAD_TOKEN: TOKEN, BLOCKPAD_PORT: '1' });
+  await stale.rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'x' } });
+  const sx = await stale.call('blockpad_status');
+  check('a port nobody listens on says the app must be open', sx.isError && /Cannot reach Blockpad/.test(sx.text) && /Let AI agents connect/.test(sx.text), sx.text);
+  stale.kill();
+  const override = mk({ BLOCKPAD_TOKEN: TOKEN, BLOCKPAD_PORT: String(PORT), BLOCKPAD_DATA_DIR: emptyDir });
+  await override.rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'x' } });
+  check('BLOCKPAD_TOKEN and BLOCKPAD_PORT still work as an override', !(await override.call('blockpad_status')).isError);
+  override.kill();
 
   const away = mk({ BLOCKPAD_URL: 'http://example.com:7878' });
   await W(1200);

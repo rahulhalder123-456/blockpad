@@ -97,13 +97,14 @@
   B.update = async (p, o) => {
     // replacing the text of a page that has some: keep what is there as a version first (Page history → restore). Blockpad normally lets the newest version
     // follow the page for a few minutes, which would overwrite it, so the old text is saved as its own entry and the new text gets one after it
-    const keepOld = o.markdown !== undefined && o.mode !== 'append' && p.type !== 'db' && (p.blocks || []).some((b) => BP.textOf(b.text || '').trim() || b.type !== 'p');
+    // (the Markdown is parsed first, so nothing waits between saving the old version and changing the page)
+    const parsed = o.markdown !== undefined && p.type !== 'db' ? await B.parse(o.markdown) : null;
+    const keepOld = !!parsed && o.mode !== 'append' && (p.blocks || []).some((b) => BP.textOf(b.text || '').trim() || b.type !== 'p');
     const version = (t) => { p.history = p.history || []; p.history.push({ t, title: p.title, blocks: JSON.parse(JSON.stringify(p.blocks)) }); if (p.history.length > 25) p.history.shift(); };
     if (keepOld) { BP.materializeHistory(); version(Date.now()); }
     if (o.title !== undefined) p.title = String(o.title);
     if (o.icon !== undefined) p.icon = String(o.icon);
-    if (o.markdown !== undefined && p.type !== 'db') {
-      const parsed = await B.parse(o.markdown);
+    if (parsed) {
       if (o.mode === 'append') {
         const last = p.blocks[p.blocks.length - 1];
         if (last && last.type === 'p' && !BP.textOf(last.text).trim() && !(last.children || []).length) p.blocks.pop();
