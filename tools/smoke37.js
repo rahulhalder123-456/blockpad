@@ -121,7 +121,9 @@ module.exports = async (t) => {
   check('clipper: only http(s) addresses are fetched', /http/i.test(bad4) && bad4 !== 'no error', bad4);
   await t.eval(`BP.clip.dialog()`); await W(200);
   check('clipper: the dialog opens', await J(`!!document.querySelector('.modal input') && document.querySelector('.modal').textContent.includes('Clip a web page')`));
-  await t.eval(`(() => { const i = document.querySelector('.modal input'); i.value = '${base}/article'; i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })); })()`); await W(2500);
+  await t.eval(`(() => { const i = document.querySelector('.modal input'); i.value = '${base}/article'; i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })); })()`);
+  for (let k = 0; k < 40 && (await J(`!!document.querySelector('.modal-back')`)); k++) await W(250);      // the fetch can take a moment in a packaged app
+  await W(400);
   check('clipper: the dialog clips and opens the new page', await J(`!document.querySelector('.modal-back') && BP.page(BP.state.current).title === 'A Great Article' && BP.allPages().filter(p => p.title === 'A Great Article').length === 2`));
   server.close();
 
