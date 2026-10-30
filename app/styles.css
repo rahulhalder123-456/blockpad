@@ -545,3 +545,10 @@ body.vim-normal .editor .block:has(.txt:focus) { box-shadow: inset 3px 0 0 var(-
 .mm-what { font-size: 14px; }
 .mm-hint { font-size: 13px; color: var(--muted); }
 .mm-raw { font-size: 12px; color: var(--muted); margin-top: 2px; } .mm-raw summary { cursor: pointer; } .mm-raw pre { margin: 6px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.45 var(--mono); max-height: 160px; overflow: auto; }
+
+/* Settings → AI agents */
+.ag-box { display: grid; gap: 8px; }
+.ag-code { max-height: 230px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; font-size: 12.5px; }
+.ag-how { margin-top: 2px; }
+.ag-row { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.ag-t { min-width: 150px; }

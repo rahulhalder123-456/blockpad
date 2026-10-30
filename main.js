@@ -349,3 +349,11 @@ function startApi(port, token) {
   });
 }
 ipcMain.handle('api:configure', async (_e, { enabled, port, token }) => (enabled ? startApi(+port || 7878, String(token || '')) : (stopApi(), { ok: true, stopped: true })));
+// AI agents (MCP): where the MCP server file is and how to start it, and a self-test of the local API for the settings page
+ipcMain.handle('agent:info', () => ({ script: path.join(app.getAppPath(), 'mcp', 'blockpad-mcp.js'), exec: process.execPath, packaged: app.isPackaged }));
+ipcMain.handle('agent:test', async (_e, { port, token }) => {
+  try {
+    const r = await net.fetch('http://127.0.0.1:' + (+port || 7878) + '/api/brain/status', { headers: { authorization: 'Bearer ' + String(token || '') } });
+    return { status: r.status, body: await r.json().catch(() => ({})) };
+  } catch (e) { return { error: e.message }; }
+});

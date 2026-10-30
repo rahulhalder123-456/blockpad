@@ -22,6 +22,8 @@ contextBridge.exposeInMainWorld('bp', {
   fetchPage: (url) => ipcRenderer.invoke('web:fetch', url),
   aiChat: (req) => ipcRenderer.invoke('ai:chat', req),
   apiConfigure: (cfg) => ipcRenderer.invoke('api:configure', cfg),
+  agentInfo: () => ipcRenderer.invoke('agent:info'),
+  agentTest: (cfg) => ipcRenderer.invoke('agent:test', cfg),
   ready: () => ipcRenderer.invoke('app:ready'),
   platform: process.platform,
   arch: process.arch,

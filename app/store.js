@@ -145,7 +145,7 @@
     // built-in offline AI is the default; someone who already configured an endpoint keeps using it
     s.ai.provider = s.ai.provider || (s.ai.endpoint && s.ai.model ? 'custom' : 'builtin');
     s.ai.local = Object.assign({ model: 'tiny', ramPct: 15, idleMin: 10, autoStart: true }, s.ai.local);
-    s.api = Object.assign({ enabled: false, port: 7878, token: '' }, s.api);
+    s.api = Object.assign({ enabled: false, port: 7878, token: '', readOnly: false }, s.api);
     BP.state.share = BP.state.share || { spaces: {} };
     BP.state.meta = BP.state.meta || {};
     BP.state.synced = BP.state.synced || {};

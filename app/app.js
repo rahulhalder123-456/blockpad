@@ -765,11 +765,11 @@
     BP.modal('Settings', (body, close) => {
       const tabs = h('div', { class: 'set-tabs' });
       const pane = h('div', { class: 'set-pane' });
-      const names = [['general', 'General'], ['members', 'Members'], ['sharing', 'Sharing'], ['ai', 'AI'], ['api', 'Local API'], ['data', 'Data, backup & sync'], ['keys', 'Shortcuts'], ['about', 'About']];
+      const names = [['general', 'General'], ['members', 'Members'], ['sharing', 'Sharing'], ['ai', 'AI'], ['api', 'Local API'], ...(window.bp ? [['agents', 'AI agents']] : []), ['data', 'Data, backup & sync'], ['keys', 'Shortcuts'], ['about', 'About']];
       const show = (k) => {
         tabs.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x.dataset.k === k));
         pane.innerHTML = '';
-        ({ general, members, sharing: (p) => BP.shareSettings(p), ai, api, data, keys, about }[k])(pane, close);
+        ({ general, members, sharing: (p) => BP.shareSettings(p), ai, api, agents, data, keys, about }[k])(pane, close);
       };
       names.forEach(([k, n]) => tabs.append(h('button', { 'data-k': k, onclick: () => show(k) }, n)));
       body.append(h('div', { class: 'set' }, tabs, pane));
@@ -931,6 +931,93 @@
         h('div', { class: 'row-gap' }, h('button', { class: 'btn small', onclick: () => { navigator.clipboard.writeText(a.token || ''); BP.toast('Token copied'); } }, 'Copy token'), h('button', { class: 'btn small', onclick: () => { a.token = ''; if (a.enabled) apply(); else { tok.textContent = '(created when you enable it)'; BP.save(); } } }, 'Regenerate')), status);
       p.append(h('h3', null, 'Example'), h('code', { class: 'pathbox pre' }, 'curl -H "Authorization: Bearer <token>" http://127.0.0.1:' + a.port + '/api/pages\ncurl -X POST -H "Authorization: Bearer <token>" -d \'{"title":"From a script","markdown":"# Hello"}\' http://127.0.0.1:' + a.port + '/api/pages\n\nEndpoints: GET/POST /api/pages · GET/PATCH/DELETE /api/pages/:id · GET /api/databases · GET/POST /api/databases/:id/rows · PATCH /api/rows/:id · GET /api/search?q='));
       if (a.enabled && window.bp) apply();
+    }
+    /* Settings → AI agents (desktop app only): connect Claude Code, Codex, Cursor … through MCP, the Shared Brain, what agents did */
+    function agents(p, close) {
+      const a = BP.state.settings.api;
+      const status = h('div', { class: 'muted small' });
+      const tomlStr = (s) => (String(s).includes("'") ? JSON.stringify(String(s)) : "'" + s + "'");
+      const newToken = () => [...crypto.getRandomValues(new Uint8Array(24))].map((b) => b.toString(16).padStart(2, '0')).join('');
+      p.append(h('h3', null, 'AI agents'),
+        h('p', { class: 'muted small' }, 'Let Claude Code, Codex, Cursor or any other AI agent that supports MCP use Blockpad: read and write your notes, write reports, and share one memory (the “Shared Brain”) so each agent can pick up where another stopped. It works only on this computer, only while Blockpad is open, and only with the key below.'));
+      const en = h('input', { type: 'checkbox', checked: a.enabled ? '' : null, onchange: () => { a.enabled = en.checked; apply(); } });
+      const wr = h('input', { type: 'checkbox', checked: a.readOnly ? null : '', onchange: () => { a.readOnly = !wr.checked; BP.save(); } });
+      p.append(h('label', { class: 'chk' }, en, ' Let AI agents connect'), status,
+        h('label', { class: 'chk' }, wr, ' Agents can change pages (switch off to let them only read)'));
+      const apply = async () => {
+        if (a.enabled && !a.token) a.token = newToken();
+        BP.save();
+        const r = await window.bp.apiConfigure({ enabled: a.enabled, port: a.port, token: a.token });
+        status.textContent = a.enabled ? (r.ok ? '● Ready: agents on this computer can connect (port ' + a.port + ')' : '✗ ' + r.error) : 'Off: agents cannot connect.';
+        if (a.enabled && !r.ok) { a.enabled = false; en.checked = false; BP.save(); }
+        draw();
+      };
+      status.textContent = a.enabled ? '● Ready: agents on this computer can connect (port ' + a.port + ')' : 'Off: agents cannot connect.';
+
+      // how to connect
+      const box = h('div', { class: 'ag-box' });
+      p.append(h('h3', null, 'Connect an agent'), box);
+      let info = null, which = 'claude';
+      function draw() {
+        box.innerHTML = '';
+        if (!info) return box.append(h('div', { class: 'muted small' }, 'Loading…'));
+        const tok = a.token || 'YOUR_TOKEN';
+        const cmd = info.packaged ? info.exec : 'node';
+        const env = Object.assign({ BLOCKPAD_TOKEN: tok }, a.port !== 7878 ? { BLOCKPAD_PORT: String(a.port) } : {}, info.packaged ? { ELECTRON_RUN_AS_NODE: '1' } : {});
+        const q = (s) => (/\s/.test(s) ? '"' + s + '"' : s);
+        const snippets = {
+          claude: ['Claude Code', 'Run this once in a terminal:', ['claude mcp add --scope user', ...Object.entries(env).map(([k, v]) => '--env ' + k + '=' + v), 'blockpad --', q(cmd), q(info.script)].join(' ')],
+          codex: ['Codex', 'Add this to ~/.codex/config.toml (on Windows: %USERPROFILE%\\.codex\\config.toml), then restart Codex:', '[mcp_servers.blockpad]\ncommand = ' + tomlStr(cmd) + '\nargs = [' + tomlStr(info.script) + ']\nenv = { ' + Object.entries(env).map(([k, v]) => k + ' = ' + tomlStr(v)).join(', ') + ' }'],
+          json: ['Cursor, Claude Desktop, others', 'Add this to the app’s MCP settings (Cursor: ~/.cursor/mcp.json, Claude Desktop: claude_desktop_config.json):', JSON.stringify({ mcpServers: { blockpad: { command: cmd, args: [info.script], env } } }, null, 2)],
+        };
+        const seg = h('div', { class: 'seg' });
+        Object.keys(snippets).forEach((k) => seg.append(h('button', { class: which === k ? 'on' : '', onclick: () => { which = k; draw(); } }, snippets[k][0])));
+        const sn = snippets[which];
+        box.append(seg, h('div', { class: 'muted small ag-how' }, sn[1]), h('code', { class: 'pathbox pre ag-code' }, sn[2]),
+          h('div', { class: 'row-gap' },
+            h('button', { class: 'btn small', onclick: () => { navigator.clipboard.writeText(sn[2]); BP.toast('Copied. It contains your key: keep it private.', 3500); } }, 'Copy'),
+            h('button', { class: 'btn small', onclick: testIt }, 'Test the connection'),
+            h('button', { class: 'btn small', title: 'Make a new key; agents using the old one stop working until you update them', onclick: () => { a.token = ''; if (a.enabled) apply(); else { BP.save(); draw(); } BP.toast('New key made. Update the agents with the new snippet.', 4500); } }, 'New key')),
+          h('div', { class: 'muted small ag-test' }),
+          !a.token ? h('div', { class: 'muted small' }, 'Switch on “Let AI agents connect” first: that creates your key.') : null,
+          h('p', { class: 'muted small' }, 'The key lets anything on this computer that has it read and change your notes while Blockpad is open. Do not share it. Agents work on this computer only; nothing is sent anywhere by Blockpad.'));
+      }
+      async function testIt() {
+        const out = box.querySelector('.ag-test');
+        if (!a.enabled) { out.textContent = '✗ Switch on “Let AI agents connect” first.'; return; }
+        out.textContent = 'Testing…';
+        const r = await window.bp.agentTest({ port: a.port, token: a.token });
+        out.textContent = r.error ? '✗ ' + r.error : r.status === 200 ? '✔ Blockpad answers. ' + (r.body.exists ? 'The Shared Brain is set up.' : 'The Shared Brain is not set up yet.') : r.status === 401 ? '✗ The key was not accepted.' : '✗ Blockpad answered ' + r.status + '.';
+      }
+      window.bp.agentInfo().then((i) => { info = i; draw(); });
+
+      // the shared brain
+      const brainBox = h('div');
+      const drawBrain = () => {
+        brainBox.innerHTML = '';
+        const s = BP.brain.status();
+        const counts = s.exists ? Object.entries(s.counts).filter(([, v]) => v).map(([k, v]) => v + ' ' + k).join(', ') : '';
+        brainBox.append(h('div', { class: 'small' }, s.exists ? 'Set up' + (counts ? ': ' + counts : ' (nothing saved in it yet)') + '.' : 'Not set up yet. It is created automatically the first time an agent saves a memory or a handoff, or you can set it up now.'),
+          h('div', { class: 'row-gap' }, s.exists
+            ? h('button', { class: 'btn small', onclick: () => { close(); BP.open(s.root.id); } }, 'Open the Shared Brain')
+            : h('button', { class: 'btn small', onclick: async () => { await BP.brain.ensure(); BP.save(); BP.renderAll(); drawBrain(); BP.toast('Shared Brain created'); } }, 'Set up the Shared Brain')));
+      };
+      p.append(h('h3', null, 'Shared Brain'),
+        h('p', { class: 'muted small' }, 'A set of ordinary pages that agents and you both use: CURRENT (what is being worked on and the latest handoffs), Memories, Handoffs, Decisions and Reports. A new agent session starts by reading it, and ends by writing a handoff. Try telling your agent: “Call brain_context and continue from the last handoff.”'), brainBox);
+      drawBrain();
+
+      // what agents did
+      const act = h('div', { class: 'ag-act' });
+      const drawAct = () => {
+        act.innerHTML = '';
+        const L = BP.state.agentLog || [];
+        if (!L.length) return act.append(h('div', { class: 'muted small' }, 'Nothing yet. What agents write or change shows up here.'));
+        L.slice(0, 15).forEach((e) => act.append(h('div', { class: 'ag-row' }, h('span', { class: 'muted small ag-t' }, BP.fmtDate(e.t)), h('b', null, e.agent), h('span', { class: 'muted' }, e.action), e.id && BP.page(e.id) ? h('button', { class: 'btn ghost small', onclick: () => { close(); BP.open(e.id); } }, e.title || 'Untitled') : h('span', null, e.title || ''))));
+        act.append(h('button', { class: 'btn ghost small', onclick: () => { BP.state.agentLog = []; BP.save(); drawAct(); } }, 'Clear this list'));
+      };
+      p.append(h('h3', null, 'What agents did'), act);
+      drawAct();
+      const timer = setInterval(() => { if (!p.isConnected) return clearInterval(timer); drawAct(); drawBrain(); }, 3000);
     }
     function about(p) {
       p.append(h('div', { class: 'about' }, h('img', { src: '../assets/logo.svg', alt: '', width: 72, height: 72 }), h('div', null, h('h2', null, 'Blockpad'), h('p', { class: 'muted' }, 'Version ' + (BP.appVersion || '') + ' · local-first notes, wiki and databases'))),

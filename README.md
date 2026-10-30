@@ -80,6 +80,7 @@ Press **Share** on a page. Blockpad makes two `blockpad://` links: **Can edit** 
 
 ## Local API, AI and sync (all opt-in, all yours)
 - **Local REST API** (Settings > Local API): read and write pages, databases and rows from your own scripts. Off by default, 127.0.0.1 only, bearer token, rejects browser requests.
+- **AI agents and a Shared Brain** (desktop app only; Settings > AI agents): Claude Code, Codex, Cursor and any other MCP-capable agent can read and write your notes, write reports, and keep one shared memory. The server is `mcp/blockpad-mcp.js` (no dependencies, runs with the app's own executable, so Node need not be installed); Settings gives a copy-ready snippet for each agent with your key in it. The **Shared Brain** is a set of ordinary pages (CURRENT, Memories, Handoffs, Decisions, Reports): an agent starts a session with `brain_context`, saves lasting facts with `brain_remember`, searches with `brain_recall`, and ends with `brain_handoff`, so the next agent (or you) continues where it stopped. Agents are credited on what they write, every change is listed under "What agents did", a switch makes agents read-only, and replacing a page's text keeps the old text in Page history. See `mcp/README.md`; `tools/smoke39.js` runs the server end to end (81 checks, also against the packaged app).
 - **Built-in AI, no key, no account** (Settings > AI): a tiny open model (Qwen2.5 0.5B by default, ~0.6 GB of RAM) runs on this computer through a bundled llama.cpp engine. Turn it on/off with the 🧠 chip at the top or in Settings. You set a memory limit of 10-25% of your RAM; the model and its context window are sized to fit, a watchdog stops it if it ever exceeds the limit, it turns itself off after being idle, and Stop frees all of its memory. It listens only on 127.0.0.1 with a random per-run key. Models (nano 0.27 GB, tiny 0.49 GB, small 1.1 GB) are downloaded once from Hugging Face, resumable, then it works offline. Improve / shorten / translate / summarize a selection, `/Ask AI`, continue writing.
 - **Or your own model** (Settings > AI > My own endpoint): Ollama or any OpenAI-compatible endpoint. Nothing is sent until you configure it and pick an action.
 - **Sync between devices** (Settings > Data): store the workspace in a folder that OneDrive, Dropbox or Syncthing syncs. Blockpad detects changes made by another device and merges page by page (newest edit wins; permanent deletions propagate). Not live co-editing.
@@ -109,6 +110,9 @@ app/diagrams.js       diagrams from text (vendor/mermaid.min.js, loaded on first
 app/clipper.js        web clipper
 app/slides.js         present a page as slides
 app/vim.js            Vim keys
+app/brain.js          the Shared Brain for AI agents (desktop)
+app/api.js            local REST API (pages, databases, search, brain)
+mcp/blockpad-mcp.js   MCP server for AI agents (desktop); see mcp/README.md
 assets/               logo.svg, icon.png, icon.ico
 tools/                icon generator and smoke tests (npm start with --smoke=tools/smokeN.js)
 replica/              recon map and feature matrix from the replica-recon step
