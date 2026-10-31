@@ -1,17 +1,17 @@
 {
-  "version": "1.8.5",
+  "version": "1.8.6",
   "released": "2026-10-30",
   "notes": [
-    "Links, backlinks, tags, graph view and daily notes",
-    "Canvas boards, command palette (Ctrl+P), Markdown vault import and export",
-    "Diagrams from text, web clipper, slides and Vim keys"
+    "Phones: the Back key and the side drawer now behave, and touch screens get every control",
+    "Diagrams: flowcharts at the right size, clearer errors, dark-mode colours",
+    "AI agents (Claude Code, Codex, Cursor) can use Blockpad with a Shared Brain (desktop app)"
   ],
   "page": "https://blockpad-umber.vercel.app/#download",
   "downloads": {
-    "windows": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.5/Blockpad-Setup.exe",
+    "windows": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.6/Blockpad-Setup.exe",
     "macosArm": "",
     "macosIntel": "",
-    "linux": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.5/Blockpad-linux-x64.tar.gz",
+    "linux": "https://github.com/rahulhalder123-456/blockpad/releases/download/v1.8.6/Blockpad-linux-x64.tar.gz",
     "android": "https://blockpad-umber.vercel.app/download/Blockpad.apk"
   }
 }
